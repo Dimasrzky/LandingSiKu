@@ -26,7 +26,7 @@ const PLANS: Plan[] = [
     period: 'per sekolah / bulan',
     popular: false,
     cta: 'Mulai Gratis 1 Bulan',
-    href: 'https://si-ku.vercel.app/daftar',
+    href: '/daftar',
     features: [
       { label: 'Dashboard keuangan dasar',  on: true  },
       { label: 'Manajemen SPP & tagihan',   on: true  },
@@ -43,7 +43,7 @@ const PLANS: Plan[] = [
     period: 'per sekolah / bulan',
     popular: true,
     cta: 'Mulai Gratis 1 Bulan',
-    href: 'https://si-ku.vercel.app/daftar',
+    href: '/daftar',
     features: [
       { label: 'Semua fitur Starter',              on: true  },
       { label: 'Laporan BOS otomatis',             on: true  },
@@ -216,7 +216,7 @@ export default function HargaPage() {
               {/*2+ sekolah sudah merasakan manfaatnya.*/}
               Tidak perlu keahlian IT — tim kami bantu dari awal.
             </p>
-            <Link href="https://si-ku.vercel.app/daftar" className="btn-primary">
+            <Link href="/daftar" className="btn-primary">
               ✦ Demo Gratis Sekarang
             </Link>
           </div>

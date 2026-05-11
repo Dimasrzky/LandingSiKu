@@ -107,7 +107,7 @@ export default function HomePage() {
             </p>
 
             <div className="hero-cta">
-              <Link href="https://si-ku.vercel.app/daftar" className="btn-primary">
+              <Link href="/daftar" className="btn-primary">
                 ✦ Jadwalkan Demo Gratis
               </Link>
             </div>
@@ -384,7 +384,7 @@ export default function HomePage() {
                 <span className="price-feat-item" key={f}>{f}</span>
               ))}
             </div>
-            <Link href="https://si-ku.vercel.app/daftar" className="btn-cta-big">
+            <Link href="/daftar" className="btn-cta-big">
               Jadwalkan Demo Gratis
             </Link>
             <div className="cta-note">

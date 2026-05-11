@@ -91,7 +91,7 @@ export default function Navbar() {
           Dukungan
         </Link>
 
-        <Link href="https://si-ku.vercel.app/daftar" className="btn-nav">
+        <Link href="/daftar" className="btn-nav">
           Coba Gratis
         </Link>
       </div>
