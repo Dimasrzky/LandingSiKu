@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 export default function Footer() {
   return (
     <footer className="footer">
@@ -9,11 +7,6 @@ export default function Footer() {
           <div className="footer-tagline">Sistem Keuangan Sekolah Swasta Modern</div>
         </div>
         <div className="footer-links">
-          <Link href="/#fitur">Fitur</Link>
-          <Link href="/#cara-kerja">Cara Kerja</Link>
-          <Link href="/harga">Harga</Link>
-          <Link href="/support">Dukungan</Link>
-          <Link href="/daftar">Demo Gratis</Link>
           <a href="mailto:halo@siku.id">halo@siku.id</a>
         </div>
       </div>

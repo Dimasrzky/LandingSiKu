@@ -1,14 +1,25 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { Wallet, MessageCircle, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown } from 'lucide-react'
+
+const fiturItems = [
+  { slug: 'manajemen-spp',      label: 'Manajemen SPP & Tagihan',       icon: <Wallet size={16} /> },
+  { slug: 'notifikasi-whatsapp', label: 'Notifikasi WhatsApp Otomatis',  icon: <MessageCircle size={16} /> },
+  { slug: 'pembayaran-digital',  label: 'Integrasi Pembayaran Digital',  icon: <CreditCard size={16} /> },
+  { slug: 'laporan-dashboard',   label: 'Laporan & Dashboard Real-time', icon: <BarChart3 size={16} /> },
+  { slug: 'multi-jenjang',       label: 'Multi-Jenjang & Multi-Sekolah', icon: <Building2 size={16} /> },
+  { slug: 'manajemen-siswa',     label: 'Manajemen Siswa & Kelas',       icon: <GraduationCap size={16} /> },
+]
 
 export default function Navbar() {
   const pathname = usePathname()
+  const router = useRouter()
   const isHome = pathname === '/'
 
   const scrollTo = (id: string) => {
-    if (!isHome) return
     const el = document.getElementById(id)
     if (el) {
       const offset = 72
@@ -17,36 +28,60 @@ export default function Navbar() {
     }
   }
 
+  const goToSection = (e: React.MouseEvent, id: string) => {
+    e.preventDefault()
+    if (isHome) {
+      scrollTo(id)
+    } else {
+      sessionStorage.setItem('scrollTo', id)
+      router.push('/')
+    }
+  }
+
   return (
     <nav className="nav">
       <Link href="/" className="nav-logo">
-        SiKu <span>BETA</span>
+        <Image
+          src="/image/LogoSiKu.png"
+          alt="SiKu"
+          height={44}
+          width={120}
+          style={{ objectFit: 'contain' }}
+          priority
+        />
       </Link>
 
       <div className="nav-links">
-        {isHome ? (
-          <>
-            <a
-              href="#fitur"
-              className="nav-hide-mobile"
-              onClick={(e) => { e.preventDefault(); scrollTo('fitur') }}
-            >
-              Fitur
-            </a>
-            <a
-              href="#cara-kerja"
-              className="nav-hide-mobile"
-              onClick={(e) => { e.preventDefault(); scrollTo('cara-kerja') }}
-            >
-              Cara Kerja
-            </a>
-          </>
-        ) : (
-          <>
-            <Link href="/#fitur" className="nav-hide-mobile">Fitur</Link>
-            <Link href="/#cara-kerja" className="nav-hide-mobile">Cara Kerja</Link>
-          </>
-        )}
+        {/* Fitur dropdown */}
+        <div className="nav-dropdown nav-hide-mobile">
+          <button className="nav-dropdown-trigger" type="button">
+            Fitur <ChevronDown size={14} strokeWidth={2.5} />
+          </button>
+          <div className="nav-dropdown-menu">
+            <div className="nav-dropdown-menu-inner">
+              {fiturItems.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/fitur/${item.slug}`}
+                  className="nav-dropdown-item"
+                >
+                  <span className="nav-dropdown-icon">{item.icon}</span>
+                  <span>
+                    <span className="nav-dropdown-item-label">{item.label}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <Link
+          href="/"
+          className="nav-hide-mobile"
+          onClick={(e) => goToSection(e, 'cara-kerja')}
+        >
+          Cara Kerja
+        </Link>
 
         <Link href="/harga" className="nav-hide-mobile">
           Harga

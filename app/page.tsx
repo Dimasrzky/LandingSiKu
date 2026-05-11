@@ -1,20 +1,67 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { Wallet, Landmark, BarChart3, Building2, GraduationCap, FileSpreadsheet, PhoneCall, Clock4, ShieldAlert } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { FileSpreadsheet, PhoneCall, Clock4, ShieldAlert } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const IkonWA = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-)
+function GachaNumber({ target, from, duration = 1400, format }: {
+  target: number
+  from: number
+  duration?: number
+  format: (n: number) => string
+}) {
+  const [display, setDisplay] = useState(from)
+  const ref = useRef<HTMLSpanElement>(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || started.current) return
+      started.current = true
+      observer.disconnect()
+      const startTime = performance.now()
+      let raf: number
+      const tick = (now: number) => {
+        const progress = Math.min((now - startTime) / duration, 1)
+        if (progress < 1) {
+          const settle = Math.max(0, (progress - 0.55) / 0.45)
+          const base = from + (target - from) * settle
+          const noise = (1 - settle) * Math.abs(target - from) * (Math.random() - 0.5)
+          setDisplay(Math.round(Math.max(0, base + noise)))
+          raf = requestAnimationFrame(tick)
+        } else {
+          setDisplay(target)
+        }
+      }
+      raf = requestAnimationFrame(tick)
+      return () => cancelAnimationFrame(raf)
+    }, { threshold: 0.4 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, from, duration])
+
+  return <span ref={ref}>{format(display)}</span>
+}
 
 export default function HomePage() {
 
-  // Scroll-reveal animation untuk elemen yang masuk viewport
+  useEffect(() => {
+    const target = sessionStorage.getItem('scrollTo')
+    if (target) {
+      sessionStorage.removeItem('scrollTo')
+      const el = document.getElementById(target)
+      if (el) {
+        const offset = 72
+        const top = el.getBoundingClientRect().top + window.pageYOffset - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }
+  }, [])
+
   useEffect(() => {
     const targets = document.querySelectorAll(
       '.pain-card, .feat-card, .testi-card, .step'
@@ -61,11 +108,8 @@ export default function HomePage() {
 
             <div className="hero-cta">
               <Link href="/daftar" className="btn-primary">
-                ✦ Daftar Demo Gratis 1 Bulan
+                ✦ Jadwalkan Demo Gratis
               </Link>
-              <a href="#fitur" className="btn-secondary">
-                Lihat Fitur
-              </a>
             </div>
 
             <div className="hero-stats">
@@ -204,85 +248,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── FITUR ────────────────────────────────── */}
-      <section className="section features-bg" id="fitur">
-        <div className="section-inner">
-          <div className="section-label">Solusi SiKu</div>
-          <h2 className="section-title">
-            Semua yang dibutuhkan
-            <br />yayasan & bendahara sekolah swasta Indonesia
-          </h2>
-          <p className="section-subtitle">
-            Dirancang khusus untuk alur kerja keuangan sekolah swasta Indonesia,
-            dari TK hingga SMA/SMK.
-          </p>
-
-          <div className="features-grid">
-            {[
-              {
-                icon: <Wallet size={24} />,
-                iconBg: '#EFF6FF', iconColor: '#1D4ED8',
-                title: 'Manajemen SPP & Tagihan',
-                desc: 'Generate tagihan otomatis setiap bulan untuk seluruh siswa. Kelola berbagai jenis biaya dalam satu sistem.',
-                items: ['SPP, uang gedung, ekskul, dll.', 'Tagihan per kelas/jenjang/yayasan', 'Cicilan & diskon otomatis', 'Riwayat pembayaran lengkap'],
-                highlight: true,
-                badge: 'UNGGULAN',
-              },
-              {
-                icon: <IkonWA />,
-                iconBg: '#F0FDF4', iconColor: '#16A34A',
-                title: 'Notifikasi WhatsApp Otomatis',
-                desc: 'Sistem kirim pesan WA otomatis ke orang tua — tagihan, konfirmasi bayar, hingga pengingat tunggakan.',
-                items: ['Reminder H-3, H-1 jatuh tempo', 'Konfirmasi pembayaran instan', 'Laporan bulanan ke orang tua'],
-              },
-              {
-                icon: <Landmark size={24} />,
-                iconBg: '#FFF7ED', iconColor: '#C2410C',
-                title: 'Integrasi Pembayaran Digital',
-                desc: 'Orang tua bayar via transfer bank, virtual account, atau QRIS. Dana otomatis terverifikasi di sistem.',
-                items: ['Virtual Account semua bank', 'QRIS & e-wallet populer', 'Rekonsiliasi otomatis harian'],
-              },
-              {
-                icon: <BarChart3 size={24} />,
-                iconBg: '#F5F3FF', iconColor: '#7C3AED',
-                title: 'Laporan & Dashboard Real-time',
-                desc: 'Kepala sekolah dan yayasan pantau kondisi keuangan kapan saja. Ekspor ke Excel/PDF sekali klik.',
-                items: ['Dashboard tunggakan & pelunasan', 'Laporan per jenjang & kelas', 'Ekspor Excel & PDF'],
-              },
-              {
-                icon: <Building2 size={24} />,
-                iconBg: '#FFF1F2', iconColor: '#BE123C',
-                title: 'Multi-Jenjang & Multi-Sekolah',
-                desc: 'Satu akun yayasan untuk mengelola TK, SD, SMP, dan SMA sekaligus. Laporan konsolidasi yayasan tersedia.',
-                items: ['TK/PAUD · SD · SMP · SMA', 'Laporan konsolidasi yayasan', 'Pengaturan biaya per jenjang'],
-              },
-              {
-                icon: <GraduationCap size={24} />,
-                iconBg: '#ECFDF5', iconColor: '#059669',
-                title: 'Manajemen Siswa & Kelas',
-                desc: 'Data master siswa terintegrasi dengan sistem keuangan. Import data siswa dari Excel dengan mudah.',
-                items: ['Import data siswa via Excel', 'Naik kelas & pindah sekolah', 'Riwayat keuangan per siswa'],
-              },
-            ].map((feat) => (
-              <div
-                key={feat.title}
-                className={`feat-card${feat.highlight ? ' highlight' : ''}`}
-              >
-                {feat.badge && <div className="feat-badge">{feat.badge}</div>}
-                <div className="feat-icon-wrap" style={{ background: feat.iconBg, color: feat.iconColor }}>{feat.icon}</div>
-                <div className="feat-title">{feat.title}</div>
-                <div className="feat-desc">{feat.desc}</div>
-                <ul className="feat-list">
-                  {feat.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ─── CARA KERJA ───────────────────────────── */}
       <section className="section" id="cara-kerja">
         <div className="section-inner">
@@ -388,7 +353,24 @@ export default function HomePage() {
           </p>
 
           <div className="pricing-card">
-            <div className="price-tag">Rp 0</div>
+            <div className="price-tag-wrap">
+              <div className="price-tag">
+                Rp <GachaNumber
+                  target={0}
+                  from={299000}
+                  duration={500}
+                  format={(n) => n.toLocaleString('id-ID')}
+                />
+              </div>
+              <div className="price-tag-original">
+                Rp <GachaNumber
+                  target={299000}
+                  from={0}
+                  duration={500}
+                  format={(n) => n.toLocaleString('id-ID')}
+                />/bln
+              </div>
+            </div>
             <div className="price-sub">
               Selama 1 bulan pertama · Tidak perlu kartu kredit
             </div>
@@ -402,8 +384,8 @@ export default function HomePage() {
                 <span className="price-feat-item" key={f}>{f}</span>
               ))}
             </div>
-            <Link href="/daftar" className="btn-cta-big">
-              Mulai Demo Gratis Sekarang
+            <Link href="https://si-ku.vercel.app/daftar" className="btn-cta-big">
+              Jadwalkan Demo Gratis
             </Link>
             <div className="cta-note">
               Setelah 1 bulan, pilih lanjut atau berhenti — tanpa paksaan
