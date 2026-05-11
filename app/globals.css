@@ -1409,6 +1409,11 @@ body {
 }
 
 /* ─── FEATURE PAGE ───────────────────────────────── */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 .feature-page {
   padding: 100px 5% 80px;
   min-height: 100vh;
@@ -1429,6 +1434,7 @@ body {
   text-decoration: none;
   margin-bottom: 2rem;
   transition: color 0.2s;
+  animation: fadeInLeft 0.4s ease both;
 }
 
 .feature-back:hover {
@@ -1441,6 +1447,7 @@ body {
   border-radius: 20px;
   padding: 2.5rem;
   margin-bottom: 1.5rem;
+  animation: fadeInUp 0.5s 0.1s ease both;
 }
 
 .feature-hero-icon {
@@ -1506,6 +1513,15 @@ body {
 
 .feature-cta {
   display: inline-block;
+}
+
+.feature-detail-card:nth-child(1) { animation: fadeInUp 0.45s 0.25s ease both; }
+.feature-detail-card:nth-child(2) { animation: fadeInUp 0.45s 0.33s ease both; }
+.feature-detail-card:nth-child(3) { animation: fadeInUp 0.45s 0.41s ease both; }
+.feature-detail-card:nth-child(4) { animation: fadeInUp 0.45s 0.49s ease both; }
+
+.feature-others {
+  animation: fadeInUp 0.5s 0.45s ease both;
 }
 
 .feature-details {
