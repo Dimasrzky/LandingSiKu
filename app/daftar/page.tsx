@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface FormData {
   nama: string
@@ -67,6 +67,8 @@ const SUMBER_OPTIONS = [
 ]
 
 export default function DaftarPage() {
+  const alertRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const prev = document.body.style.backgroundColor
     document.body.style.backgroundColor = '#091828'
@@ -103,38 +105,52 @@ export default function DaftarPage() {
     }
   }
 
+  const [validationAlert, setValidationAlert] = useState<string[]>([])
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
   const validate = (): boolean => {
     const newErrors: FormErrors = {}
+    const missing: string[] = []
 
-    if (!form.nama.trim()) newErrors.nama = 'Nama wajib diisi'
-    if (!form.email.trim()) {
-      newErrors.email = 'Email wajib diisi'
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      newErrors.email = 'Format email tidak valid'
-    }
-    if (!form.jabatan) newErrors.jabatan = 'Pilih jabatan Anda'
-    if (!form.sekolah.trim()) newErrors.sekolah = 'Nama sekolah wajib diisi'
-    if (!form.jenjang) newErrors.jenjang = 'Pilih jenjang sekolah'
-    if (!form.provinsi.trim()) newErrors.provinsi = 'Provinsi wajib diisi'
-    if (!form.kota.trim()) newErrors.kota = 'Kota wajib diisi'
+    if (!form.nama.trim())        { newErrors.nama = 'Nama wajib diisi';            missing.push('Nama Lengkap') }
+    if (!form.email.trim())       { newErrors.email = 'Email wajib diisi';           missing.push('Email') }
+    else if (!/\S+@\S+\.\S+/.test(form.email)) { newErrors.email = 'Format email tidak valid'; missing.push('Email (format tidak valid)') }
+    if (!form.jabatan)            { newErrors.jabatan = 'Pilih jabatan Anda';        missing.push('Jabatan') }
+    if (!form.sekolah.trim())     { newErrors.sekolah = 'Nama sekolah wajib diisi'; missing.push('Nama Sekolah / Yayasan') }
+    if (!form.jenjang)            { newErrors.jenjang = 'Pilih jenjang sekolah';    missing.push('Jenjang Sekolah') }
+    if (!form.provinsi.trim())    { newErrors.provinsi = 'Provinsi wajib diisi';    missing.push('Provinsi') }
+    if (!form.kota.trim())        { newErrors.kota = 'Kota wajib diisi';            missing.push('Kota / Kabupaten') }
 
     setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    setValidationAlert(missing)
+    return missing.length === 0
   }
 
   const handleSubmit = async () => {
-    if (!validate()) return
+    if (!validate()) {
+      setTimeout(() => alertRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50)
+      return
+    }
 
+    setValidationAlert([])
     setIsSubmitting(true)
+    setSubmitError(null)
 
-    // ─── TODO: Kirim data ke backend / Google Sheets ────────────
-    // Contoh: fetch('/api/leads', { method: 'POST', body: JSON.stringify(form) })
-    // Sementara simulasi delay 1.5 detik untuk UX
-    await new Promise((res) => setTimeout(res, 1500))
+    try {
+      const res = await fetch('/api/daftar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
 
-    console.log('Lead captured:', form)
-    setIsSubmitting(false)
-    setIsSuccess(true)
+      if (!res.ok) throw new Error('server error')
+
+      setIsSuccess(true)
+    } catch {
+      setSubmitError('Gagal mengirim pendaftaran. Silakan coba lagi atau hubungi kami langsung.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -161,6 +177,18 @@ export default function DaftarPage() {
                   Email dalam <strong>1×24 jam</strong> untuk proses onboarding.
                   Tidak perlu tanda tangan kontrak, tidak perlu kartu kredit.
                 </p>
+
+                {validationAlert.length > 0 && (
+                  <div className="form-validation-alert" ref={alertRef}>
+                    <div className="form-validation-alert-title">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Mohon lengkapi {validationAlert.length} field berikut:
+                    </div>
+                    <ul className="form-validation-alert-list">
+                      {validationAlert.map((f) => <li key={f}>{f}</li>)}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Nama & Email */}
                 <div className="form-row">
@@ -402,6 +430,10 @@ export default function DaftarPage() {
                     : 'Jadwalkan Sekarang — 100% Gratis 1 Bulan ✦'}
                 </button>
 
+                {submitError && (
+                  <div className="form-submit-error">{submitError}</div>
+                )}
+
                 <div className="form-privacy">
                   <span>
                     Data Anda aman dan tidak akan disebarkan ke pihak ketiga manapun.<br />
@@ -412,7 +444,10 @@ export default function DaftarPage() {
             ) : (
               /* ─── SUCCESS STATE ─── */
               <div className="success-state">
-                <div className="success-icon">✅</div>
+                <svg className="success-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle className="circle" cx="50" cy="50" r="46" />
+                  <path className="check" d="M 28 50 L 43 66 L 72 34" />
+                </svg>
                 <div className="success-title">Pendaftaran Berhasil!</div>
                 <div className="success-desc">
                   Terima kasih sudah mendaftar, <strong>{form.nama}</strong>!
@@ -430,9 +465,6 @@ export default function DaftarPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
                   Chat Email Tim SiKu
                 </a>
               </div>

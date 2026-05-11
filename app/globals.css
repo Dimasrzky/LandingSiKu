@@ -1148,6 +1148,57 @@ body {
   cursor: not-allowed;
 }
 
+.form-validation-alert {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-left: 4px solid #DC2626;
+  border-radius: 10px;
+  animation: shake 0.35s ease;
+}
+
+.form-validation-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #B91C1C;
+  margin-bottom: 0.6rem;
+}
+
+.form-validation-alert-list {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-validation-alert-list li {
+  font-size: 0.82rem;
+  color: #B91C1C;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+.form-submit-error {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #B91C1C;
+}
+
 .form-privacy {
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -1171,14 +1222,37 @@ body {
 }
 
 .success-icon {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: var(--emerald-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 90px; height: 90px;
   margin: 0 auto 1.5rem;
-  font-size: 2.5rem;
+  display: block;
+}
+
+.success-icon .circle {
+  stroke: var(--emerald);
+  stroke-width: 4;
+  fill: var(--emerald-bg);
+  stroke-dasharray: 289;
+  stroke-dashoffset: 289;
+  animation: draw-circle 0.5s ease forwards;
+}
+
+.success-icon .check {
+  stroke: var(--emerald);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: draw-check 0.4s ease forwards 0.45s;
+}
+
+@keyframes draw-circle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-check {
+  to { stroke-dashoffset: 0; }
 }
 
 .success-title {
@@ -1193,6 +1267,26 @@ body {
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.8;
+}
+
+.email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1.75rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.email-btn:hover {
+  background: var(--navy-light);
+  transform: translateY(-2px);
 }
 
 .whatsapp-btn {
