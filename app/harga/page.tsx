@@ -26,7 +26,7 @@ const PLANS: Plan[] = [
     period: 'per sekolah / bulan',
     popular: false,
     cta: 'Mulai Gratis 1 Bulan',
-    href: '/daftar',
+    href: 'https://si-ku.vercel.app/daftar',
     features: [
       { label: 'Dashboard keuangan dasar',  on: true  },
       { label: 'Manajemen SPP & tagihan',   on: true  },
@@ -43,11 +43,10 @@ const PLANS: Plan[] = [
     period: 'per sekolah / bulan',
     popular: true,
     cta: 'Mulai Gratis 1 Bulan',
-    href: '/daftar',
+    href: 'https://si-ku.vercel.app/daftar',
     features: [
       { label: 'Semua fitur Starter',              on: true  },
       { label: 'Laporan BOS otomatis',             on: true  },
-      { label: 'Portal orang tua + app',           on: true  },
       { label: 'Payment gateway terintergrasi',    on: true  },
       { label: 'Rekonsiliasi bank otomatis',       on: true  },
       { label: 'Multi-unit / yayasan',             on: false },

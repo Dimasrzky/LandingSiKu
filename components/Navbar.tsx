@@ -91,20 +91,6 @@ export default function Navbar() {
           Dukungan
         </Link>
 
-        <Link
-          href="https://si-ku.vercel.app"
-          style={{
-            color: 'var(--navy)',
-            fontSize: '1.125rem',
-            fontWeight: 500,
-            textDecoration: 'none',
-            transition: 'color 0.2s',
-          }}
-          className="nav-hide-mobile"
-        >
-          Masuk
-        </Link>
-
         <Link href="https://si-ku.vercel.app/daftar" className="btn-nav">
           Coba Gratis
         </Link>
