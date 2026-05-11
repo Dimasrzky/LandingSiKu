@@ -216,8 +216,8 @@ export default function HargaPage() {
               {/*2+ sekolah sudah merasakan manfaatnya.*/}
               Tidak perlu keahlian IT — tim kami bantu dari awal.
             </p>
-            <Link href="/daftar" className="btn-primary">
-              ✦ Daftar Demo Gratis Sekarang
+            <Link href="https://si-ku.vercel.app/daftar" className="btn-primary">
+              ✦ Demo Gratis Sekarang
             </Link>
           </div>
         </section>
