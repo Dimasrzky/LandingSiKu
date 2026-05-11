@@ -1002,9 +1002,11 @@ body {
 
 /* ─── FORM PAGE ──────────────────────────────────── */
 .form-page {
-  padding: 100px 5% 80px;
-  background: var(--cream);
+  padding: 60px 5% 80px;
   min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .form-page-inner {

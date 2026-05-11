@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface FormData {
   nama: string
@@ -12,6 +12,9 @@ interface FormData {
   jumlah: string
   provinsi: string
   kota: string
+  jadwalTanggal: string
+  jadwalWaktu: string
+  sumber: string
   tantangan: string
 }
 
@@ -49,7 +52,27 @@ const JABATAN_OPTIONS = [
   'Lainnya',
 ]
 
+const WAKTU_OPTIONS = [
+  'Pagi (09:00 – 12:00)',
+  'Siang (12:00 – 15:00)',
+  'Sore (15:00 – 17:00)',
+]
+
+const SUMBER_OPTIONS = [
+  'Google / Mesin Pencari',
+  'Instagram / Facebook',
+  'Rekomendasi Teman / Kolega',
+  'WhatsApp / Broadcast',
+  'Lainnya',
+]
+
 export default function DaftarPage() {
+  useEffect(() => {
+    const prev = document.body.style.backgroundColor
+    document.body.style.backgroundColor = '#091828'
+    return () => { document.body.style.backgroundColor = prev }
+  }, [])
+
   const [form, setForm] = useState<FormData>({
     nama: '',
     email: '',
@@ -59,6 +82,9 @@ export default function DaftarPage() {
     jumlah: '',
     provinsi: '',
     kota: '',
+    jadwalTanggal: '',
+    jadwalWaktu: '',
+    sumber: '',
     tantangan: '',
   })
 
@@ -89,6 +115,7 @@ export default function DaftarPage() {
     if (!form.jabatan) newErrors.jabatan = 'Pilih jabatan Anda'
     if (!form.sekolah.trim()) newErrors.sekolah = 'Nama sekolah wajib diisi'
     if (!form.jenjang) newErrors.jenjang = 'Pilih jenjang sekolah'
+    if (!form.provinsi.trim()) newErrors.provinsi = 'Provinsi wajib diisi'
     if (!form.kota.trim()) newErrors.kota = 'Kota wajib diisi'
 
     setErrors(newErrors)
@@ -112,7 +139,13 @@ export default function DaftarPage() {
 
   return (
     <>
-      <div className="form-page">
+      <div
+        className="form-page"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('/image/BgDaftarSiKu.jpg')`,
+          backgroundAttachment: 'fixed',
+        }}
+      >
         <div className="form-page-inner">
 
           <div className="form-wrapper">
@@ -289,6 +322,41 @@ export default function DaftarPage() {
                   )}
                 </div>
 
+                {/* Preferensi Jadwal Demo */}
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="jadwalTanggal">
+                      Preferensi Tanggal Demo
+                    </label>
+                    <input
+                      id="jadwalTanggal"
+                      name="jadwalTanggal"
+                      type="date"
+                      className="form-input"
+                      value={form.jadwalTanggal}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="jadwalWaktu">
+                      Preferensi Waktu
+                    </label>
+                    <select
+                      id="jadwalWaktu"
+                      name="jadwalWaktu"
+                      className="form-select"
+                      value={form.jadwalWaktu}
+                      onChange={handleChange}
+                    >
+                      <option value="">-- Pilih Waktu --</option>
+                      {WAKTU_OPTIONS.map((w) => (
+                        <option key={w} value={w}>{w}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
                 {/* Tantangan */}
                 <div className="form-group">
                   <label className="form-label" htmlFor="tantangan">
@@ -303,6 +371,25 @@ export default function DaftarPage() {
                     value={form.tantangan}
                     onChange={handleChange}
                   />
+                </div>
+
+                {/* Sumber Informasi */}
+                <div className="form-group">
+                  <label className="form-label" htmlFor="sumber">
+                    Dari mana Anda mengetahui SiKu?
+                  </label>
+                  <select
+                    id="sumber"
+                    name="sumber"
+                    className="form-select"
+                    value={form.sumber}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Pilih Sumber --</option>
+                    {SUMBER_OPTIONS.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <button
