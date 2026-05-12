@@ -1,5 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { google } from 'googleapis'
+
+async function appendToSheets(data: Record<string, string>) {
+  const auth = new google.auth.GoogleAuth({
+    credentials: {
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    },
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  })
+
+  const sheets = google.sheets({ version: 'v4', auth })
+
+  const timestamp = new Intl.DateTimeFormat('id-ID', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+    timeZone: 'Asia/Jakarta',
+  }).format(new Date())
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
+    range: 'Sheet1!A:M',
+    valueInputOption: 'USER_ENTERED',
+    requestBody: {
+      values: [[
+        timestamp,
+        data.nama,
+        data.email,
+        data.jabatan,
+        data.sekolah,
+        data.jenjang,
+        data.jumlah        || '-',
+        data.provinsi,
+        data.kota,
+        data.jadwalTanggal || '-',
+        data.jadwalWaktu   || '-',
+        data.sumber        || '-',
+        data.tantangan     || '-',
+      ]],
+    },
+  })
+}
 
 function buildEmailHtml(data: Record<string, string>): string {
   const field = (label: string, value: string) =>
@@ -112,17 +154,20 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    await transporter.sendMail({
-      from: `"SiKu Form" <${process.env.SMTP_USER}>`,
-      to: process.env.EMAIL_TO || 'info@siku.id',
-      subject: `[Lead Baru] ${data.nama} — ${data.sekolah}`,
-      html: buildEmailHtml(data),
-      replyTo: data.email,
-    })
+    await Promise.all([
+      transporter.sendMail({
+        from: `"SiKu Form" <${process.env.SMTP_USER}>`,
+        to: process.env.EMAIL_TO || 'info@siku.id',
+        subject: `[Lead Baru] ${data.nama} — ${data.sekolah}`,
+        html: buildEmailHtml(data),
+        replyTo: data.email,
+      }),
+      appendToSheets(data),
+    ])
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Email error:', error)
-    return NextResponse.json({ success: false, message: 'Gagal mengirim email' }, { status: 500 })
+    console.error('Submit error:', error)
+    return NextResponse.json({ success: false, message: 'Gagal mengirim pendaftaran' }, { status: 500 })
   }
 }

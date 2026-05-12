@@ -102,8 +102,8 @@ export default function HomePage() {
 
             <p className="hero-desc">
               Kelola SPP, tagihan, dan laporan keuangan seluruh jenjang sekolah
-              dalam satu platform. Notifikasi otomatis ke orang tua via WhatsApp.
-              Tanpa ribet, tanpa manual.
+              dalam satu platform. Notifikasi otomatis ke orang tua
+              tanpa ribet, tanpa manual.
             </p>
 
             <div className="hero-cta">
@@ -377,7 +377,7 @@ export default function HomePage() {
             <div className="price-features">
               {[
                 'Semua fitur lengkap', 'Tidak ada batas siswa',
-                'Notifikasi WhatsApp', 'Laporan & Dashboard',
+                'Notifikasi otomatis WhatsApp', 'Laporan & Dashboard',
                 'Onboarding oleh tim kami', 'Dukungan teknis',
                 'Export Excel & PDF', 'Multi-jenjang sekolah',
               ].map((f) => (

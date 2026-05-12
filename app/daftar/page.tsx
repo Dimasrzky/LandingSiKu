@@ -165,14 +165,14 @@ export default function DaftarPage() {
         <div className="form-page-inner">
 
           <div className="form-wrapper">
-            <Link href="/" className="form-page-back">
+            <Link href="/" className="form-page-back fp-fade" style={{ '--fd': '0.25s' } as React.CSSProperties}>
               ← Kembali ke beranda
             </Link>
             {!isSuccess ? (
               <>
-                <div className="form-header-label">Demo Gratis 1 Bulan</div>
-                <h1 className="form-title">Jadwalkan Sekarang</h1>
-                <p className="form-subtitle">
+                <div className="form-header-label fp-fade" style={{ '--fd': '0.32s' } as React.CSSProperties}>Demo Gratis 1 Bulan</div>
+                <h1 className="form-title fp-fade" style={{ '--fd': '0.4s' } as React.CSSProperties}>Jadwalkan Sekarang</h1>
+                <p className="form-subtitle fp-fade" style={{ '--fd': '0.48s' } as React.CSSProperties}>
                   Isi formulir di bawah. Tim kami akan menghubungi Anda melalui
                   Email dalam <strong>1×24 jam</strong> untuk proses onboarding.
                   Tidak perlu tanda tangan kontrak, tidak perlu kartu kredit.
@@ -191,7 +191,7 @@ export default function DaftarPage() {
                 )}
 
                 {/* Nama & Email */}
-                <div className="form-row">
+                <div className="form-row fp-fade" style={{ '--fd': '0.56s' } as React.CSSProperties}>
                   <div className="form-group">
                     <label className="form-label" htmlFor="nama">
                       Nama Lengkap <span>*</span>
@@ -230,7 +230,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Jabatan */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '0.62s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="jabatan">
                     Jabatan Anda <span>*</span>
                   </label>
@@ -252,7 +252,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Nama Sekolah */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '0.68s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="sekolah">
                     Nama Sekolah / Yayasan <span>*</span>
                   </label>
@@ -271,7 +271,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Jenjang & Jumlah Siswa */}
-                <div className="form-row">
+                <div className="form-row fp-fade" style={{ '--fd': '0.74s' } as React.CSSProperties}>
                   <div className="form-group">
                     <label className="form-label" htmlFor="jenjang">
                       Jenjang Sekolah <span>*</span>
@@ -313,7 +313,7 @@ export default function DaftarPage() {
                 </div>
                 
                 {/* Provinsi */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '0.80s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="provinsi">
                     Provinsi <span>*</span>
                   </label>
@@ -332,7 +332,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Kota */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '0.86s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="kota">
                     Kota / Kabupaten <span>*</span>
                   </label>
@@ -351,7 +351,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Preferensi Jadwal Demo */}
-                <div className="form-row">
+                <div className="form-row fp-fade" style={{ '--fd': '0.92s' } as React.CSSProperties}>
                   <div className="form-group">
                     <label className="form-label" htmlFor="jadwalTanggal">
                       Preferensi Tanggal Demo
@@ -386,7 +386,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Tantangan */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '0.98s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="tantangan">
                     Tantangan utama yang ingin diselesaikan
                   </label>
@@ -402,7 +402,7 @@ export default function DaftarPage() {
                 </div>
 
                 {/* Sumber Informasi */}
-                <div className="form-group">
+                <div className="form-group fp-fade" style={{ '--fd': '1.04s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="sumber">
                     Dari mana Anda mengetahui SiKu?
                   </label>
@@ -421,7 +421,8 @@ export default function DaftarPage() {
                 </div>
 
                 <button
-                  className="submit-btn"
+                  className="submit-btn fp-fade"
+                  style={{ '--fd': '1.1s' } as React.CSSProperties}
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
