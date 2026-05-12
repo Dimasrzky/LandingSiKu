@@ -26,6 +26,9 @@ interface FormErrors {
   jenjang?: string
   provinsi?: string
   kota?: string
+  jadwalTanggal?: string
+  tantangan?: string
+  sumber?: string
 }
 
 const JENJANG_OPTIONS = [
@@ -120,6 +123,9 @@ export default function DaftarPage() {
     if (!form.jenjang)            { newErrors.jenjang = 'Pilih jenjang sekolah';    missing.push('Jenjang Sekolah') }
     if (!form.provinsi.trim())    { newErrors.provinsi = 'Provinsi wajib diisi';    missing.push('Provinsi') }
     if (!form.kota.trim())        { newErrors.kota = 'Kota wajib diisi';            missing.push('Kota / Kabupaten') }
+    if (!form.jadwalTanggal)      { newErrors.jadwalTanggal = 'Tanggal demo wajib diisi'; missing.push('Preferensi Tanggal Demo') }
+    if (!form.tantangan.trim())   { newErrors.tantangan = 'Tantangan wajib diisi';  missing.push('Tantangan yang Ingin Diselesaikan') }
+    if (!form.sumber)             { newErrors.sumber = 'Pilih sumber informasi';    missing.push('Sumber Informasi') }
 
     setErrors(newErrors)
     setValidationAlert(missing)
@@ -354,16 +360,19 @@ export default function DaftarPage() {
                 <div className="form-row fp-fade" style={{ '--fd': '0.92s' } as React.CSSProperties}>
                   <div className="form-group">
                     <label className="form-label" htmlFor="jadwalTanggal">
-                      Preferensi Tanggal Demo
+                      Preferensi Tanggal Demo <span>*</span>
                     </label>
                     <input
                       id="jadwalTanggal"
                       name="jadwalTanggal"
                       type="date"
-                      className="form-input"
+                      className={`form-input${errors.jadwalTanggal ? ' error' : ''}`}
                       value={form.jadwalTanggal}
                       onChange={handleChange}
                     />
+                    {errors.jadwalTanggal && (
+                      <div className="form-error-msg">{errors.jadwalTanggal}</div>
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -388,28 +397,31 @@ export default function DaftarPage() {
                 {/* Tantangan */}
                 <div className="form-group fp-fade" style={{ '--fd': '0.98s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="tantangan">
-                    Tantangan utama yang ingin diselesaikan
+                    Tantangan utama yang ingin diselesaikan <span>*</span>
                   </label>
                   <textarea
                     id="tantangan"
                     name="tantangan"
-                    className="form-textarea"
+                    className={`form-textarea${errors.tantangan ? ' error' : ''}`}
                     rows={3}
                     placeholder="cth: Rekap SPP masih manual di Excel, susah pantau tunggakan..."
                     value={form.tantangan}
                     onChange={handleChange}
                   />
+                  {errors.tantangan && (
+                    <div className="form-error-msg">{errors.tantangan}</div>
+                  )}
                 </div>
 
                 {/* Sumber Informasi */}
                 <div className="form-group fp-fade" style={{ '--fd': '1.04s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="sumber">
-                    Dari mana Anda mengetahui SiKu?
+                    Dari mana Anda mengetahui SiKu? <span>*</span>
                   </label>
                   <select
                     id="sumber"
                     name="sumber"
-                    className="form-select"
+                    className={`form-select${errors.sumber ? ' error' : ''}`}
                     value={form.sumber}
                     onChange={handleChange}
                   >
@@ -418,6 +430,9 @@ export default function DaftarPage() {
                       <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
+                  {errors.sumber && (
+                    <div className="form-error-msg">{errors.sumber}</div>
+                  )}
                 </div>
 
                 <button
