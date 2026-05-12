@@ -167,7 +167,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error)
     console.error('Submit error:', error)
-    return NextResponse.json({ success: false, message: 'Gagal mengirim pendaftaran' }, { status: 500 })
+    return NextResponse.json({ success: false, message: msg }, { status: 500 })
   }
 }

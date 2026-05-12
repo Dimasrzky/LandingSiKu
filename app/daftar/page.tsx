@@ -149,11 +149,14 @@ export default function DaftarPage() {
         body: JSON.stringify(form),
       })
 
-      if (!res.ok) throw new Error('server error')
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.message || 'server error')
+      }
 
       setIsSuccess(true)
-    } catch {
-      setSubmitError('Gagal mengirim pendaftaran. Silakan coba lagi atau hubungi kami langsung.')
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Gagal mengirim pendaftaran.')
     } finally {
       setIsSubmitting(false)
     }
