@@ -67,7 +67,7 @@ function buildEmailHtml(data: Record<string, string>): string {
             <div style="font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">SiKu</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Sistem Keuangan Sekolah</div>
             <div style="margin-top:20px;display:inline-block;background:#059669;color:#fff;font-size:13px;font-weight:600;padding:6px 18px;border-radius:20px;">
-              🔔 Pendaftar Baru
+              🔔 Calon Pelanggan
             </div>
           </td>
         </tr>
@@ -76,7 +76,7 @@ function buildEmailHtml(data: Record<string, string>): string {
         <tr>
           <td style="background:#ffffff;padding:32px 40px;">
             <p style="margin:0 0 24px;font-size:15px;color:#374151;line-height:1.6;">
-              Ada sekolah baru yang tertarik dengan SiKu dan mengisi formulir demo.
+              Ada sekolah yang tertarik dengan SiKu dan mengisi formulir demo.
               Segera hubungi dalam <strong>1×24 jam</strong>.
             </p>
 
