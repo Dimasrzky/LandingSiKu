@@ -50,18 +50,26 @@ export default function Navbar() {
   return (
     <>
       <nav className="nav">
-        <Link href="/" className="nav-logo">
+        <Link href="/" className="nav-logo-card">
           <Image
-            src="/image/LogoSiKu.png"
+            src="/image/LogoSiKuBaru.png"
             alt="SiKu"
-            height={44}
-            width={120}
-            style={{ objectFit: 'contain' }}
+            height={20}
+            width={100}
+            style={{ objectFit: 'contain', transform: 'translateY(-3px)' }}
             priority
           />
         </Link>
 
-        <div className="nav-links">
+        <div className="nav-links-card">
+          <Link
+            href="/"
+            className="nav-hide-mobile"
+            onClick={(e) => goToSection(e, 'beranda')}
+          >
+            Beranda
+          </Link>
+
           {/* Fitur dropdown */}
           <div className="nav-dropdown nav-hide-mobile">
             <button className="nav-dropdown-trigger" type="button">
@@ -94,11 +102,7 @@ export default function Navbar() {
           </Link>
 
           <Link href="/harga" className="nav-hide-mobile">
-            Harga
-          </Link>
-
-          <Link href="/support" className="nav-hide-mobile">
-            Dukungan
+            Harga &amp; Paket
           </Link>
 
           <Link href="/daftar" className="btn-nav nav-hide-mobile">
