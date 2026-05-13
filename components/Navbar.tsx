@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown } from 'lucide-react'
+import { useState } from 'react'
+import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X } from 'lucide-react'
 
 const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -24,6 +25,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
   const isHome = pathname === '/'
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
@@ -36,6 +38,7 @@ export default function Navbar() {
 
   const goToSection = (e: React.MouseEvent, id: string) => {
     e.preventDefault()
+    setMenuOpen(false)
     if (isHome) {
       scrollTo(id)
     } else {
@@ -45,62 +48,117 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="nav">
-      <Link href="/" className="nav-logo">
-        <Image
-          src="/image/LogoSiKu.png"
-          alt="SiKu"
-          height={44}
-          width={120}
-          style={{ objectFit: 'contain' }}
-          priority
-        />
-      </Link>
+    <>
+      <nav className="nav">
+        <Link href="/" className="nav-logo">
+          <Image
+            src="/image/LogoSiKu.png"
+            alt="SiKu"
+            height={44}
+            width={120}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </Link>
 
-      <div className="nav-links">
-        {/* Fitur dropdown */}
-        <div className="nav-dropdown nav-hide-mobile">
-          <button className="nav-dropdown-trigger" type="button">
-            Fitur <ChevronDown size={14} strokeWidth={2.5} />
-          </button>
-          <div className="nav-dropdown-menu">
-            <div className="nav-dropdown-menu-inner">
-              {fiturItems.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/fitur/${item.slug}`}
-                  className="nav-dropdown-item"
-                >
-                  <span className="nav-dropdown-icon">{item.icon}</span>
-                  <span>
-                    <span className="nav-dropdown-item-label">{item.label}</span>
-                  </span>
-                </Link>
-              ))}
+        <div className="nav-links">
+          {/* Fitur dropdown */}
+          <div className="nav-dropdown nav-hide-mobile">
+            <button className="nav-dropdown-trigger" type="button">
+              Fitur <ChevronDown size={14} strokeWidth={2.5} />
+            </button>
+            <div className="nav-dropdown-menu">
+              <div className="nav-dropdown-menu-inner">
+                {fiturItems.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/fitur/${item.slug}`}
+                    className="nav-dropdown-item"
+                  >
+                    <span className="nav-dropdown-icon">{item.icon}</span>
+                    <span>
+                      <span className="nav-dropdown-item-label">{item.label}</span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
+
+          <Link
+            href="/"
+            className="nav-hide-mobile"
+            onClick={(e) => goToSection(e, 'cara-kerja')}
+          >
+            Cara Kerja
+          </Link>
+
+          <Link href="/harga" className="nav-hide-mobile">
+            Harga
+          </Link>
+
+          <Link href="/support" className="nav-hide-mobile">
+            Dukungan
+          </Link>
+
+          <Link href="/daftar" className="btn-nav nav-hide-mobile">
+            Coba Gratis
+          </Link>
+
+          {/* Hamburger button */}
+          <button
+            className="nav-hamburger"
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+      </nav>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div className="nav-mobile-overlay" onClick={() => setMenuOpen(false)} />
+      )}
+
+      {/* Mobile menu drawer */}
+      <div className={`nav-mobile-menu${menuOpen ? ' nav-mobile-menu--open' : ''}`}>
+        <div className="nav-mobile-section-label">Fitur</div>
+        {fiturItems.map((item) => (
+          <Link
+            key={item.slug}
+            href={`/fitur/${item.slug}`}
+            className="nav-mobile-item"
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="nav-dropdown-icon">{item.icon}</span>
+            <span className="nav-dropdown-item-label">{item.label}</span>
+          </Link>
+        ))}
+
+        <div className="nav-mobile-divider" />
 
         <Link
           href="/"
-          className="nav-hide-mobile"
+          className="nav-mobile-item"
           onClick={(e) => goToSection(e, 'cara-kerja')}
         >
           Cara Kerja
         </Link>
-
-        <Link href="/harga" className="nav-hide-mobile">
+        <Link href="/harga" className="nav-mobile-item" onClick={() => setMenuOpen(false)}>
           Harga
         </Link>
-
-        <Link href="/support" className="nav-hide-mobile">
+        <Link href="/support" className="nav-mobile-item" onClick={() => setMenuOpen(false)}>
           Dukungan
         </Link>
 
-        <Link href="/daftar" className="btn-nav">
+        <div className="nav-mobile-divider" />
+
+        <Link href="/daftar" className="btn-nav nav-mobile-cta" onClick={() => setMenuOpen(false)}>
           Coba Gratis
         </Link>
       </div>
-    </nav>
+    </>
   )
 }
