@@ -985,27 +985,7 @@ a.btn-hero-outline:hover {
   margin-top: -2.8rem;
 }
 
-@media (max-width: 768px) {
-  .masalah-inner {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .masalah-deco {
-    flex: none;
-    width: 100%;
-    min-height: 180px;
-  }
-
-  .masalah-cards {
-    width: 100%;
-  }
-
-  .masalah-card--light,
-  .masalah-card--dark {
-    width: 250px;
-  }
-}
+/* masalah mobile — handled in main @media block below */
 
 /* ─── KONDISI NYATA SECTION ──────────────────────── */
 .kondisi-section {
@@ -1115,13 +1095,7 @@ a.btn-hero-outline:hover {
   animation: cardSlideRight 0.65s 0.15s ease forwards;
 }
 
-@media (max-width: 768px) {
-  .kondisi-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
-  }
-}
+/* kondisi mobile — handled in main @media block below */
 
 /* ─── KONDISI CARDS ──────────────────────────────── */
 .kcards-section {
@@ -2528,59 +2502,273 @@ a.btn-hero-outline:hover {
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
+
+/* ── Tablet (769px – 1024px) ──────────────────────── */
+@media (max-width: 1024px) {
+  /* Hero */
+  .hero { padding: 100px 4% 80px; }
+  .hero-inner { gap: 2rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .hero-slides-wrap { flex: 0 0 44%; }
+
+  /* Kondisi */
+  .kondisi-title { font-size: 2rem; }
+  .kondisi-desc  { font-size: 1.3rem; }
+  .kondisi-btn   { margin-top: 8rem; transform: translateX(20px); }
+
+  /* kcards */
+  .kcards-grid { gap: 0 2rem; max-width: 100%; }
+  .kcards-grid > :nth-child(3) { transform: translateX(-1rem) translateY(-2.5rem); }
+  .kcards-grid > :nth-child(4) { transform: translateX(-1rem) translateY(2.5rem); }
+
+  /* Cara Kerja */
+  .ckerja-timeline { max-width: 100%; }
+  .ckerja-card-wrap { width: 230px; }
+  .ckerja-step { grid-template-columns: 1fr 100px 1fr; }
+}
+
+/* ── Mobile (≤768px) ──────────────────────────────── */
 @media (max-width: 768px) {
+
+  /* ── Navbar ─────────────────────────────────────── */
+  .nav { top: 8px; padding: 0 4%; gap: 10px; }
+  .nav-links-card { padding: 4px; border-radius: 12px; gap: 0; }
+  .nav-hide-mobile { display: none !important; }
+  .nav-hamburger   { display: flex !important; }
+
+  /* ── Sections generic ───────────────────────────── */
+  .section { padding: 48px 5%; }
+  .section-title    { font-size: 1.55rem; }
+  .section-subtitle { font-size: 1rem; }
+
+  /* ── Hero ───────────────────────────────────────── */
+  .hero { padding: 90px 5% 48px; min-height: unset; }
+
   .hero-inner {
     flex-direction: column;
-    gap: 2.5rem;
-  }
-
-  .hero-slides-wrap {
-    flex: 0 0 auto;
-    width: 100%;
-    aspect-ratio: 16 / 9;
+    gap: 1.75rem;
+    align-items: flex-start;
   }
 
   .hero-slides-wrap {
     order: -1;
+    flex: none;
+    width: 100%;
+    transform: none;
+    aspect-ratio: 16 / 9;
   }
 
-  .steps::before {
-    display: none;
-  }
+  .hero-content { transform: none; }
 
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  .hero h1       { font-size: 1.75rem; line-height: 1.25; }
+  .hero-desc     { font-size: 0.95rem; max-width: 100%; }
+  .hero-cta      { gap: 0.75rem; flex-wrap: wrap; }
+  .hero-anchor-btn { display: none; }
 
-  .nav-hide-mobile {
-    display: none;
-  }
+  /* Hide decorative stars that overflow on mobile */
+  .hero-star { display: none; }
 
-  .nav-hamburger {
-    display: flex;
-  }
+  /* ── Ticker ─────────────────────────────────────── */
+  .ticker-item { font-size: 0.85rem; padding: 0 18px; }
 
-  .nav-links-card {
-    padding: 4px;
-    border-radius: 12px;
-    gap: 0;
-  }
-
-  .nav {
-    top: 8px;
-    padding: 0 4%;
-  }
-
-  .form-wrapper {
-    padding: 2rem 1.5rem;
-  }
-
-  .footer-inner {
+  /* ── Pain / Masalah section ─────────────────────── */
+  .masalah-inner {
     flex-direction: column;
-    text-align: center;
+    gap: 1.5rem;
+    align-items: center;
   }
 
-  .steps {
-    gap: 2rem;
+  /* Hide the decorative star block on mobile */
+  .masalah-deco { display: none; }
+
+  .masalah-cards {
+    width: 100%;
+    max-width: 360px;
+    align-items: center;
   }
+
+  .masalah-card--light {
+    width: 100%;
+    right: 0;
+    margin-top: 0;
+    border-radius: 20px 0 20px 0;
+  }
+
+  .masalah-card--dark {
+    width: 100%;
+    left: 0;
+    margin-top: -20px;
+    height: auto;
+    border-radius: 0 20px 0 20px;
+  }
+
+  .masalah-card--light::before,
+  .masalah-card--dark::before { display: none; }
+
+  .masalah-stat-num   { font-size: 2.8rem; padding-left: 0.5rem; }
+  .masalah-stat-label { font-size: 1rem; padding-left: 0.75rem; white-space: normal; }
+  .masalah-quote-text { font-size: 1.1rem; }
+
+  /* ── Kondisi Nyata section ──────────────────────── */
+  .kondisi-section { padding: 48px 5%; }
+
+  .kondisi-inner {
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .kondisi-label  { font-size: 1.35rem; }
+  .kondisi-title  { font-size: 1.6rem; line-height: 1.3; }
+  .kondisi-desc   { font-size: 1rem; font-weight: 600; }
+
+  .kondisi-divider-line { width: 100%; max-width: 240px; }
+
+  .kondisi-action { width: 100%; }
+
+  .kondisi-btn {
+    margin-top: 0;
+    transform: none;
+    font-size: 1rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* ── Kondisi Cards (kcards) ─────────────────────── */
+  .kcards-section { padding: 0 5% 48px; overflow-x: hidden; }
+
+  .kcards-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem 0;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .kcards-wrap,
+  .kcards-wrap--down {
+    transform: none;
+    padding-top: 44px;
+  }
+
+  .kcards-grid > :nth-child(3),
+  .kcards-grid > :nth-child(4) { transform: none; }
+
+  .kcards-icon {
+    width: 72px;
+    height: 72px;
+    top: -28px;
+    right: 16px;
+  }
+
+  .kcards-icon img,
+  .kcards-icon > * { width: 36px !important; height: 36px !important; }
+
+  .kcards-card {
+    min-height: unset;
+    padding: 1rem 1rem 0.9rem;
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .kcards-title {
+    font-size: 1rem;
+    padding-right: 4.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .kcards-desc {
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .kcards-star {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .kcards-star svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ── Cara Kerja timeline ────────────────────────── */
+  .ckerja-timeline { margin-top: 2rem; }
+  .ckerja-vline    { display: none; }
+
+  .ckerja-step,
+  .ckerja-step--left,
+  .ckerja-step--right {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 1.5rem 0 0.5rem;
+    min-height: unset;
+  }
+
+  /* Hide empty spacer divs that exist for desktop 3-col layout */
+  .ckerja-step--left > div:last-child:not(.ckerja-card-wrap):not(.ckerja-center),
+  .ckerja-step--right > div:first-child:not(.ckerja-card-wrap):not(.ckerja-center) {
+    display: none;
+  }
+
+  .ckerja-center { order: -1; margin-bottom: 0.5rem; }
+  .ckerja-dot    { width: 12px; height: 12px; }
+
+  .ckerja-step--left .ckerja-card-wrap,
+  .ckerja-step--right .ckerja-card-wrap {
+    justify-self: unset;
+    width: 100%;
+    max-width: 320px;
+    transform: none !important;
+    margin-top: 34px;
+  }
+
+  /* Disable entrance animations on mobile */
+  .ckerja-anim--left,
+  .ckerja-anim--right { opacity: 1; transform: none; }
+  .ckerja-anim--left.visible,
+  .ckerja-anim--right.visible { animation: none; }
+
+  /* Number circle: sit fully above the card top edge */
+  .ckerja-num {
+    right: auto !important;
+    left: 50% !important;
+    top: -34px !important;
+    transform: translateX(-50%) !important;
+    width: 52px !important;
+    height: 52px !important;
+    font-size: 1.2rem !important;
+  }
+
+  /* Remove hole cutouts — too narrow on mobile */
+  .ckerja-card-body--right,
+  .ckerja-card-body--left {
+    background: #fff !important;
+    padding-left: 1.1rem !important;
+    padding-right: 1.1rem !important;
+    text-align: left !important;
+  }
+
+  .ckerja-card-icon,
+  .ckerja-card-icon--bl {
+    right: 0.75rem !important;
+    left: auto !important;
+    bottom: 0.6rem !important;
+  }
+
+  /* ── Pain grid ──────────────────────────────────── */
+  .pain-grid      { grid-template-columns: 1fr; }
+  .features-grid  { grid-template-columns: 1fr; }
+
+  /* ── Forms ──────────────────────────────────────── */
+  .form-row     { grid-template-columns: 1fr; }
+  .form-wrapper { padding: 2rem 1.25rem; }
+
+  /* ── Footer ─────────────────────────────────────── */
+  .footer-inner { flex-direction: column; text-align: center; }
+
+  /* ── Steps ──────────────────────────────────────── */
+  .steps        { gap: 2rem; }
+  .steps::before { display: none; }
 }
