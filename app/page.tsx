@@ -138,6 +138,21 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.ckerja-anim')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        observer.unobserve(el)
+        const delay = parseInt(el.dataset.delay ?? '0', 10)
+        setTimeout(() => el.classList.add('visible'), delay)
+      })
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' })
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>('.kcard-anim'))
     const seen = new Set<HTMLElement>()
     const observer = new IntersectionObserver((entries) => {
@@ -362,7 +377,7 @@ export default function HomePage() {
 
           {/* Kanan: tombol */}
           <div className="kondisi-action kondisi-anim-right">
-            <Link href="/fitur" className="kondisi-btn">
+            <Link href="/daftar" className="kondisi-btn">
               <span>Solusi Kami</span>
               <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" fill="#1A3557" />
@@ -445,35 +460,78 @@ export default function HomePage() {
             <div className="section-label">Cara Kerja</div>
             <h2 className="section-title">Mulai dalam 3 langkah mudah</h2>
             <p className="section-subtitle" style={{ margin: '0 auto', textAlign: 'center' }}>
-              Tidak perlu keahlian IT. Tim kami siap bantu setup dari awal
-              hingga sekolah siap pakai.
+              Tidak perlu keahlian IT. Tim kami siap membantu <br /> setup dari awal hingga sekolah siap pakai.
             </p>
           </div>
 
-          <div className="steps">
-            {[
-              {
-                num: '1',
-                title: 'Daftar & Isi Data Sekolah',
-                desc: 'Isi formulir singkat. Tim kami hubungi dalam 1x24 jam untuk membantu proses setup awal sistem Anda.',
-              },
-              {
-                num: '2',
-                title: 'Import Data Siswa',
-                desc: 'Upload data siswa dari Excel yang sudah ada. Sistem langsung siap generate tagihan untuk seluruh siswa.',
-              },
-              {
-                num: '3',
-                title: 'Sistem Berjalan Otomatis',
-                desc: 'Tagihan dikirim, WA terkirim, pembayaran masuk — semua terpantau di dashboard real-time Anda.',
-              },
-            ].map((step) => (
-              <div className="step" key={step.num}>
-                <div className="step-num">{step.num}</div>
-                <div className="step-title">{step.title}</div>
-                <div className="step-desc">{step.desc}</div>
+          {/* Timeline */}
+          <div className="ckerja-timeline">
+            <div className="ckerja-vline" />
+
+            {/* Step 1 – kiri */}
+            <div className="ckerja-step ckerja-step--left">
+              <div className="ckerja-card-wrap ckerja-anim ckerja-anim--left" data-delay="0">
+                <div className="ckerja-card">
+                  <div className="ckerja-card-header">Daftar &amp; Lengkapi Data Sekolah</div>
+                  <div className="ckerja-card-body ckerja-card-body--right">
+                    <p>Isi formulir singkat seputar profil sekolah dan komponen biaya. <br />Tim kami menghubungi dalam 1×24 jam untuk membantu proses setup awal.</p>
+                    <span className="ckerja-card-icon">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2A5499" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+                        <rect x="9" y="3" width="6" height="4" rx="1"/>
+                        <path d="M9 12l2 2 4-4"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="ckerja-num">1</div>
               </div>
-            ))}
+              <div className="ckerja-center"><div className="ckerja-dot" /></div>
+              <div />
+            </div>
+
+            {/* Step 2 – kanan */}
+            <div className="ckerja-step ckerja-step--right">
+              <div />
+              <div className="ckerja-center"><div className="ckerja-dot" /></div>
+              <div className="ckerja-card-wrap ckerja-anim ckerja-anim--right" data-delay="220">
+                <div className="ckerja-card">
+                  <div className="ckerja-card-header">Import Data Siswa</div>
+                  <div className="ckerja-card-body ckerja-card-body--left">
+                    <p>Upload data siswa dari file <br /> Excel yang sudah ada. Sistem langsung siap men-generate tagihan untuk seluruh siswa secara otomatis.</p>
+                    <span className="ckerja-card-icon ckerja-card-icon--bl">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2A5499" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="8 17 12 21 16 17"/>
+                        <line x1="12" y1="12" x2="12" y2="21"/>
+                        <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="ckerja-num">2</div>
+              </div>
+            </div>
+
+            {/* Step 3 – kiri */}
+            <div className="ckerja-step ckerja-step--left">
+              <div className="ckerja-card-wrap ckerja-anim ckerja-anim--left" data-delay="440">
+                <div className="ckerja-card">
+                  <div className="ckerja-card-header">Sistem Berjalan Otomatis</div>
+                  <div className="ckerja-card-body ckerja-card-body--right">
+                    <p>Tagihan terkirim, notifikasi <br /> WhatsApp aktif, pembayaran <br /> masuk semua terpantau langsung <br /> dari dashboard real-time Anda.</p>
+                    <span className="ckerja-card-icon">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2A5499" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <path d="M8 21h8M12 17v4"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="ckerja-num">3</div>
+              </div>
+              <div className="ckerja-center"><div className="ckerja-dot" /></div>
+              <div />
+            </div>
           </div>
         </div>
       </section>
