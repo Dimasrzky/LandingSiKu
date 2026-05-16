@@ -3,13 +3,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { FileSpreadsheet, PhoneCall, Clock4, ShieldAlert } from 'lucide-react'
 
 const ArrowCircleIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" fill="#F7DD7D" />
-    <line x1="7" y1="12" x2="16" y2="12" stroke="#1A3557" strokeWidth="2" strokeLinecap="round" />
-    <polyline points="12.5 8 17 12 12.5 16" stroke="#1A3557" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <line x1="7" y1="12" x2="16" y2="12" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" />
+    <polyline points="12.5 8 17 12 12.5 16" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
 import Navbar from '@/components/Navbar'
@@ -56,6 +55,12 @@ function GachaNumber({ target, from, duration = 1400, format }: {
   return <span ref={ref}>{format(display)}</span>
 }
 
+const tickerItems = [
+  'Kurangi rekap manual',
+  'Laporan akurat siap audit',
+  'Selesai dalam 3 langkah',
+]
+
 const heroSlides = [
   { src: '/assets/AssetsHero1.jpeg', alt: 'Dashboard SiKu' },
   { src: '/assets/AssetsHero2.jpg', alt: 'Laporan Keuangan SiKu' },
@@ -94,7 +99,6 @@ export default function HomePage() {
     const targets = document.querySelectorAll(
       '.pain-card, .feat-card, .testi-card, .step'
     )
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -105,8 +109,55 @@ export default function HomePage() {
       },
       { threshold: 0.1 }
     )
-
     targets.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const targets = document.querySelectorAll<HTMLElement>(
+      '.masalah-card--light, .masalah-card--dark, .kondisi-anim-left, .kondisi-anim-right'
+    )
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                el.classList.add('visible')
+              })
+            })
+            observer.unobserve(el)
+          }
+        })
+      },
+      { threshold: 0.08 }
+    )
+    targets.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.kcard-anim'))
+    const seen = new Set<HTMLElement>()
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        if (seen.has(el)) return
+        seen.add(el)
+        observer.unobserve(el)
+        const idx = cards.indexOf(el)
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.classList.add('visible')
+            })
+          })
+        }, idx * 160)
+      })
+    }, { threshold: 0.15 })
+    cards.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 
@@ -115,7 +166,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* ─── HERO ─────────────────────────────────── */}
-      <section className={`hero${heroReady ? ' hero--ready' : ''}`}>
+      <section id="beranda" className={`hero${heroReady ? ' hero--ready' : ''}`}>
         <div className="hero-inner">
 
           {/* Konten kiri */}
@@ -213,57 +264,177 @@ export default function HomePage() {
           </div>
 
         </div>
+
+        {/* Anchor — klik scroll ke bagian masalah */}
+        <a
+          href="#masalah"
+          className="hero-anchor-btn"
+          aria-label="Lihat masalah yang kami selesaikan"
+        >
+          <Image
+            src="/image/AnchorProblem.png"
+            alt=""
+            width={340}
+            height={120}
+            className="hero-anchor"
+          />
+        </a>
       </section>
 
+      {/* ─── TICKER ───────────────────────────────── */}
+      <div className="ticker-wrap" aria-hidden>
+        <div className="ticker-track">
+          {[...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems,...tickerItems, ...tickerItems, ...tickerItems].flatMap((item, i) => [
+            <span className="ticker-item" key={`item-${i}`}>{item}</span>,
+            <span className="ticker-star" key={`star-${i}`}>✦</span>,
+          ])}
+        </div>
+      </div>
+
       {/* ─── PAIN POINTS ──────────────────────────── */}
-      <section className="section">
-        <div className="section-inner">
-          <div style={{ textAlign: 'center' }}>
-            <div className="section-label">Masalah Yang Sering Terjadi</div>
-            <h2 className="section-title">
-              Keuangan kewalahan?
-              <br />Kami paham.
+      <section className="section masalah-section" id="masalah">
+        <div className="section-inner masalah-inner">
+
+          {/* Dekorasi bintang kiri */}
+          <div className="masalah-deco">
+            <Image
+              src="/image/StarHero.png"
+              alt=""
+              width={152}
+              height={152}
+              className="masalah-star masalah-star--sm"
+              aria-hidden
+            />
+            <Image
+              src="/image/StarHero.png"
+              alt=""
+              width={250}
+              height={250}
+              className="masalah-star masalah-star--lg"
+              aria-hidden
+            />
+          </div>
+
+          {/* Kartu statistik */}
+          <div className="masalah-cards">
+            <div className="masalah-card masalah-card--light">
+              <div className="masalah-stat-num">80%</div>
+              <div className="masalah-stat-label">dari 57.000 sekolah swasta</div>
+            </div>
+            <div className="masalah-card masalah-card--dark">
+              <span className="masalah-quote-o">&ldquo;</span>
+              <p className="masalah-quote-text">
+                Masih kelola keuangan secara manual. Tanpa sistem yang terintegrasi.
+              </p>
+              <span className="masalah-quote-c">&rdquo;</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── KONDISI NYATA ────────────────────────── */}
+      <section className="kondisi-section">
+        <div className="kondisi-inner">
+
+          {/* Kiri: teks */}
+          <div className="kondisi-content kondisi-anim-left">
+            <span className="kondisi-label">Kenapa ini penting?</span>
+            <div className="kondisi-divider">
+              <Image
+                src="/image/Line.png"
+                alt=""
+                width={240}
+                height={18}
+                className="kondisi-divider-line"
+                aria-hidden
+              />
+            </div>
+            <h2 className="kondisi-title">
+              Begini kondisi nyata yang terjadi<br />
+              di banyak sekolah swasta hari ini
             </h2>
-            <p className="section-subtitle" style={{ margin: '0 auto', textAlign: 'center' }}>
-              Tanpa sistem yang tepat, pekerjaan administratif keuangan sekolah
-              bisa memakan waktu berjam-jam setiap hari.
+            <p className="kondisi-desc">
+              Bukan karena tidak mau berubah tapi karena belum ada
+              solusi yang benar-benar pas untuk skala mereka.
             </p>
           </div>
 
-          <div className="pain-grid">
-            {[
-              {
-                num: '1',
-                icon: <FileSpreadsheet size={22} />,
-                title: 'Rekap SPP Manual di Excel',
-                desc: 'Data ratusan siswa diinput satu per satu. Rentan salah ketik, susah dicari, sering tidak sinkron antar jenjang.',
-              },
-              {
-                num: '2',
-                icon: <PhoneCall size={22} />,
-                title: 'Menghubungi Orang Tua Secara Manual',
-                desc: 'Reminder tunggakan SPP lewat telepon atau WhatsApp satu-satu. Menyita waktu, sering tidak tersampaikan.',
-              },
-              {
-                num: '3',
-                icon: <Clock4 size={22} />,
-                title: 'Laporan Keuangan yang Tidak Real-time',
-                desc: 'Kepala sekolah dan yayasan harus menunggu akhir bulan untuk melihat kondisi keuangan. Keputusan terlambat.',
-              },
-              {
-                num: '4',
-                icon: <ShieldAlert size={22} />,
-                title: 'Data Berceceran & Tidak Aman',
-                desc: 'File Excel bisa hilang, tertimpa, atau diakses sembarang pihak. Tidak ada backup otomatis dan audit trail.',
-              },
-            ].map((item) => (
-              <div className="pain-card" data-num={item.num} key={item.num}>
-                <div className="pain-icon">{item.icon}</div>
-                <div className="pain-title">{item.title}</div>
-                <div className="pain-desc">{item.desc}</div>
-              </div>
-            ))}
+          {/* Kanan: tombol */}
+          <div className="kondisi-action kondisi-anim-right">
+            <Link href="/fitur" className="kondisi-btn">
+              <span>Solusi Kami</span>
+              <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#1A3557" />
+                <line x1="7" y1="12" x2="16" y2="12" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+                <polyline points="12.5 8 17 12 12.5 16" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
           </div>
+
+        </div>
+      </section>
+
+      {/* ─── KONDISI CARDS ────────────────────────── */}
+      <section className="kcards-section">
+        <div className="kcards-grid">
+
+          {/* Card 1 */}
+          <div className="kcards-wrap">
+            <div className="kcards-card kcard-anim">
+              <div className="kcards-icon kcards-icon--yellow">
+                <Image src="/icons/IconProblem1.png" alt="" width={60} height={60} />
+              </div>
+              <h3 className="kcards-title">Rekap manual <br />rawan salah catat</h3>
+              <p className="kcards-desc">Bendahara mencocokan mutasi rekening dengan data siswa satu per satu di Excel. Satu baris terlewat bisa membuat laporan tidak seimbang selama berbulan-bulan.</p>
+              <span className="kcards-star">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M 8.91 8.26 L 11.11 3.79 Q 12 2 12.89 3.79 L 15.09 8.26 L 20.02 8.98 Q 22 9.27 20.57 10.67 L 17 14.14 L 17.84 19.05 Q 18.18 21.02 16.41 20.09 L 12 17.77 L 7.59 20.09 Q 5.82 21.02 6.16 19.05 L 7 14.14 L 3.43 10.67 Q 2 9.27 3.98 8.98 Z" fill="#A3CDFE"/></svg>
+              </span>
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="kcards-wrap kcards-wrap--down">
+            <div className="kcards-card kcard-anim">
+              <div className="kcards-icon kcards-icon--navy">
+                <Image src="/icons/IconProblem2.png" alt="" width={55} height={55} />
+              </div>
+              <h3 className="kcards-title">Verifikasi pembayaran <br />lewat WhatsApp</h3>
+              <p className="kcards-desc">Orang tua mengirim screenshot bukti transfer ke nomor admin. Bukti bayar mudah terlewat, hilang di chat, dan tidak ada konfirmasi otomatis yang terkirim balik.</p>
+              <span className="kcards-star">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M 8.91 8.26 L 11.11 3.79 Q 12 2 12.89 3.79 L 15.09 8.26 L 20.02 8.98 Q 22 9.27 20.57 10.67 L 17 14.14 L 17.84 19.05 Q 18.18 21.02 16.41 20.09 L 12 17.77 L 7.59 20.09 Q 5.82 21.02 6.16 19.05 L 7 14.14 L 3.43 10.67 Q 2 9.27 3.98 8.98 Z" fill="#A3CDFE"/></svg>
+              </span>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="kcards-wrap">
+            <div className="kcards-card kcard-anim">
+              <div className="kcards-icon kcards-icon--navy">
+                <Image src="/icons/IconProblem3.png" alt="" width={45} height={45} />
+              </div>
+              <h3 className="kcards-title">Pengingat tagihan <br />dilakukan satu per satu</h3>
+              <p className="kcards-desc">Mengingatkan orang tua yang belum bayar dilakukan manual — dicari dari daftar Excel, dikirim pesan satu per satu. Proses ini bisa menyita setengah hari kerja bendahara.</p>
+              <span className="kcards-star">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M 8.91 8.26 L 11.11 3.79 Q 12 2 12.89 3.79 L 15.09 8.26 L 20.02 8.98 Q 22 9.27 20.57 10.67 L 17 14.14 L 17.84 19.05 Q 18.18 21.02 16.41 20.09 L 12 17.77 L 7.59 20.09 Q 5.82 21.02 6.16 19.05 L 7 14.14 L 3.43 10.67 Q 2 9.27 3.98 8.98 Z" fill="#A3CDFE"/></svg>
+              </span>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="kcards-wrap kcards-wrap--down">
+            <div className="kcards-card kcard-anim">
+              <div className="kcards-icon kcards-icon--yellow">
+                <Image src="/icons/IconProblem4.png" alt="" width={60} height={60} />
+              </div>
+              <h3 className="kcards-title">Laporan keuangan <br />selalu terlambat</h3>
+              <p className="kcards-desc">Kepala sekolah dan yayasan hanya bisa melihat kondisi keuangan setelah rekap selesai disusun — bukan secara real-time. Keputusan penting pun menjadi terhambat.</p>
+              <span className="kcards-star">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M 8.91 8.26 L 11.11 3.79 Q 12 2 12.89 3.79 L 15.09 8.26 L 20.02 8.98 Q 22 9.27 20.57 10.67 L 17 14.14 L 17.84 19.05 Q 18.18 21.02 16.41 20.09 L 12 17.77 L 7.59 20.09 Q 5.82 21.02 6.16 19.05 L 7 14.14 L 3.43 10.67 Q 2 9.27 3.98 8.98 Z" fill="#A3CDFE"/></svg>
+              </span>
+            </div>
+          </div>
+
         </div>
       </section>
 
