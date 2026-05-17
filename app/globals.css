@@ -742,7 +742,7 @@ a.btn-hero-outline:hover {
 
 .section-label {
   display: inline-block;
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
   background: #2A5499;
@@ -750,7 +750,7 @@ a.btn-hero-outline:hover {
   border-radius: 100px;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
-  box-shadow: 0 6px 24px #2A5499;
+  box-shadow: 0 6px 24px #98b8ea;
 }
 
 .section-title {
@@ -1384,8 +1384,384 @@ a.btn-hero-outline:hover {
   line-height: 1.7;
 }
 
+/* ─── APA ITU SIKU ────────────────────────────────── */
+.apasiku-section {
+  background: #ffffff;
+  padding: 80px 5%;
+}
+
+.apasiku-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 90px;
+}
+
+.apasiku-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.apasiku-badge {
+  display: inline-block;
+  background: #F7DD7D;
+  color: #1A2D5A;
+  font-size: 1.51rem;
+  font-weight: 700;
+  padding: 1px 18px;
+  border-radius: 999px;
+  width: fit-content;
+  box-shadow: 0 4px 20px rgba(26, 50, 79, 0.268);
+}
+
+.apasiku-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: #0F1D3A;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 752px;
+}
+
+.apasiku-desc {
+  font-size: 1.45rem;
+  color: #4A6A90;
+  margin: 0;
+  max-width: 700px;
+}
+
+.apasiku-image {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-8rem);
+}
+
+/* Apa itu SiKu — badge/title/desc entrance */
+.apasiku-anim {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.apasiku-anim.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Apa itu SiKu — star animations */
+@keyframes star-enter {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes star-rock {
+  0%,100% { transform: rotate(-15deg); }
+  50%     { transform: rotate(15deg); }
+}
+
+.apasiku-star {
+  opacity: 0;
+}
+.apasiku-star img {
+  width: 210px;
+  height: 210px;
+  object-fit: contain;
+  filter: drop-shadow(0px 1px 4px rgba(150, 159, 174, 0.35));
+}
+.apasiku-star.star-entering {
+  animation: star-enter 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+.apasiku-star.star-rocking {
+  opacity: 1;
+  animation: star-rock 3.5s ease-in-out infinite;
+}
+
+/* ─── APA ITU SIKU — CARDS ANIMATIONS ───────────── */
+.apasiku-fcard-anim {
+  opacity: 0;
+  transform: perspective(800px) rotateY(90deg);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: opacity 0.4s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.apasiku-fcard-anim.visible {
+  opacity: 1;
+  transform: perspective(800px) rotateY(0deg);
+}
+
+.apasiku-dash-anim {
+  opacity: 0;
+  transform: translateX(calc(-4rem + 56px));
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.apasiku-dash-anim.visible {
+  opacity: 1;
+  transform: translateX(-4rem);
+}
+
+/* ─── APA ITU SIKU — CARDS ──────────────────────── */
+.apasiku-cards {
+  max-width: 1100px;
+  margin: 48px auto 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 2×2 feature cards */
+.apasiku-fcards {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 330px);
+  column-gap: 50px;
+  row-gap: 4px;
+  transform: translateX(-6.4rem);
+}
+
+.apasiku-fcard-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.apasiku-fcard {
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px 20px;
+  box-shadow: 0 4px 20px rgba(45, 92, 150, 0.515);
+  min-height: 295px;
+  min-width: 300px;
+}
+
+.apasiku-fcard-desc {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #4A6A90;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.apasiku-fcard-footer {
+  display: flex;
+  align-items: center;
+  margin-left: 80px;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.apasiku-fcard-label {
+  background: #2A5499;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 6px 8px 6px 18px;
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(33,67,108,0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 52px;
+  white-space: nowrap;
+  width: 100%;
+  transform: translateY(-30px);
+}
+
+.apasiku-fcard-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F7DD7D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Dashboard mockup */
+/* Dashboard container — light blue bg, tiap section jadi kartu terpisah */
+.apasiku-dashboard {
+  width: 540px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(36, 78, 142, 0.46);
+  transform: translateX(-4rem);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Header card */
+.apasiku-dash-header {
+  background: #1A3A6B;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 16px 20px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+/* Rows card */
+.apasiku-dash-rows {
+  background: #fff;
+  border-radius: 12px;
+  padding: 4px 0;
+  overflow: hidden;
+}
+
+.apasiku-dash-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #F3F4F6;
+}
+.apasiku-dash-row:last-child { border-bottom: none; }
+
+.apasiku-dash-name {
+  font-size: 0.95rem;
+  color: #1F2937;
+  font-weight: 500;
+}
+
+.apasiku-dash-chip {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: #fff;
+}
+.apasiku-dash-chip--lunas    { background: #16A34A; }
+.apasiku-dash-chip--menunggu { background: #D97706; }
+.apasiku-dash-chip--belum    { background: #DC2626; }
+
+/* Progress card — yellow, rounded */
+.apasiku-dash-prog-card {
+  background: #F7DD7D;
+  border-radius: 12px;
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+
+.apasiku-dash-prog-header {
+  color: #1A3A6B;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 14px 20px 10px;
+}
+
+.apasiku-dash-prog-track {
+  background: rgba(255,255,255,0.55);
+  height: 10px;
+  margin: 0 20px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.apasiku-dash-prog-fill {
+  background: #1A3A6B;
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* Stats — 3 kartu terpisah */
+.apasiku-dash-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  background: transparent;
+  padding: 0;
+}
+
+.apasiku-dash-stat {
+  background: #2A5499;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border-right: none;
+}
+.apasiku-dash-stat:last-child { border-right: none; }
+
+.apasiku-dash-stat-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+.apasiku-dash-stat-lbl {
+  font-size: 0.7rem;
+  color: #A4CEFF;
+  text-align: center;
+  padding: 0 4px;
+}
+
+/* Action cards */
+.apasiku-dash-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 60px 14px 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  position: relative;
+}
+.apasiku-dash-action--wa     { background: #00A46A; }
+.apasiku-dash-action--report { background: #2A5499; }
+
+.apasiku-dash-action-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.apasiku-dash-action-txt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.apasiku-dash-action-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+}
+.apasiku-dash-action-sub {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.apasiku-dash-action-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1A3A6B;
+  background: #F7DD7D;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 /* ─── CARA KERJA TIMELINE ────────────────────────── */
-#cara-kerja { background: #F0F5FB; }
+#cara-kerja { background: #CEE1F8; }
 
 .ckerja-timeline {
   position: relative;
@@ -2728,6 +3104,11 @@ a.btn-hero-outline:hover {
     width: 100%;
     justify-content: space-between;
   }
+
+  /* ── Apa itu SiKu ──────────────────────────────── */
+  .apasiku-section { padding: 56px 5%; }
+  .apasiku-inner { flex-direction: column; gap: 36px; }
+  .apasiku-image img { width: 240px; height: 240px; }
 
   /* ── Kondisi Cards (kcards) ─────────────────────── */
   .kcards-section { padding: 0 5% 48px; overflow-x: hidden; }

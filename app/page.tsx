@@ -241,6 +241,72 @@ export default function HomePage() {
     return () => observer.disconnect()
   }, [])
 
+  // Apa itu SiKu — badge/title/desc fade-in
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.apasiku-anim')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const el = entry.target as HTMLElement
+        if (entry.isIntersecting) {
+          const delay = parseInt(el.dataset.delay ?? '0', 10)
+          setTimeout(() => el.classList.add('visible'), delay)
+        }
+      })
+    }, { threshold: 0.15 })
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  // Apa itu SiKu — star enter lalu rock
+  useEffect(() => {
+    const star = document.querySelector<HTMLElement>('.apasiku-star')
+    if (!star) return
+    let done = false
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || done) return
+      done = true
+      observer.disconnect()
+      star.classList.add('star-entering')
+      setTimeout(() => {
+        star.classList.remove('star-entering')
+        star.classList.add('star-rocking')
+      }, 700)
+    }, { threshold: 0.3 })
+    observer.observe(star)
+    return () => observer.disconnect()
+  }, [])
+
+  // Apa itu SiKu — feature cards entrance (staggered, triggers when section in view)
+  useEffect(() => {
+    const container = document.querySelector<HTMLElement>('.apasiku-fcards')
+    if (!container) return
+    const cards = Array.from(container.querySelectorAll<HTMLElement>('.apasiku-fcard-anim'))
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        cards.forEach((card, i) => {
+          setTimeout(() => card.classList.add('visible'), i * 400)
+        })
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.2 })
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
+
+  // Apa itu SiKu — dashboard slide-in from right
+  useEffect(() => {
+    const dash = document.querySelector<HTMLElement>('.apasiku-dash-anim')
+    if (!dash) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      setTimeout(() => dash.classList.add('visible'), 200)
+    }, { threshold: 0.15 })
+    observer.observe(dash)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <Navbar />
@@ -515,6 +581,167 @@ export default function HomePage() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ─── APA ITU SIKU ───────────────────────────── */}
+      <section className="apasiku-section">
+        <div className="apasiku-inner">
+          <div className="apasiku-content">
+            <span className="apasiku-badge apasiku-anim" data-delay="0">Apa itu SiKu?</span>
+            <h2 className="apasiku-title apasiku-anim" data-delay="140">Sistem keuangan sekolah swasta yang simpel, akurat, dan siap audit</h2>
+            <p className="apasiku-desc apasiku-anim" data-delay="280">SiKu adalah platform SaaS manajemen keuangan berbasis web yang dirancang khusus untuk sekolah dan yayasan swasta skala kecil hingga menengah — menggantikan Excel, buku kas, dan WhatsApp dengan satu sistem yang terintegrasi penuh.</p>
+          </div>
+          <div className="apasiku-image">
+            <div className="apasiku-star">
+              <Image src="/image/StarHero.png" alt="SiKu Star Hero" width={360} height={360} />
+            </div>
+          </div>
+        </div>
+
+        {/* ─ Feature Cards + Dashboard ─ */}
+        <div className="apasiku-cards">
+
+          {/* Left: 2×2 feature cards */}
+          <div className="apasiku-fcards">
+
+            <div className="apasiku-fcard-wrap apasiku-fcard-anim" data-delay="0">
+              <div className="apasiku-fcard">
+                <p className="apasiku-fcard-desc">Tidak butuh latar belakang akuntansi atau keahlian IT. SiKu dirancang agar bendahara bisa langsung pakai tanpa pelatihan panjang.</p>
+              </div>
+              <div className="apasiku-fcard-footer">
+                <span className="apasiku-fcard-label">Simpel untuk Semua
+                <span className="apasiku-fcard-icon">
+                  <Image src="/icons/IconMonitor.png" alt="Monitor" width={23} height={23} />
+                </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="apasiku-fcard-wrap apasiku-fcard-anim" data-delay="120">
+              <div className="apasiku-fcard">
+                <p className="apasiku-fcard-desc">Semua data pembayaran tercatat di satu tempat secara otomatis tidak ada lagi data tersebar di banyak file atau chat yang tidak terorganisir.</p>
+              </div>
+              <div className="apasiku-fcard-footer">
+                <span className="apasiku-fcard-label">Akurat &amp; Terpusat
+                <span className="apasiku-fcard-icon">
+                  <Image src="/icons/IconDB.png" alt="Database" width={23} height={23} />
+                </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="apasiku-fcard-wrap apasiku-fcard-anim" data-delay="240">
+              <div className="apasiku-fcard">
+                <p className="apasiku-fcard-desc">Laporan keuangan tersusun otomatis dan bisa diakses kapan saja oleh kepala sekolah maupun pengurus yayasan tanpa perlu menunggu rekap manual.</p>
+              </div>
+              <div className="apasiku-fcard-footer">
+                <span className="apasiku-fcard-label">Siap Audit Kapan Saja
+                <span className="apasiku-fcard-icon">
+                  <Image src="/icons/IconFile.png" alt="File" width={18} height={18} />
+                </span>
+                </span>
+              </div>
+            </div>
+
+            <div className="apasiku-fcard-wrap apasiku-fcard-anim" data-delay="360">
+              <div className="apasiku-fcard">
+                <p className="apasiku-fcard-desc">Kirim pengingat tagihan ke seluruh orang tua sekaligus langsung ke WhatsApp masing-masing tanpa ketik satu per satu, tanpa copy-paste.</p>
+              </div>
+              <div className="apasiku-fcard-footer">
+                <span className="apasiku-fcard-label">Satu Klik Ingatkan
+                <span className="apasiku-fcard-icon">
+                  <Image src="/icons/IconWaStroke.png" alt="WhatsApp" width={23} height={23} />
+                </span>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right: Dashboard mockup */}
+          <div className="apasiku-dashboard apasiku-dash-anim">
+
+            <div className="apasiku-dash-header">STATUS PEMBAYARAN – KELAS 7A</div>
+
+            <div className="apasiku-dash-rows">
+              <div className="apasiku-dash-row">
+                <span className="apasiku-dash-name">Ahmad Fauzi</span>
+                <span className="apasiku-dash-chip apasiku-dash-chip--lunas">Lunas</span>
+              </div>
+              <div className="apasiku-dash-row">
+                <span className="apasiku-dash-name">Siti Rahma</span>
+                <span className="apasiku-dash-chip apasiku-dash-chip--menunggu">Menunggu</span>
+              </div>
+              <div className="apasiku-dash-row">
+                <span className="apasiku-dash-name">Budi Santoso</span>
+                <span className="apasiku-dash-chip apasiku-dash-chip--lunas">Lunas</span>
+              </div>
+              <div className="apasiku-dash-row">
+                <span className="apasiku-dash-name">Dewi Anggraini</span>
+                <span className="apasiku-dash-chip apasiku-dash-chip--belum">Belum Bayar</span>
+              </div>
+            </div>
+
+            <div className="apasiku-dash-prog-card">
+              <div className="apasiku-dash-prog-header">PROGRES PEMBAYARAN BULAN INI</div>
+              <div className="apasiku-dash-prog-track">
+                <div className="apasiku-dash-prog-fill" style={{ width: '75%' }} />
+              </div>
+            </div>
+
+            <div className="apasiku-dash-stats">
+              <div className="apasiku-dash-stat">
+                <span className="apasiku-dash-stat-val">75%</span>
+                <span className="apasiku-dash-stat-lbl">Sudah Lunas</span>
+              </div>
+              <div className="apasiku-dash-stat">
+                <span className="apasiku-dash-stat-val">Rp 42jt</span>
+                <span className="apasiku-dash-stat-lbl">Terkumpul</span>
+              </div>
+              <div className="apasiku-dash-stat">
+                <span className="apasiku-dash-stat-val">14</span>
+                <span className="apasiku-dash-stat-lbl">Belum Bayar</span>
+              </div>
+            </div>
+
+            <div className="apasiku-dash-action apasiku-dash-action--wa">
+              <span className="apasiku-dash-action-ico">
+                <Image src="/icons/IconWA.png" alt="WA" width={32} height={32} />
+              </span>
+              <div className="apasiku-dash-action-txt">
+                <span className="apasiku-dash-action-title">14 Orang Tua Belum Bayar</span>
+                <span className="apasiku-dash-action-sub">Kirim pengingat ke orang tua</span>
+              </div>
+              <span className="apasiku-dash-action-arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="13 6 19 12 13 18"/>
+                </svg>
+              </span>
+            </div>
+
+            <div className="apasiku-dash-action apasiku-dash-action--report">
+              <span className="apasiku-dash-action-ico">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+                  <rect x="9" y="3" width="6" height="4" rx="1"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              </span>
+              <div className="apasiku-dash-action-txt">
+                <span className="apasiku-dash-action-title">Laporan Juni 2025</span>
+                <span className="apasiku-dash-action-sub">Sudah tersedia — Siap diunduh kapan saja</span>
+              </div>
+              <span className="apasiku-dash-action-arrow">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="13 6 19 12 13 18"/>
+                </svg>
+              </span>
+            </div>
+
+          </div>
         </div>
       </section>
 
