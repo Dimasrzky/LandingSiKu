@@ -2980,12 +2980,12 @@ a.btn-hero-outline:hover {
   .hero { padding: 100px 4% 80px; }
   .hero-inner { gap: 2rem; }
   .hero h1 { font-size: 2.2rem; }
-  .hero-slides-wrap { flex: 0 0 44%; }
+  .hero-slides-wrap { flex: 0 0 44%; transform: none; }
 
   /* Kondisi */
   .kondisi-title { font-size: 2rem; }
   .kondisi-desc  { font-size: 1.3rem; }
-  .kondisi-btn   { margin-top: 8rem; transform: translateX(20px); }
+  .kondisi-btn   { margin-top: 4rem; transform: translateX(0); }
 
   /* kcards */
   .kcards-grid { gap: 0 2rem; max-width: 100%; }
@@ -2996,6 +2996,22 @@ a.btn-hero-outline:hover {
   .ckerja-timeline { max-width: 100%; }
   .ckerja-card-wrap { width: 100%; }
   .ckerja-step { grid-template-columns: 1fr 60px 1fr; }
+
+  /* Apa itu SiKu — tablet: stack cards+dashboard vertically, keep inner side-by-side */
+  .apasiku-inner { gap: 32px; }
+  .apasiku-image { transform: translateX(-2rem); }
+  .apasiku-star img { width: 180px; height: 180px; }
+  .apasiku-cards { flex-direction: column; gap: 28px; }
+  .apasiku-fcards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    transform: none;
+  }
+  .apasiku-fcard { min-width: 0; }
+  .apasiku-fcard-footer { margin-left: 0; }
+  .apasiku-dashboard { width: 100%; transform: none; }
+  .apasiku-dash-anim { transform: translateY(30px); }
+  .apasiku-dash-anim.visible { transform: none; }
 }
 
 /* ── Mobile (≤768px) ──────────────────────────────── */
@@ -3106,9 +3122,90 @@ a.btn-hero-outline:hover {
   }
 
   /* ── Apa itu SiKu ──────────────────────────────── */
-  .apasiku-section { padding: 56px 5%; }
-  .apasiku-inner { flex-direction: column; gap: 36px; }
-  .apasiku-image img { width: 240px; height: 240px; }
+  .apasiku-section { padding: 48px 5%; overflow-x: hidden; }
+  .apasiku-inner { flex-direction: column; gap: 20px; }
+  .apasiku-image { transform: none; align-self: center; }
+  .apasiku-star img { width: 140px !important; height: 140px !important; }
+
+  .apasiku-title { font-size: 1.45rem; }
+  .apasiku-desc  { font-size: 1rem; }
+
+  .apasiku-cards {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    margin-top: 28px;
+  }
+
+  /* 2-column grid on mobile (cards are short text) */
+  .apasiku-fcards {
+    grid-template-columns: 1fr 1fr;
+    transform: none;
+    column-gap: 12px;
+    row-gap: 24px;
+  }
+
+  .apasiku-fcard {
+    min-width: 0;
+    min-height: unset;
+    padding: 14px 12px 12px;
+  }
+
+  .apasiku-fcard-desc {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .apasiku-fcard-footer { margin-left: 0; padding: 0 2px; }
+
+  .apasiku-fcard-label {
+    height: 38px;
+    font-size: 0.72rem;
+    padding: 4px 6px 4px 12px;
+    gap: 6px;
+    transform: translateY(-14px);
+  }
+
+  .apasiku-fcard-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  /* Dashboard mobile */
+  .apasiku-dashboard {
+    width: 100%;
+    transform: none;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .apasiku-dash-header {
+    font-size: 0.85rem;
+    padding: 12px 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .apasiku-dash-row { padding: 10px 14px; }
+  .apasiku-dash-name { font-size: 0.82rem; }
+  .apasiku-dash-chip { font-size: 0.68rem; padding: 3px 10px; }
+
+  .apasiku-dash-prog-header { font-size: 0.72rem; padding: 10px 14px 8px; }
+  .apasiku-dash-prog-track  { margin: 0 14px; }
+
+  .apasiku-dash-stats { gap: 6px; }
+  .apasiku-dash-stat  { padding: 10px 6px; }
+  .apasiku-dash-stat-val { font-size: 1rem; }
+  .apasiku-dash-stat-lbl { font-size: 0.62rem; }
+
+  .apasiku-dash-action { padding: 11px 52px 11px 12px; gap: 10px; }
+  .apasiku-dash-action-ico { width: 36px; height: 36px; }
+  .apasiku-dash-action-title { font-size: 0.8rem; }
+  .apasiku-dash-action-sub   { font-size: 0.65rem; }
+  .apasiku-dash-action-arrow { width: 30px; height: 30px; right: 10px; }
+
+  .apasiku-dash-anim { transform: translateY(24px); }
+  .apasiku-dash-anim.visible { transform: none; }
 
   /* ── Kondisi Cards (kcards) ─────────────────────── */
   .kcards-section { padding: 0 5% 48px; overflow-x: hidden; }
