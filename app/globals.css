@@ -3826,15 +3826,49 @@ a.btn-hero-outline:hover {
 @media (max-width: 768px) {
   .footer-inner {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .footer-left {
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-logo-wrap {
+    justify-content: center;
+  }
+
+  .footer-by {
+    transform: none;
+  }
+
+  .footer-desc {
+    transform: none;
+    font-size: 0.95rem;
+  }
+
+  .footer-badge {
+    transform: none;
+    margin: 0 auto;
   }
 
   .footer-right {
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
   }
 
   .footer-socials {
-    flex-direction: row;
+    flex-direction: column;
+    align-items: flex-start;
+    transform: none;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
   }
 }
 
@@ -4475,7 +4509,7 @@ a.btn-hero-outline:hover {
   .form-wrapper { padding: 2rem 1.25rem; }
 
   /* ── Footer ─────────────────────────────────────── */
-  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-inner { flex-direction: column; text-align: center; gap: 1.5rem; }
 
   /* ── Steps ──────────────────────────────────────── */
   .steps        { gap: 2rem; }
