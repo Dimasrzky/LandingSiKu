@@ -66,9 +66,44 @@ const heroSlides = [
   { src: '/assets/AssetsHero2.jpg', alt: 'Laporan Keuangan SiKu' },
 ]
 
+const testimonials = [
+  {
+    name: 'Sri Rahayu, S.Pd',
+    role: 'Bendahara · SDIT Al-Hikmah, Yogyakarta',
+    initials: 'SR',
+    color: '#1A3557',
+    stars: 5,
+    quote: 'Dulu rekap SPP 3 jenjang bisa sampai 2 hari. Sekarang tinggal buka dashboard, semua sudah tersedia. WA ke orang tua juga otomatis, saya tidak perlu ketik satu-satu lagi.',
+  },
+  {
+    name: 'Bambang Wicaksono',
+    role: 'Bendahara Yayasan · Yayasan Pendidikan Nusantara',
+    initials: 'BW',
+    color: '#059669',
+    stars: 5,
+    quote: 'Yayasan kami punya 3 sekolah. Sebelumnya laporan keuangan masing-masing tidak bisa dibandingkan. Sekarang bisa lihat konsolidasi semua sekolah dalam satu layar.',
+  },
+  {
+    name: 'Dewi Nuraini',
+    role: 'Bendahara · TK & SD Islam Terpadu Ceria',
+    initials: 'DN',
+    color: '#D97706',
+    stars: 4,
+    quote: 'Awalnya saya pikir sulit dipakai karena tidak biasa dengan aplikasi. Ternyata mudah sekali. Support-nya juga cepat respons. Orang tua senang bisa bayar SPP lewat transfer langsung.',
+  },
+  {
+    name: 'Sari Rahayu',
+    role: 'Bendahara',
+    avatar: '/assets/UserTesti.png',
+    stars: 4,
+    quote:'Sebelum pakai SiKu, saya bisa menghabiskan dua hari penuh hanya untuk rekap pembayaran SPP. Sekarang laporan sudah tersedia otomatis, saya tinggal download dan langsung lapor ke kepala sekolah'
+  }
+]
+
 export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [heroReady, setHeroReady] = useState(false)
+  const [testiActive, setTestiActive] = useState(0)
 
   useEffect(() => {
     const t = setTimeout(() => setHeroReady(true), 50)
@@ -81,6 +116,7 @@ export default function HomePage() {
     }, 3500)
     return () => clearInterval(timer)
   }, [])
+
 
   useEffect(() => {
     const target = sessionStorage.getItem('scrollTo')
@@ -307,6 +343,61 @@ export default function HomePage() {
     return () => observer.disconnect()
   }, [])
 
+  // CTA Harga — staggered entrance
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.cta-anim')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const delay = parseInt(el.dataset.delay ?? '0', 10)
+        setTimeout(() => el.classList.add('visible'), delay)
+        observer.unobserve(el)
+      })
+    }, { threshold: 0.12 })
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.testi-anim-left, .testi-anim-right')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('testi-visible')
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.15 })
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    // Trigger circle animation on section
+    const section = document.querySelector('.closing-section')
+    const sectionObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      entry.target.classList.add('closing-visible')
+      sectionObserver.disconnect()
+    }, { threshold: 0.15 })
+    if (section) sectionObserver.observe(section)
+
+    // Staggered content animations
+    const els = document.querySelectorAll<HTMLElement>('.closing-anim')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const delay = parseInt(el.dataset.delay ?? '0', 10)
+        setTimeout(() => el.classList.add('closing-visible'), delay)
+        observer.unobserve(el)
+      })
+    }, { threshold: 0.15 })
+    els.forEach((el) => observer.observe(el))
+
+    return () => { sectionObserver.disconnect(); observer.disconnect() }
+  }, [])
+
   return (
     <>
       <Navbar />
@@ -424,6 +515,7 @@ export default function HomePage() {
             height={120}
             className="hero-anchor"
           />
+          <span className="hero-anchor-text">Gulir ke bawah</span>
         </a>
       </section>
 
@@ -839,108 +931,226 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── TESTIMONI ────────────────────────────── */}
-      <section className="section features-bg">
-        <div className="section-inner">
-          <div style={{ textAlign: 'center' }}>
-            <h2 className="section-title">Yang mereka rasakan</h2>
+      {/* ─── CTA HARGA ────────────────────────────── */}
+      <section className="cta-harga-section">
+        <div className="cta-harga-inner">
+
+          {/* Header */}
+          <div className="cta-harga-header">
+            <span className="cta-harga-badge cta-anim" data-delay="0">Harga &amp; Paket</span>
+            <h2 className="cta-harga-title cta-anim" data-delay="120">1 Bulan Gratis<br />Tanpa Syarat Tersembunyi</h2>
+            <p className="cta-harga-desc cta-anim" data-delay="240">
+              Kami tahu sekolah perlu membuktikan manfaat sebelum berkomitmen.
+              Karena itu kami tawarkan akses penuh bukan versi terbatas <br />selama 1 bulan pertama.
+            </p>
           </div>
 
-          <div className="testi-grid">
-            {[
-              {
-                stars: '★★★★★',
-                quote: 'Dulu rekap SPP 3 jenjang bisa sampai 2 hari. Sekarang tinggal buka dashboard, semua sudah tersedia. WA ke orang tua juga otomatis, saya tidak perlu ketik satu-satu lagi.',
-                initials: 'SR',
-                color: '#1A3557',
-                name: 'Sri Rahayu, S.Pd',
-                school: 'Bendahara · SDIT Al-Hikmah, Yogyakarta',
-              },
-              {
-                stars: '★★★★★',
-                quote: 'Yayasan kami punya 3 sekolah. Sebelumnya laporan keuangan masing-masing tidak bisa dibandingkan. Sekarang bisa lihat konsolidasi semua sekolah dalam satu layar.',
-                initials: 'BW',
-                color: '#059669',
-                name: 'Bambang Wicaksono',
-                school: 'Bendahara Yayasan · Yayasan Pendidikan Nusantara',
-              },
-              {
-                stars: '★★★★☆',
-                quote: 'Awalnya saya pikir sulit dipakai karena tidak biasa dengan aplikasi. Ternyata mudah sekali. Support-nya juga cepat respons. Orang tua senang bisa bayar SPP lewat transfer langsung.',
-                initials: 'DN',
-                color: '#D97706',
-                name: 'Dewi Nuraini',
-                school: 'Bendahara · TK & SD Islam Terpadu Ceria',
-              },
-            ].map((t) => (
-              <div className="testi-card" key={t.name}>
-                <div className="stars">{t.stars}</div>
-                <div className="testi-quote">&ldquo;{t.quote}&rdquo;</div>
-                <div className="testi-author">
-                  <div className="author-avatar" style={{ background: t.color }}>
-                    {t.initials}
-                  </div>
-                  <div>
-                    <div className="author-name">{t.name}</div>
-                    <div className="author-school">{t.school}</div>
-                  </div>
-                </div>
+          {/* Card besar */}
+          <div className="cta-card-wrap cta-anim" data-delay="400">
+            <div className="cta-card">
+              <span className="cta-card-topbadge">Terbatas Batch Pertama</span>
+
+              <div className="cta-card-price">
+                <span className="cta-price-num">
+                  Rp <GachaNumber
+                    target={0}
+                    from={200000}
+                    duration={1000}
+                    format={(n) => n.toLocaleString('id-ID')}
+                  />
+                </span>
               </div>
-            ))}
+
+              <div className="cta-card-sub">
+                <span>Selama 1 bulan pertama</span>
+                <span className="cta-sub-dot" />
+                <span>Tidak perlu kartu kredit</span>
+              </div>
+
+              <div className="cta-features">
+                {[
+                  ['Semua fitur lengkap',           'Tidak ada batas siswa'],
+                  ['Notifikasi WhatsApp otomatis',   'Laporan & Dashboard'],
+                  ['Onboarding oleh tim kami',       'Dukungan teknis'],
+                  ['Export Excel & PDF',             'Multi-jenjang sekolah'],
+                ].map((row, i) => (
+                  <div className="cta-feat-row" key={i}>
+                    {row.map((item) => (
+                      <div className="cta-feat-item" key={item}>
+                        <svg className="cta-feat-check" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              <Link href="/daftar" className="cta-card-btn">
+                Jadwalkan Demo Gratis
+              </Link>
+              <p className="cta-card-note">Setelah 1 bulan, pilih lanjut atau berhenti – tanpa paksaan</p>
+            </div>
+
+            {/* Info box */}
+            <div className="cta-info-box">
+              <span className="cta-info-icon">
+                <Image src="/icons/IconGuard.png" alt="Guard" width={60} height={60} />
+              </span>
+              <p className="cta-info-text">
+                Tim kami siap membantu. Setelah mendaftar, kami menghubungi kamu
+                dalam 1×24 jam untuk menjadwalkan sesi demo dan proses onboarding.
+              </p>
+            </div>
           </div>
+
         </div>
       </section>
 
-      {/* ─── PRICING CTA ──────────────────────────── */}
-      <section className="section pricing-section" id="harga">
-        <div className="pricing-inner">
-          <h2 className="pricing-title">
-            1 Bulan Gratis.
-            <br />Tanpa syarat tersembunyi.
-          </h2>
-          <p className="pricing-subtitle">
-            Kami tahu sekolah perlu membuktikan manfaat sebelum berkomitmen.
-            Karena itu kami tawarkan demo penuh — bukan versi terbatas — selama 1 bulan.
-          </p>
+      {/* ─── TESTIMONI ────────────────────────────── */}
+      <section className="testi-section">
+        <div className="testi-section-inner">
 
-          <div className="pricing-card">
-            <div className="price-tag-wrap">
-              <div className="price-tag">
-                Rp <GachaNumber
-                  target={0}
-                  from={299000}
-                  duration={500}
-                  format={(n) => n.toLocaleString('id-ID')}
-                />
+          {/* Header: kiri + kanan */}
+          <div className="testi-header">
+            {/* Kiri: badge + title */}
+            <div className="testi-header-left">
+              <span className="testi-badge cta-anim" data-delay="0">Testimoni</span>
+              <h2 className="testi-title cta-anim" data-delay="150">Kata Mereka yang<br />Sudah Mencoba SiKu</h2>
+            </div>
+
+            {/* Kanan: star */}
+            <div className="testi-header-right">
+              <Image
+                src="/image/StarHero.png"
+                alt=""
+                width={220}
+                height={220}
+                className="testi-star"
+                aria-hidden
+              />
+            </div>
+          </div>
+
+          {/* Slider + CTA */}
+          <div className="testi-body">
+
+            {/* Left: testimonial slider */}
+            <div className="testi-slider-wrap testi-anim-left">
+                {testimonials[testiActive].avatar ? (
+                  <div className="testi-slider-avatar testi-slider-avatar--img">
+                    <Image src={testimonials[testiActive].avatar} alt={testimonials[testiActive].name} width={200} height={200} style={{ objectFit: 'cover', borderRadius: '50%' }} />
+                  </div>
+                ) : (
+                  <div className="testi-slider-avatar" style={{ background: (testimonials[testiActive] as { color?: string }).color }}>
+                    {(testimonials[testiActive] as { initials?: string }).initials}
+                  </div>
+                )}
+              <div className="testi-slider-card">
+                {/* Header tetap — tidak ikut animasi slide */}
+                <div className="testi-slider-header">
+                  <div className="testi-slider-meta">
+                    <div className="testi-slider-name">{testimonials[testiActive].name}</div>
+                    <div className="testi-slider-role">{testimonials[testiActive].role}</div>
+                  </div>
+                </div>
+
+                {/* Konten berubah — key memicu re-mount dan replay animasi */}
+                <div className="testi-slider-content" key={testiActive}>
+                  {/* Stars */}
+                  <div className="testi-slider-stars">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill={i < testimonials[testiActive].stars ? '#F7DD7D' : '#D1D5DB'} xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="testi-slider-quote">&ldquo;{testimonials[testiActive].quote}&rdquo;</p>
+                </div>
+
+                {/* Navigation */}
+                <div className="testi-slider-nav">
+                  <div className="testi-slider-dots">
+                    {testimonials.map((_, i) => (
+                      <button
+                        key={i}
+                        className={`testi-dot${i === testiActive ? ' testi-dot--active' : ''}`}
+                        onClick={() => setTestiActive(i)}
+                        aria-label={`Testimoni ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                  <div className="testi-slider-arrows">
+                    <button
+                      className="testi-arrow"
+                      onClick={() => setTestiActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                      aria-label="Sebelumnya"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="15 18 9 12 15 6"/>
+                      </svg>
+                    </button>
+                    <button
+                      className="testi-arrow"
+                      onClick={() => setTestiActive((prev) => (prev + 1) % testimonials.length)}
+                      aria-label="Berikutnya"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="price-tag-original">
-                Rp <GachaNumber
-                  target={299000}
-                  from={0}
-                  duration={500}
-                  format={(n) => n.toLocaleString('id-ID')}
-                />/bln
+            </div>
+
+            {/* Right: CTA card */}
+            <div className="testi-cta-card testi-anim-right" style={{ transitionDelay: '150ms' }}>
+              <div className="testi-cta-icon">
+                <Image src="/icons/IconRoket.png" alt="" width={80} height={80} style={{ objectFit: 'contain', transform: 'translate(6px, -6px)' }} />
               </div>
+              <h3 className="testi-cta-title">Siap merasakan sendiri?</h3>
+              <p className="testi-cta-desc">Bergabunglah dengan sekolah-sekolah yang sudah beralih dari Excel dan WhatsApp ke <br />sistem yang benar-benar bekerja.</p>
+              <ul className="testi-cta-list">
+                {[
+                  '1 bulan gratis, semua fitur lengkap',
+                  'Onboarding dipandu tim kami',
+                  'Aktif dalam 1x24 jam',
+                ].map((item) => (
+                  <li key={item} className="testi-cta-list-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link href="/daftar" className="testi-cta-btn">
+                Coba Gratis Sekarang <ArrowCircleIcon />
+              </Link>
             </div>
-            <div className="price-sub">
-              Selama 1 bulan pertama · Tidak perlu kartu kredit
-            </div>
-            <div className="price-features">
-              {[
-                'Semua fitur lengkap', 'Tidak ada batas siswa',
-                'Notifikasi otomatis WhatsApp', 'Laporan & Dashboard',
-                'Onboarding oleh tim kami', 'Dukungan teknis',
-                'Export Excel & PDF', 'Multi-jenjang sekolah',
-              ].map((f) => (
-                <span className="price-feat-item" key={f}>{f}</span>
-              ))}
-            </div>
-            <Link href="/daftar" className="btn-cta-big">
-              Jadwalkan Demo Gratis
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── CLOSING CTA ──────────────────────────── */}
+      <section className="closing-section">
+        <div className="closing-circle closing-circle--tl" />
+        <div className="closing-circle closing-circle--br" />
+        <div className="closing-inner">
+          <span className="closing-badge closing-anim" data-delay="0">Mulai Sekarang</span>
+          <h2 className="closing-title closing-anim" data-delay="120">Saatnya beralih ke SiKu.<br />Sudah cukup rekap manual.</h2>
+          <p className="closing-desc closing-anim" data-delay="240">Coba gratis 1 bulan penuh tanpa kartu kredit, tanpa risiko.<br />Tim kami siap membantu dari awal hingga sistem berjalan.</p>
+          <div className="closing-btns closing-anim" data-delay="360">
+            <Link href="/harga" className="closing-btn-outline">Lihat Paket &amp; Harga</Link>
+            <Link href="/daftar" className="closing-btn-primary">
+              Jadwalkan Demo Gratis <ArrowCircleIcon />
             </Link>
-            <div className="cta-note">
-              Setelah 1 bulan, pilih lanjut atau berhenti — tanpa paksaan
-            </div>
           </div>
         </div>
       </section>

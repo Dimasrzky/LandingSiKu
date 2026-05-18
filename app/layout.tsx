@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import './globals.css'
+import AudioPlayer from '../components/AudioPlayer'
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id" data-scroll-behavior="smooth">
       <body className={dmSans.variable}>
         {children}
+        <AudioPlayer />
       </body>
     </html>
   )
