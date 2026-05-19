@@ -13,7 +13,7 @@ const WhatsAppIcon = ({ size = 32 }: { size?: number }) => (
 )
 
 const iconMap: Record<string, React.ReactNode> = {
-  'manajemen-spp': <Wallet size={32} />,
+  'manajemen-tagihan': <Wallet size={32} />,
   'notifikasi-whatsapp': <WhatsAppIcon size={32} />,
   'pembayaran-digital': <CreditCard size={32} />,
   'laporan-dashboard': <BarChart3 size={32} />,

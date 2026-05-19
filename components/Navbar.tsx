@@ -20,7 +20,7 @@ const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
 )
 
 const fiturItems = [
-  { slug: 'manajemen-spp',      label: 'Manajemen SPP & Tagihan',       icon: <Wallet size={16} /> },
+  { slug: 'manajemen-tagihan',      label: 'Manajemen Tagihan',       icon: <Wallet size={16} /> },
   { slug: 'notifikasi-whatsapp', label: 'Notifikasi WhatsApp Otomatis',  icon: <WhatsAppIcon size={16} /> },
   { slug: 'pembayaran-digital',  label: 'Integrasi Pembayaran Digital',  icon: <CreditCard size={16} /> },
   { slug: 'laporan-dashboard',   label: 'Laporan & Dashboard Real-time', icon: <BarChart3 size={16} /> },

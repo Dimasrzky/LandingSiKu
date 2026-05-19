@@ -15,14 +15,14 @@ export type Feature = {
 
 export const features: Feature[] = [
   {
-    slug: 'manajemen-spp',
-    title: 'Manajemen SPP & Tagihan',
-    shortTitle: 'Manajemen SPP',
+    slug: 'manajemen-tagihan',
+    title: 'Manajemen Tagihan',
+    shortTitle: 'Manajemen Tagihan',
     desc: 'Generate tagihan otomatis setiap bulan untuk seluruh siswa. Kelola berbagai jenis biaya dalam satu sistem.',
     iconBg: '#EFF6FF',
     iconColor: '#1D4ED8',
     badge: 'UNGGULAN',
-    items: ['SPP, uang gedung, ekskul, dll.', 'Tagihan per kelas/jenjang/yayasan', 'Cicilan & diskon otomatis', 'Riwayat pembayaran lengkap'],
+    items: ['SPP, uang gedung, ekskul, dll.', 'Tagihan per kelas/jenjang/yayasan', 'Cicilan & diskon otomatis', 'Riwayat pembayaran lengkap', 'Mengatur beasiswa'],
     details: [
       {
         heading: 'Tagihan Otomatis Setiap Bulan',
@@ -39,6 +39,10 @@ export const features: Feature[] = [
       {
         heading: 'Riwayat Pembayaran Lengkap',
         body: 'Setiap transaksi tercatat lengkap dengan timestamp, metode pembayaran, dan petugas yang memproses. Audit trail tersedia kapan saja.',
+      },
+      {
+        heading: 'Mengatur Beasiswa',
+        body: 'Tetapkan beasiswa untuk siswa tertentu dengan pengurangan biaya otomatis pada tagihan bulanan. Kelola jenis, besaran, dan periode beasiswa langsung dari dasbor tanpa perlu penyesuaian manual setiap bulan.',
       },
     ],
   },
@@ -69,18 +73,14 @@ export const features: Feature[] = [
     slug: 'pembayaran-digital',
     title: 'Integrasi Pembayaran Digital',
     shortTitle: 'Pembayaran Digital',
-    desc: 'Orang tua bayar via transfer bank, virtual account, atau QRIS. Dana otomatis terverifikasi di sistem.',
+    desc: 'Orang tua bayar via transfer bank. Dana otomatis terverifikasi di sistem.',
     iconBg: '#FFF7ED',
     iconColor: '#C2410C',
-    items: ['Virtual Account semua bank', 'QRIS & e-wallet populer', 'Rekonsiliasi otomatis harian'],
+    items: ['Virtual Account semua bank', 'Rekonsiliasi otomatis harian'],
     details: [
       {
         heading: 'Virtual Account Semua Bank',
         body: 'Orang tua dapat membayar melalui transfer bank apa pun menggunakan nomor Virtual Account unik per siswa. Pembayaran terverifikasi otomatis tanpa konfirmasi manual.',
-      },
-      {
-        heading: 'QRIS & E-wallet',
-        body: 'Dukung pembayaran via QRIS yang bisa discan dari GoPay, OVO, Dana, ShopeePay, dan semua aplikasi e-wallet populer. Praktis untuk orang tua yang terbiasa cashless.',
       },
       {
         heading: 'Rekonsiliasi Otomatis Harian',
