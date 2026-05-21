@@ -41,8 +41,8 @@ export const features: Feature[] = [
         body: 'Setiap transaksi tercatat lengkap dengan timestamp, metode pembayaran, dan petugas yang memproses. Audit trail tersedia kapan saja.',
       },
       {
-        heading: 'Mengatur Beasiswa',
-        body: 'Tetapkan beasiswa untuk siswa tertentu dengan pengurangan biaya otomatis pada tagihan bulanan. Kelola jenis, besaran, dan periode beasiswa langsung dari dasbor tanpa perlu penyesuaian manual setiap bulan.',
+        heading: 'Mengatur Beasiswa/Potongan',
+        body: 'Tetapkan beasiswa atau potongan biaya untuk siswa tertentu dengan pengurangan otomatis pada tagihan bulanan. Kelola jenis, besaran, dan periode beasiswa maupun potongan langsung dari dasbor tanpa perlu penyesuaian manual setiap bulan.',
       },
     ],
   },
