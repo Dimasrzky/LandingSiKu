@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X } from 'lucide-react'
 
 const ChevronRightCircleIcon = () => (
@@ -33,19 +33,6 @@ export default function Navbar() {
   const router = useRouter()
   const isHome = pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!isHome) return
-    const el = document.getElementById('cara-kerja')
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => setActiveSection(entry.isIntersecting ? 'cara-kerja' : null),
-      { threshold: 0.2 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [isHome])
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
@@ -84,7 +71,7 @@ export default function Navbar() {
         <div className="nav-links-card">
           <Link
             href="/"
-            className={`nav-hide-mobile${pathname === '/' && activeSection !== 'cara-kerja' ? ' nav-link-active' : ''}`}
+            className={`nav-hide-mobile${pathname === '/' ? ' nav-link-active' : ''}`}
             onClick={(e) => goToSection(e, 'beranda')}
           >
             Beranda
@@ -117,9 +104,8 @@ export default function Navbar() {
           </div>
 
           <Link
-            href="/"
-            className={`nav-hide-mobile${activeSection === 'cara-kerja' ? ' nav-link-active' : ''}`}
-            onClick={(e) => goToSection(e, 'cara-kerja')}
+            href="/carakerja"
+            className={`nav-hide-mobile${pathname === '/carakerja' ? ' nav-link-active' : ''}`}
           >
             Cara Kerja
           </Link>
@@ -170,9 +156,9 @@ export default function Navbar() {
         <div className="nav-mobile-divider" />
 
         <Link
-          href="/"
+          href="/carakerja"
           className="nav-mobile-item"
-          onClick={(e) => goToSection(e, 'cara-kerja')}
+          onClick={() => setMenuOpen(false)}
         >
           Cara Kerja
         </Link>

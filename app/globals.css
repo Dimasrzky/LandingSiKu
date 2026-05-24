@@ -3145,9 +3145,27 @@ a.btn-hero-outline:hover {
   margin-top: 1rem;
 }
 
+/* ─── STAR HERO (cara kerja page) ───────────────── */
+@keyframes star-enter {
+  from { opacity: 0; transform: scale(0.6) rotate(-30deg); }
+  to   { opacity: 1; transform: scale(1)   rotate(0deg); }
+}
+
+@keyframes star-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.ckerja-star {
+  animation:
+    star-enter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    star-spin  10s linear infinite 0.7s;
+}
+
 /* ─── FORM PAGE ──────────────────────────────────── */
 .form-page {
-  padding: 60px 5% 80px;
+  padding: 120px 5% 80px;
+  background:#CEE1F8;
   min-height: 100vh;
   background-size: cover;
   background-position: center;
@@ -3161,7 +3179,7 @@ a.btn-hero-outline:hover {
 }
 
 .form-page-inner {
-  max-width: 680px;
+  max-width: 730px;
   margin: 0 auto;
 }
 
@@ -3183,7 +3201,7 @@ a.btn-hero-outline:hover {
 .form-wrapper {
   background: var(--white);
   border-radius: 20px;
-  padding: 3rem;
+  padding: 2.5rem;
   border: 1px solid var(--border);
   box-shadow: 0 8px 40px rgba(26, 53, 87, 0.08);
   animation: fp-card-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
@@ -3207,39 +3225,40 @@ a.btn-hero-outline:hover {
 .form-header-label {
   display: inline-block;
   font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--emerald);
-  background: var(--emerald-bg);
+  font-weight: 700;
+  color: #2A5499;
+  background: #F7DD7D;
   padding: 4px 14px;
   border-radius: 100px;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 0 5px 10px rgba(31, 85, 167, 0.316);
 }
 
 .form-title {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 900;
   color: var(--navy-dark);
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }
 
 .form-subtitle {
-  font-size: 0.88rem;
-  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4A6A90;
   margin-bottom: 2rem;
-  line-height: 1.7;
 }
 
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
 .form-label {
-  font-size: 0.83rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--text-mid);
   margin-bottom: 0.4rem;
   display: block;
@@ -3254,15 +3273,57 @@ a.btn-hero-outline:hover {
 .form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
+  border: 2px solid #2A5499;
+  border-radius: 12px;
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 0.9rem;
-  color: var(--text-dark);
+  color: #4A6A90;
   background: var(--white);
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 3px rgba(31, 85, 167, 0.316);
   outline: none;
   appearance: none;
+}
+
+.form-select {
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10' fill='%232A5499' stroke='%232A5499' stroke-width='2'/%3E%3Cpolyline points='8 11 12 15 16 11' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 20px 20px;
+}
+
+.form-date-wrap {
+  position: relative;
+}
+
+.form-date-wrap .form-input {
+  padding-right: 2.75rem;
+}
+
+.form-date-icon {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  width: 2.75rem;
+  height: 100%;
+  cursor: pointer;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #4A6A90;
+  opacity: 1;
 }
 
 .form-input:focus,
@@ -3291,23 +3352,33 @@ a.btn-hero-outline:hover {
 }
 
 .submit-btn {
-  width: 100%;
-  padding: 1rem;
-  background: var(--navy);
+  background: #1A2C4E;
   color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  padding: 0 0 0 2rem;
+  height: 52px;
+  border-radius: 30px;
+  font-weight: 600;
   font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  width: fit-content;
+  margin: 3rem auto 0;
+  align-items: center;
+  gap: 25px;
   transition: all 0.2s;
-  margin-top: 0.5rem;
+  box-shadow: 0 4px 20px rgba(26, 53, 87, 0.25);
+}
+
+.submit-btn svg{
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
 }
 
 .submit-btn:hover:not(:disabled) {
   background: var(--navy-light);
   transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(26, 53, 87, 0.3);
 }
 
 .submit-btn:disabled {
@@ -3367,10 +3438,10 @@ a.btn-hero-outline:hover {
 }
 
 .form-privacy {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 1rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #4A6A90;
+  margin-top: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3380,6 +3451,20 @@ a.btn-hero-outline:hover {
 
 .form-privacy-icon {
   flex-shrink: 0;
+}
+
+.form-free-demo-note {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  background: #2A5499;
+  margin-top: 2.3rem;
+  margin-left: -2.5rem;
+  margin-right: -2.5rem;
+  margin-bottom: -2.5rem;
+  padding: 0.85rem 2.5rem;
+  border-radius: 0 0 20px 20px;
 }
 
 /* ─── SUCCESS STATE ──────────────────────────────── */

@@ -36,7 +36,6 @@ async function appendToSheets(data: Record<string, string>) {
         data.kota,
         data.jadwalTanggal || '-',
         data.jadwalWaktu   || '-',
-        data.sumber        || '-',
         data.tantangan     || '-',
       ]],
     },
@@ -103,7 +102,6 @@ function buildEmailHtml(data: Record<string, string>): string {
             <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;margin-bottom:24px;">
               ${field('Tanggal', data.jadwalTanggal)}
               ${field('Waktu', data.jadwalWaktu)}
-              ${field('Sumber Informasi', data.sumber)}
             </table>
 
             ${data.tantangan ? `

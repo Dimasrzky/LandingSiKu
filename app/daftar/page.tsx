@@ -1,7 +1,18 @@
 'use client'
 
-import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+
+import Image from 'next/image'
+import Navbar from '@/components/Navbar'
+
+const ArrowCircleIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#F7DD7D" />
+    <line x1="7" y1="12" x2="16" y2="12" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" />
+    <polyline points="12.5 8 17 12 12.5 16" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+import Footer from '@/components/Footer'
 
 interface FormData {
   nama: string
@@ -24,9 +35,11 @@ interface FormErrors {
   jabatan?: string
   sekolah?: string
   jenjang?: string
+  jumlah?: string
   provinsi?: string
   kota?: string
   jadwalTanggal?: string
+  jadwalWaktu?: string
   tantangan?: string
   sumber?: string
 }
@@ -59,14 +72,6 @@ const WAKTU_OPTIONS = [
   'Pagi (09:00 – 12:00)',
   'Siang (12:00 – 15:00)',
   'Sore (15:00 – 17:00)',
-]
-
-const SUMBER_OPTIONS = [
-  'Google / Mesin Pencari',
-  'Instagram / Facebook',
-  'Rekomendasi Teman / Kolega',
-  'WhatsApp / Broadcast',
-  'Lainnya',
 ]
 
 export default function DaftarPage() {
@@ -123,7 +128,9 @@ export default function DaftarPage() {
     if (!form.jenjang)            { newErrors.jenjang = 'Pilih jenjang sekolah';    missing.push('Jenjang Sekolah') }
     if (!form.provinsi.trim())    { newErrors.provinsi = 'Provinsi wajib diisi';    missing.push('Provinsi') }
     if (!form.kota.trim())        { newErrors.kota = 'Kota wajib diisi';            missing.push('Kota / Kabupaten') }
+    if (!form.jumlah)             { newErrors.jumlah = 'Pilih jumlah siswa';        missing.push('Jumlah Siswa') }
     if (!form.jadwalTanggal)      { newErrors.jadwalTanggal = 'Tanggal demo wajib diisi'; missing.push('Preferensi Tanggal Demo') }
+    if (!form.jadwalWaktu)        { newErrors.jadwalWaktu = 'Pilih waktu demo';    missing.push('Preferensi Waktu Demo') }
     if (!form.tantangan.trim())   { newErrors.tantangan = 'Tantangan wajib diisi';  missing.push('Tantangan yang Ingin Diselesaikan') }
     if (!form.sumber)             { newErrors.sumber = 'Pilih sumber informasi';    missing.push('Sumber Informasi') }
 
@@ -164,19 +171,13 @@ export default function DaftarPage() {
 
   return (
     <>
+      <Navbar />
       <div
         className="form-page"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('/image/BgDaftarSiKu.jpg')`,
-          backgroundAttachment: 'fixed',
-        }}
       >
         <div className="form-page-inner">
 
           <div className="form-wrapper">
-            <Link href="/" className="form-page-back fp-fade" style={{ '--fd': '0.25s' } as React.CSSProperties}>
-              ← Kembali ke beranda
-            </Link>
             {!isSuccess ? (
               <>
                 <div className="form-header-label fp-fade" style={{ '--fd': '0.32s' } as React.CSSProperties}>Demo Gratis 1 Bulan</div>
@@ -210,7 +211,7 @@ export default function DaftarPage() {
                       name="nama"
                       type="text"
                       className={`form-input${errors.nama ? ' error' : ''}`}
-                      placeholder="cth: Bu Sari Dewi"
+                      placeholder="cth: Sari Dewi Kurniawati"
                       value={form.nama}
                       onChange={handleChange}
                     />
@@ -228,7 +229,7 @@ export default function DaftarPage() {
                       name="email"
                       type="email"
                       className={`form-input${errors.email ? ' error' : ''}`}
-                      placeholder="cth: bu.sari.dewi@example.com"
+                      placeholder="cth: SariDewi@example.com"
                       value={form.email}
                       onChange={handleChange}
                     />
@@ -270,7 +271,7 @@ export default function DaftarPage() {
                     name="sekolah"
                     type="text"
                     className={`form-input${errors.sekolah ? ' error' : ''}`}
-                    placeholder="cth: SD Islam Terpadu Al-Hikmah"
+                    placeholder="cth: SDIT Al - Hikmah"
                     value={form.sekolah}
                     onChange={handleChange}
                   />
@@ -304,12 +305,12 @@ export default function DaftarPage() {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="jumlah">
-                      Jumlah Siswa (estimasi)
+                      Jumlah Siswa (estimasi)<span>*</span>
                     </label>
                     <select
                       id="jumlah"
                       name="jumlah"
-                      className="form-select"
+                      className={`form-select${errors.jumlah ? ' error' : ''}`}
                       value={form.jumlah}
                       onChange={handleChange}
                     >
@@ -318,6 +319,9 @@ export default function DaftarPage() {
                         <option key={j} value={j}>{j}</option>
                       ))}
                     </select>
+                    {errors.jumlah && (
+                    <div className="form-error-msg">{errors.jumlah}</div>
+                  )}
                   </div>
                 </div>
                 
@@ -365,14 +369,17 @@ export default function DaftarPage() {
                     <label className="form-label" htmlFor="jadwalTanggal">
                       Preferensi Tanggal Demo <span>*</span>
                     </label>
-                    <input
-                      id="jadwalTanggal"
-                      name="jadwalTanggal"
-                      type="date"
-                      className={`form-input${errors.jadwalTanggal ? ' error' : ''}`}
-                      value={form.jadwalTanggal}
-                      onChange={handleChange}
-                    />
+                    <div className="form-date-wrap">
+                      <input
+                        id="jadwalTanggal"
+                        name="jadwalTanggal"
+                        type="date"
+                        className={`form-input${errors.jadwalTanggal ? ' error' : ''}`}
+                        value={form.jadwalTanggal}
+                        onChange={handleChange}
+                      />
+                      <Image src="/icons/IconDate.png" alt="" width={20} height={20} className="form-date-icon" aria-hidden="true" />
+                    </div>
                     {errors.jadwalTanggal && (
                       <div className="form-error-msg">{errors.jadwalTanggal}</div>
                     )}
@@ -380,12 +387,12 @@ export default function DaftarPage() {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="jadwalWaktu">
-                      Preferensi Waktu
+                      Preferensi Waktu<span>*</span>
                     </label>
                     <select
                       id="jadwalWaktu"
                       name="jadwalWaktu"
-                      className="form-select"
+                      className={`form-select${errors.jadwalWaktu ? ' error' : ''}`}
                       value={form.jadwalWaktu}
                       onChange={handleChange}
                     >
@@ -394,13 +401,16 @@ export default function DaftarPage() {
                         <option key={w} value={w}>{w}</option>
                       ))}
                     </select>
+                      {errors.jadwalWaktu && (
+                      <div className="form-error-msg">{errors.jadwalWaktu}</div>
+                    )}
                   </div>
                 </div>
 
                 {/* Tantangan */}
                 <div className="form-group fp-fade" style={{ '--fd': '0.98s' } as React.CSSProperties}>
                   <label className="form-label" htmlFor="tantangan">
-                    Tantangan utama yang ingin diselesaikan <span>*</span>
+                    Masalah utama yang sedang dialami <span>*</span>
                   </label>
                   <textarea
                     id="tantangan"
@@ -416,37 +426,13 @@ export default function DaftarPage() {
                   )}
                 </div>
 
-                {/* Sumber Informasi */}
-                <div className="form-group fp-fade" style={{ '--fd': '1.04s' } as React.CSSProperties}>
-                  <label className="form-label" htmlFor="sumber">
-                    Dari mana Anda mengetahui SiKu? <span>*</span>
-                  </label>
-                  <select
-                    id="sumber"
-                    name="sumber"
-                    className={`form-select${errors.sumber ? ' error' : ''}`}
-                    value={form.sumber}
-                    onChange={handleChange}
-                  >
-                    <option value="">-- Pilih Sumber --</option>
-                    {SUMBER_OPTIONS.map((s) => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </select>
-                  {errors.sumber && (
-                    <div className="form-error-msg">{errors.sumber}</div>
-                  )}
-                </div>
-
                 <button
                   className="submit-btn fp-fade"
                   style={{ '--fd': '1.1s' } as React.CSSProperties}
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting
-                    ? 'Mendaftarkan...'
-                    : 'Jadwalkan Sekarang — 100% Gratis 1 Bulan ✦'}
+                  {isSubmitting ? 'Mendaftarkan...' : <>Jadwalkan Demo Sekarang <ArrowCircleIcon /></>}
                 </button>
 
                 {submitError && (
@@ -457,6 +443,12 @@ export default function DaftarPage() {
                   <span>
                     Data Anda aman dan tidak akan disebarkan ke pihak ketiga manapun.<br />
                     Dengan mendaftar, Anda setuju untuk dihubungi oleh tim SiKu melalui Email.
+                  </span>
+                </div>
+
+                <div className="form-free-demo-note">
+                  <span>
+                    100% Gratis Selama 1 Bulan
                   </span>
                 </div>
               </>
@@ -492,6 +484,7 @@ export default function DaftarPage() {
 
         </div>
       </div>
+      <Footer />
     </>
   )
 }
