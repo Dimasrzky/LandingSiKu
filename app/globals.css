@@ -212,12 +212,12 @@ body {
   margin-top: 0.25rem;
   padding: 0.75rem 1rem !important;
   border-radius: 8px !important;
-  background: var(--emerald) !important;
+  background: #1A2C4E !important;
   color: #fff !important;
 }
 
 .nav-mobile-cta:hover {
-  background: var(--emerald-light) !important;
+  background: #1A2C4E !important;
 }
 
 /* ─── NAVBAR DROPDOWN ───────────────────────────── */
@@ -4592,6 +4592,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* ── Forms ──────────────────────────────────────── */
   .form-row     { grid-template-columns: 1fr; }
   .form-wrapper { padding: 2rem 1.25rem; }
+
+  .form-free-demo-note {
+    font-size: 1.15rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    margin-bottom: -2rem;
+  }
+
+  .form-privacy {
+    font-size: 0.875rem;
+  }
 
   /* ── Footer ─────────────────────────────────────── */
   .footer-inner { flex-direction: column; text-align: center; gap: 1.5rem; }

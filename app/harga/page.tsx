@@ -1,95 +1,126 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect } from 'react'
+import Image from 'next/image'
+import { useEffect, useState, useRef } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import './harga.css'
 
 type Plan = {
   name: string
+  dot: 'green' | 'amber' | 'green-muted'
   tagline: string
+  maxSiswa: string
   price: string
   period: string
   popular: boolean
   comingSoon?: boolean
-  cta: string
   href: string
-  features: { label: string; on: boolean }[]
+  features: string[]
 }
 
 const PLANS: Plan[] = [
   {
     name: 'Starter',
-    tagline: 'Sekolah kecil, s/d 200 siswa',
-    price: 'Rp 299.000',
-    period: 'per sekolah / bulan',
+    dot: 'green',
+    tagline: 'Untuk sekolah kecil yang baru mulai digitalisasi pencatatan keuangan.',
+    maxSiswa: 'Maks. 200 siswa',
+    price: 'Rp 550.000',
+    period: 'Per sekolah / bulan',
     popular: false,
-    cta: 'Mulai Gratis 1 Bulan',
     href: '/daftar',
     features: [
-      { label: 'Dashboard keuangan dasar',  on: true  },
-      { label: 'Manajemen SPP & tagihan',   on: true  },
-      { label: 'Notifikasi WA otomatis',    on: true  },
-      { label: 'Laporan bulanan',           on: true  },
-      { label: 'Multi-unit / yayasan',      on: false },
-      { label: 'Laporan BOS otomatis',      on: false },
+      'Dashboard keuangan real-time',
+      'Manajemen SPP & tagihan',
+      'Manajemen siswa & import Excel',
+      '200 pesan WhatsApp / bulan',
+      'Laporan PDF & Excel',
     ],
   },
   {
     name: 'Sekolah',
-    tagline: 'Sekolah menengah, s/d 600 siswa',
-    price: 'Rp 599.000',
-    period: 'per sekolah / bulan',
+    dot: 'amber',
+    tagline: 'Untuk sekolah menengah yang butuh otomasi pembayaran dan kepatuhan.',
+    maxSiswa: 'Maks. 600 siswa',
+    price: 'Rp 1.200.000',
+    period: 'Per sekolah / bulan',
     popular: true,
-    cta: 'Mulai Gratis 1 Bulan',
     href: '/daftar',
     features: [
-      { label: 'Semua fitur Starter',              on: true  },
-      { label: 'Laporan BOS otomatis',             on: true  },
-      { label: 'Payment gateway terintergrasi',    on: true  },
-      { label: 'Rekonsiliasi bank otomatis',       on: true  },
-      { label: 'Multi-unit / yayasan',             on: false },
+      'Semua fitur Starter',
+      '800 pesan WhatsApp / bulan',
+      'Payment gateway',
+      'Rekonsiliasi bank otomatis',
+      'Laporan BOS otomatis',
     ],
   },
   {
     name: 'Yayasan',
-    tagline: 'Multi-unit, siswa tak terbatas',
-    price: 'Rp 1.499.000',
-    period: 'per yayasan / bulan',
+    dot: 'green-muted',
+    tagline: 'Untuk yayasan multi-unit yang butuh konsolidasi lintas jenjang sekolah.',
+    maxSiswa: 'Maks. 200 siswa',
+    price: 'Rp 3.100.000',
+    period: 'Per sekolah / bulan',
     popular: false,
     comingSoon: true,
-    cta: 'Segera Hadir',
     href: '#',
     features: [
-      { label: 'Semua fitur Sekolah',               on: true },
-      { label: 'Kelola banyak unit sekolah',        on: true },
-      { label: 'Dashboard konsolidasi yayasan',     on: true },
-      { label: 'Audit trail & ISAK 35',             on: true },
-      { label: 'Dedicated onboarding',              on: true },
-      { label: 'Priority support',                  on: true },
+      'Semua fitur Sekolah',
+      '2.500 pesan WhatsApp / bulan',
+      'Kelola banyak unit sekolah',
+      'Dashboard konsolidasi yayasan',
+      'Dedicated onboarding & priority support',
     ],
   },
 ]
 
-const FAQS = [
-  {
-    q: 'Apakah demo gratis benar-benar gratis?',
-    a: 'Ya. 1 bulan penuh tanpa batasan fitur, tanpa kartu kredit, tanpa syarat tersembunyi. Setelah 1 bulan Anda bisa memilih paket atau berhenti kapan saja.',
-  },
-  {
-    q: 'Bisa upgrade atau downgrade paket?',
-    a: 'Tentu. Anda dapat pindah paket kapan saja. Penagihan akan disesuaikan secara prorata.',
-  },
-  {
-    q: 'Data siswa kami aman?',
-    a: 'Data tersimpan di server Indonesia dengan enkripsi end-to-end. Kami tidak menjual atau berbagi data Anda ke pihak ketiga.',
-  },
-  {
-    q: 'Bagaimana proses onboarding?',
-    a: 'Tim kami menghubungi Anda dalam 1×24 jam setelah daftar untuk membantu setup awal — import data siswa, konfigurasi tagihan, dan pelatihan staf.',
-  },
-]
+
+function GachaNumber({ target, from, duration = 1400, format }: {
+  target: number; from: number; duration?: number; format: (n: number) => string
+}) {
+  const [display, setDisplay] = useState(from)
+  const ref = useRef<HTMLSpanElement>(null)
+  const started = useRef(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || started.current) return
+      started.current = true
+      observer.disconnect()
+      const startTime = performance.now()
+      let raf: number
+      const tick = (now: number) => {
+        const progress = Math.min((now - startTime) / duration, 1)
+        if (progress < 1) {
+          const settle = Math.max(0, (progress - 0.55) / 0.45)
+          const base = from + (target - from) * settle
+          const noise = (1 - settle) * Math.abs(target - from) * (Math.random() - 0.5)
+          setDisplay(Math.round(Math.max(0, base + noise)))
+          raf = requestAnimationFrame(tick)
+        } else {
+          setDisplay(target)
+        }
+      }
+      raf = requestAnimationFrame(tick)
+      return () => cancelAnimationFrame(raf)
+    }, { threshold: 0.4 })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, from, duration])
+  return <span ref={ref}>{format(display)}</span>
+}
+
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke='#00A46A' strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+)
+
+const LockIcon = () => (
+  <Image src="/icons/IconsLock.png" alt="Lock" width={52} height={52} />
+)
 
 export default function HargaPage() {
   useEffect(() => {
@@ -103,8 +134,23 @@ export default function HargaPage() {
           }
         })
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     )
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.cta-anim')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const delay = parseInt(el.dataset.delay ?? '0', 10)
+        setTimeout(() => el.classList.add('visible'), delay)
+        observer.unobserve(el)
+      })
+    }, { threshold: 0.12 })
     els.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
@@ -113,114 +159,186 @@ export default function HargaPage() {
     <>
       <Navbar />
 
-      <main>
-        {/* ─── HERO ─────────────────────────────────────── */}
-        <section className="ph-hero">
-          <div className="ph-hero-inner">
-            <div className="ph-badge">Harga Transparan</div>
-            <h1 className="ph-h1">
-              Pilih paket yang tepat<br />
-              untuk sekolah Anda
-            </h1>
-            <p className="ph-desc">
-              Mulai dengan demo gratis 1 bulan penuh tanpa kartu kredit,
-              tanpa syarat tersembunyi. Pilih paket setelah Anda merasakan manfaatnya.
-            </p>
+      <main className="ph-main">
+
+        {/* ─── HEADER ───────────────────────────────────── */}
+        <section className="ph-header">
+          <div className="ph-header-inner">
+            <div className="ph-header-text">
+              <div className="ph-label" data-animate style={{ '--delay': '0s' } as React.CSSProperties}>Harga &amp; Paket</div>
+              <h1 className="ph-h1" data-animate style={{ '--delay': '0.12s' } as React.CSSProperties}>
+                Pilih paket yang sesuai<br />
+                dengan skala sekolah Anda
+              </h1>
+              <p className="ph-desc" data-animate style={{ '--delay': '0.24s' } as React.CSSProperties}>
+                Semua paket mencakup onboarding dan dukungan teknis dari tim kami.
+              </p>
+              <p className="ph-desc" data-animate style={{ '--delay': '0.34s' } as React.CSSProperties}>
+                Mulai dari paket mana pun dan upgrade kapan saja.
+              </p>
+            </div>
+            <div className="ph-header-deco ph-header-deco--anim" aria-hidden="true" />
           </div>
         </section>
 
         {/* ─── PRICING CARDS ────────────────────────────── */}
-        <section className="ph-dark">
+        <section className="ph-cards-section">
           <div className="ph-cards">
             {PLANS.map((plan, i) => (
               <div
                 key={plan.name}
                 data-animate
                 style={{ '--delay': `${i * 0.13}s` } as React.CSSProperties}
-                className={[
-                  'ph-card',
-                  plan.popular ? 'ph-card--popular' : '',
-                  plan.comingSoon ? 'ph-card--locked' : '',
-                ].join(' ').trim()}
+                className="ph-card-outer"
               >
+                <div
+                  className={[
+                    'ph-card',
+                    plan.popular ? 'ph-card--popular' : '',
+                    plan.comingSoon ? 'ph-card--locked' : '',
+                  ].filter(Boolean).join(' ')}
+                >
+                  {/* Siswa badge */}
+                  <div className={`ph-siswa-badge${plan.popular ? ' ph-siswa-badge--dark' : ''}`}>
+                    <Image src="/icons/IconUsers.png" alt="" width={20} height={20} />
+                    {plan.maxSiswa}
+                  </div>
+
+                  {/* Plan name */}
+                  <div className="ph-plan-row">
+                    <span className={`ph-plan-dot ph-plan-dot--${plan.dot}`} />
+                    <span className="ph-plan-name">{plan.name}</span>
+                  </div>
+                  <p className="ph-plan-tagline">{plan.tagline}</p>
+
+                  {/* Price */}
+                  <div className="ph-price">{plan.price}</div>
+                  <div className="ph-period">{plan.period}</div>
+
+                  <div className="ph-divider" />
+
+                  {/* Features */}
+                  <ul className="ph-features">
+                    {plan.features.map((f) => (
+                      <li key={f}>
+                        <CheckIcon />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  {plan.comingSoon ? (
+                    <button disabled className="ph-cta ph-cta--locked">
+                      Mulai Berlangganan
+                    </button>
+                  ) : (
+                    <Link
+                      href={plan.href}
+                      className={`ph-cta${plan.popular ? ' ph-cta--popular' : ''}`}
+                    >
+                      Mulai Berlangganan
+                    </Link>
+                  )}
+
+                  {/* Lock overlay */}
+                  {plan.comingSoon && (
+                    <div className="ph-lock-overlay">
+                      <LockIcon />
+                      <span>Segera Hadir</span>
+                    </div>
+                  )}
+                </div>
+
                 {plan.popular && (
-                  <div className="ph-popular-badge">Paling populer</div>
-                )}
-                {plan.comingSoon && (
-                  <div className="ph-coming-soon-badge">Coming Soon</div>
-                )}
-
-                <div className="ph-plan-name">{plan.name}</div>
-                <div className="ph-plan-tagline">{plan.tagline}</div>
-
-                <div className="ph-price">{plan.price}</div>
-                <div className="ph-period">{plan.period}</div>
-
-                <ul className="ph-features">
-                  {plan.features.map((f) => (
-                    <li key={f.label} className={f.on ? 'ph-feat-on' : 'ph-feat-off'}>
-                      <span className="ph-dot" />
-                      {f.label}
-                    </li>
-                  ))}
-                </ul>
-
-                {plan.comingSoon ? (
-                  <button disabled className="ph-cta ph-cta--locked">
-                    {plan.cta}
-                  </button>
-                ) : (
-                  <Link
-                    href={plan.href}
-                    className={`ph-cta${plan.popular ? ' ph-cta--popular' : ''}`}
-                  >
-                    {plan.cta}
-                  </Link>
+                  <div className="ph-popular-footer">Paling Populer</div>
                 )}
               </div>
             ))}
           </div>
-
-          <p className="ph-note">
-            Semua paket termasuk demo gratis 1 bulan · Tidak perlu kartu kredit
-          </p>
         </section>
 
-        {/* ─── FAQ ──────────────────────────────────────── */}
-        <section className="ph-faq-section">
-          <div className="ph-faq-inner">
-            <div className="section-label" style={{ textAlign: 'center' }}>Pertanyaan Umum</div>
-            <h2 className="ph-faq-title">Ada yang ingin ditanyakan?</h2>
+        {/* ─── CTA HARGA ────────────────────────────── */}
+        <section className="cta-harga-section" style={{ position: 'relative', overflow: 'hidden', background: '#CEE1F8' }}>
+          <Image
+            src="/image/StarHero.png"
+            alt="Star"
+            width={200}
+            height={200}
+            className="ph-star-hero"
+            style={{ position: 'absolute', top: 20, left: 70, objectFit: 'contain', pointerEvents: 'none', zIndex: 0 }}
+          />
 
-            <div className="ph-faq-grid">
-              {FAQS.map((faq, i) => (
-                <div
-                  key={faq.q}
-                  data-animate
-                  style={{ '--delay': `${i * 0.1}s` } as React.CSSProperties}
-                  className="ph-faq-card"
-                >
-                  <div className="ph-faq-q">{faq.q}</div>
-                  <div className="ph-faq-a">{faq.a}</div>
+          <div className="cta-harga-inner">
+            <div className="cta-harga-header">
+              <h2 className="cta-harga-title cta-anim" data-delay="120">1 Bulan Gratis<br />Tanpa Syarat Tersembunyi</h2>
+              <p className="cta-harga-desc cta-anim" data-delay="240">
+                Kami tahu sekolah perlu membuktikan manfaat sebelum berkomitmen.
+                Karena itu kami tawarkan akses penuh bukan versi terbatas <br />selama 1 bulan pertama.
+              </p>
+            </div>
+
+            <div className="cta-card-wrap cta-anim" data-delay="400">
+              <div className="cta-card">
+                <span className="cta-card-topbadge">Terbatas Batch Pertama</span>
+
+                <div className="cta-card-price">
+                  <span className="cta-price-num">
+                    Rp <GachaNumber
+                      target={0}
+                      from={200000}
+                      duration={1000}
+                      format={(n) => n.toLocaleString('id-ID')}
+                    />
+                  </span>
                 </div>
-              ))}
+
+                <div className="cta-card-sub">
+                  <span>Selama 1 bulan pertama</span>
+                  <span className="cta-sub-dot" />
+                  <span>Tidak perlu kartu kredit</span>
+                </div>
+
+                <div className="cta-features">
+                  {[
+                    ['Semua fitur lengkap',           'Tidak ada batas siswa'],
+                    ['Notifikasi WhatsApp otomatis',   'Laporan & Dashboard'],
+                    ['Onboarding oleh tim kami',       'Dukungan teknis'],
+                    ['Export Excel & PDF',             'Multi-jenjang sekolah'],
+                  ].map((row, i) => (
+                    <div className="cta-feat-row" key={i}>
+                      {row.map((item) => (
+                        <div className="cta-feat-item" key={item}>
+                          <svg className="cta-feat-check" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 6L9 17l-5-5" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/daftar" className="cta-card-btn">
+                  Jadwalkan Demo Gratis
+                </Link>
+                <p className="cta-card-note">Setelah 1 bulan, pilih lanjut atau berhenti – tanpa paksaan</p>
+              </div>
+
             </div>
           </div>
-        </section>
 
-        {/* ─── BOTTOM CTA ───────────────────────────────── */}
-        <section className="ph-cta-section">
-          <div className="ph-cta-inner">
-            <h2 className="ph-cta-title">Mulai sekarang. Gratis 1 bulan.</h2>
-            <p className="ph-cta-sub">
-              {/*2+ sekolah sudah merasakan manfaatnya.*/}
-              Tidak perlu keahlian IT — tim kami bantu dari awal.
+          <div className="cta-info-box">
+            <span className="cta-info-icon">
+              <Image src="/icons/IconGuard.png" alt="Guard" width={60} height={60} />
+            </span>
+            <p className="cta-info-text">
+              Tim kami siap membantu. Setelah mendaftar, kami menghubungi kamu
+              dalam 1×24 jam untuk menjadwalkan sesi demo dan proses onboarding.
             </p>
-            <Link href="/daftar" className="btn-primary">
-              ✦ Demo Gratis Sekarang
-            </Link>
           </div>
         </section>
+
       </main>
 
       <Footer />
