@@ -25,7 +25,6 @@ interface FormData {
   kota: string
   jadwalTanggal: string
   jadwalWaktu: string
-  sumber: string
   tantangan: string
 }
 
@@ -41,7 +40,6 @@ interface FormErrors {
   jadwalTanggal?: string
   jadwalWaktu?: string
   tantangan?: string
-  sumber?: string
 }
 
 const JENJANG_OPTIONS = [
@@ -94,7 +92,6 @@ export default function DaftarPage() {
     kota: '',
     jadwalTanggal: '',
     jadwalWaktu: '',
-    sumber: '',
     tantangan: '',
   })
 
@@ -132,7 +129,6 @@ export default function DaftarPage() {
     if (!form.jadwalTanggal)      { newErrors.jadwalTanggal = 'Tanggal demo wajib diisi'; missing.push('Preferensi Tanggal Demo') }
     if (!form.jadwalWaktu)        { newErrors.jadwalWaktu = 'Pilih waktu demo';    missing.push('Preferensi Waktu Demo') }
     if (!form.tantangan.trim())   { newErrors.tantangan = 'Tantangan wajib diisi';  missing.push('Tantangan yang Ingin Diselesaikan') }
-    if (!form.sumber)             { newErrors.sumber = 'Pilih sumber informasi';    missing.push('Sumber Informasi') }
 
     setErrors(newErrors)
     setValidationAlert(missing)
