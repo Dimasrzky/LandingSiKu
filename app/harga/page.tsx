@@ -245,7 +245,6 @@ export default function HargaPage() {
                   {plan.comingSoon && (
                     <div className="ph-lock-overlay">
                       <LockIcon />
-                      <span>Segera Hadir</span>
                     </div>
                   )}
                 </div>
