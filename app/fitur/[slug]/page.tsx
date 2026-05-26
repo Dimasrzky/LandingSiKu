@@ -1,24 +1,46 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ArrowLeft, Check } from 'lucide-react'
+import Image from 'next/image'
+import {
+  CreditCard, BarChart3,SlidersHorizontal,
+} from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import FeatureBanner from '@/components/FeatureBanner'
+import SubFeatureCard from '@/components/SubFeatureCard'
 import { features, getFeatureBySlug } from '@/lib/features'
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 
-const WhatsAppIcon = ({ size = 32 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-)
+const featureIconMap: Record<string, ReactNode> = {
+  'manajemen-tagihan': <Image src="/icons/IconWallet.png" width={28} height={28} alt="Manajemen Tagihan" />,
+  'notifikasi-whatsapp': <Image src="/icons/IconWAStroke.png" width={28} height={28} alt="Notifikasi WhatsApp" />,
+  'pembayaran-digital': <Image src="/icons/IconDebit.png" width={28} height={28} alt="Pembayaran Digital" />,
+  'laporan-dashboard': <BarChart3 size={28} />,
+  'multi-jenjang': <Image src="/icons/IconSchool.png" width={28} height={28} alt="Multi-Jenjang" />,
+  'manajemen-siswa': <Image src="/icons/IconGraduation.png" width={28} height={28} alt="Manajemen Siswa" />,
+}
 
-const iconMap: Record<string, React.ReactNode> = {
-  'manajemen-tagihan': <Wallet size={32} />,
-  'notifikasi-whatsapp': <WhatsAppIcon size={32} />,
-  'pembayaran-digital': <CreditCard size={32} />,
-  'laporan-dashboard': <BarChart3 size={32} />,
-  'multi-jenjang': <Building2 size={32} />,
-  'manajemen-siswa': <GraduationCap size={32} />,
+const detailIconMap: Record<string, ReactNode> = {
+  IconBanner: <Image src="/icons/IconBanner.png" width={22} height={22} alt="Banner" />,
+  IconTab: <Image src="/icons/IconTab.png" width={22} height={22} alt="Tab" />,
+  SlidersHorizontal: <SlidersHorizontal size={22} />,
+  IconReverb: <Image src="/icons/IconReverb.png" width={22} height={22} alt="Reverb" />,
+  IconSettingWhite: <Image src="/icons/IconSettingWhite.png" width={22} height={22} alt="Settings" />,
+  IconDate: <Image src="/icons/IconDate.png" width={22} height={22} alt="Date" />,
+  IconLoading: <Image src="/icons/IconLoading.png" width={22} height={22} alt="Loading" />,
+  IconDocument: <Image src="/icons/IconDocument.png" width={22} height={22} alt="Document" />,
+  CreditCard: <CreditCard size={22} />,
+  IconBank: <Image src="/icons/IconBank.png" width={22} height={22} alt="Bank" />,
+  IconData: <Image src="/icons/IconData.png" width={22} height={22} alt="Data" />,
+  IconDashboard: <Image src="/icons/IconDashboard.png" width={22} height={22} alt="Dashboard" />,
+  IconRinci: <Image src="/icons/IconRinci.png" width={22} height={22} alt="Rinci" />,
+  IconPDF: <Image src="/icons/IconPDF.png" width={22} height={22} alt="PDF" />,
+  IconAllinOne: <Image src="/icons/IconAllinOne.png" width={22} height={22} alt="All-in-One" />,
+  IconList: <Image src="/icons/IconList.png" width={22} height={22} alt="List" />,
+  IconSetting: <Image src="/icons/IconSetting.png" width={22} height={22} alt="Settings" />,
+  IconSave: <Image src="/icons/IconSave.png" width={22} height={22} alt="Save" />,
+  IconUp: <Image src="/icons/IconUp.png" width={22} height={22} alt="Upload" />,
+  IconHistory: <Image src="/icons/IconHistory.png" width={22} height={22} alt="History" />,
 }
 
 export function generateStaticParams() {
@@ -44,57 +66,53 @@ export default async function FeaturePage(
   const feature = getFeatureBySlug(slug)
   if (!feature) notFound()
 
+  const hasFeaturedCard = feature.slug === 'manajemen-tagihan'
+  const [featuredDetail, ...restDetails] = feature.details
+  const gridDetails = hasFeaturedCard ? restDetails : feature.details
+
   return (
     <>
       <Navbar />
 
       <div className="feature-page">
-        <div className="feature-page-inner">
 
-          {/* Back link */}
-          <Link href="/" className="feature-back">
-            <ArrowLeft size={16} />
-            Kembali ke Beranda
-          </Link>
-
-          {/* Header */}
-          <div className="feature-header">
-            <div
-              className="feature-hero-icon"
-              style={{ background: feature.iconBg, color: feature.iconColor }}
-            >
-              {iconMap[feature.slug]}
-            </div>
-
-            {feature.badge && (
-              <div className="feature-badge">{feature.badge}</div>
+          {/* Top row: banner always on left, featured card only for manajemen-tagihan */}
+          <div className="fitur-section-main">
+            <FeatureBanner
+              title={feature.title}
+              desc={feature.desc}
+              badge={feature.badge}
+              icon={featureIconMap[feature.slug]}
+              items={feature.items}
+            />
+            {hasFeaturedCard && (
+              <SubFeatureCard
+                heading={featuredDetail.heading}
+                body={featuredDetail.body}
+                footerInfo={featuredDetail.footerInfo}
+                icon={featuredDetail.icon ? detailIconMap[featuredDetail.icon] : undefined}
+                featured
+              />
             )}
+          </div>
 
-            <h1 className="feature-title">{feature.title}</h1>
-            <p className="feature-lead">{feature.desc}</p>
-
-            <ul className="feature-checklist">
-              {feature.items.map((item) => (
-                <li key={item}>
-                  <Check size={16} strokeWidth={2.5} />
-                  {item}
-                </li>
+          {/* Grid: all cards (other features) or remaining cards (manajemen-tagihan) */}
+          {gridDetails.length > 0 && (
+            <div className="fitur-section-grid">
+              {gridDetails.map((d) => (
+                <SubFeatureCard
+                  key={d.heading}
+                  heading={d.heading}
+                  body={d.body}
+                  footerInfo={d.footerInfo}
+                  icon={d.icon ? detailIconMap[d.icon] : undefined}
+                  variant={d.variant}
+                />
               ))}
-            </ul>
-          </div>
-
-          {/* Detail sections */}
-          <div className="feature-details">
-            {feature.details.map((d) => (
-              <div className="feature-detail-card" key={d.heading}>
-                <h2>{d.heading}</h2>
-                <p>{d.body}</p>
-              </div>
-            ))}
-          </div>
+            </div>
+          )}
 
         </div>
-      </div>
 
       <Footer />
     </>

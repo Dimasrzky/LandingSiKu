@@ -3964,15 +3964,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .feature-page {
-  padding: 100px 5% 80px;
+  padding: 180px 5% 80px;
   min-height: 100vh;
-  background: var(--cream);
+  background: #CEE1F8;
 }
 
-.feature-page-inner {
-  max-width: 900px;
-  margin: 0 auto;
-}
 
 .feature-back {
   display: inline-flex;
@@ -4190,6 +4186,446 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/* ─── FEATURE BANNER COMPONENT ─────────────────────── */
+.fb-banner {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 3.25rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 58%;
+  min-height: 320px;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(26, 53, 87, 0.233);
+  animation: fadeInLeft 0.6s ease both;
+}
+
+/* Combined chip: icon + badge floating outside top-left */
+.fb-chip {
+  position: absolute;
+  top: -26px;
+  left: 1.1rem;
+  display: inline-flex;
+  align-items: stretch;
+  gap: 15px;
+  background: #2A5499;
+  border-radius: 100px;
+  padding: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fb-chip-icon {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: #F7DD7D;
+  color: #1A3557;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.fb-chip-badge {
+  background: #F7DD7D;
+  color: #1A3557;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 18px;
+  border-radius: 100px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.fb-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #0F2239;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+.fb-desc {
+  font-size: 1.45rem;
+  color: #4A6A90;
+  margin-bottom: 1.25rem;
+  white-space: pre-line;
+}
+
+.fb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.fb-tag {
+  background: #2A5499;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 300;
+  padding: 5px 13px;
+  border-radius: 100px;
+  line-height: 1.3;
+}
+
+/* ─── SUB-FEATURE CARD COMPONENT ───────────────────── */
+.sfc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sfc-card--featured {
+  flex: 0 0 335px;
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.355));
+  animation: cardOpen 0.9s 0.3s ease both;
+}
+
+.sfc-card--side-icon {
+  grid-column: 1 / -2;
+}
+
+.sfc-header {
+  background: #2A5499;
+  border-radius: 16px;
+  padding: 1.25rem 1.25rem 3.75rem;
+  position: relative;
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.284));
+}
+
+/* Side-icon variant: title-only header (full width) */
+.sfc-header--title-only {
+  padding: 1rem 10.9rem 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-left: 5.5rem;
+  white-space: nowrap;
+  border-radius: 16px 16px 16px 0;
+}
+
+/* White tab at top-left corner of the raised-icon content */
+.sfc-corner-tab {
+  position: absolute;
+  top: -90px;
+  left: 0;
+  width: 80px;
+  height: 90px;
+  background: #ffffff;
+  border-radius: 16px 16px 0 0;
+  z-index: 0;
+}
+
+/* Content with raised icon at top-left */
+.sfc-content--raised-icon {
+  position: relative;
+  overflow: visible !important;
+  border-radius: 16px;
+}
+
+
+.sfc-raised-icon {
+  position: absolute;
+  top: -70px;
+  left: 1rem;
+  width: 50px;
+  height: 50px;
+  background: #f7dd7d;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A3557;
+  box-shadow: 0 6px 18px rgba(42, 85, 153, 0.334);
+  z-index: 2;
+}
+
+.sfc-content--raised-icon .sfc-body {
+  border-radius: 0 16px 16px 16px;
+}
+
+.sfc-content--raised-icon:not(:has(.sfc-footer)) .sfc-body {
+  border-radius: 16px;
+}
+
+.sfc-body--has-raised-icon {
+  padding-top: 3.25rem;
+
+}
+
+.sfc-body--has-raised-icon p{
+  position: relative;
+  left: 30px;
+}
+
+.sfc-footer--rounded {
+  border-radius: 16px 0 16px 0;
+  margin-left: 19rem;
+  align-self: flex-start;
+  width: 57%;
+  position: relative;
+  top: 20px;
+  left: 7px;
+  white-space: nowrap;
+}
+
+.sfc-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+  flex: 1;
+  white-space: pre-line;
+}
+
+.sfc-card--featured .sfc-title {
+  font-size: 1.2rem;
+}
+
+.sfc-header--title-only .sfc-title {
+  white-space: nowrap;
+  position: relative;
+  top: 12px;
+}
+
+.sfc-icon {
+  width: 44px;
+  height: 44px;
+  background: #F7DD7D;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A3557;
+  position: absolute;
+  bottom: 1rem;
+  right: 1.25rem;
+}
+
+.sfc-content {
+  border-radius: 16px;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.285));
+}
+
+.sfc-body {
+  background: #ffffff;
+  padding: 1.25rem;
+  flex: 1;
+}
+
+.sfc-card--featured .sfc-body {
+  background: #ffffff;
+}
+
+.sfc-body p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2A5499;
+  line-height: 1.8;
+}
+
+.sfc-card--featured .sfc-body p {
+  font-size: 0.93rem;
+}
+
+.sfc-footer {
+  background: #F7DD7D;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1A3557;
+}
+
+.sfc-footer-star {
+  width: 30px;
+  height: 30px;
+  background: #2A5499;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F7DD7D;
+  flex-shrink: 0;
+}
+
+/* ─── FEATURE SECTION LAYOUT ────────────────────────── */
+.fitur-section {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.5s 0.1s ease both;
+}
+
+.fitur-section-main {
+  display: flex;
+  align-items: stretch;
+  gap: 3rem;
+  margin: 0 auto 2.5rem;
+  max-width: 1100px;
+}
+
+/* Banner fills full width when no featured card beside it */
+.fitur-section-main:has(.fb-banner:only-child) .fb-banner {
+  flex: 1 1 100%;
+  min-height: auto;
+}
+
+.fitur-section-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fitur-section-grid .sfc-card:nth-child(1) { animation: cardOpen 0.9s 0.5s ease-out both; }
+.fitur-section-grid .sfc-card:nth-child(2) { animation: cardOpen 0.9s 0.75s ease-out both; }
+.fitur-section-grid .sfc-card:nth-child(3) { animation: cardOpen 0.9s 1.0s ease-out both; }
+.fitur-section-grid .sfc-card:nth-child(4) { animation: cardOpen 0.9s 1.25s ease-out both; }
+.fitur-section-grid .sfc-card:nth-child(5) { animation: cardOpen 0.9s 1.5s ease-out both; }
+.fitur-section-grid .sfc-card:nth-child(6) { animation: cardOpen 0.9s 1.75s ease-out both; }
+
+@media (max-width: 1024px) {
+  .fitur-section-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .fitur-section-main {
+    gap: 2rem;
+  }
+  .sfc-card--side-icon {
+    grid-column: 1 / -1;
+  }
+  .fb-title {
+    font-size: 2rem;
+  }
+  .fb-desc {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .feature-page {
+    padding: 100px 4% 60px;
+  }
+
+  /* Layout */
+  .fitur-section-main {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .fitur-section-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .sfc-card--featured {
+    flex: none;
+  }
+  .sfc-card--side-icon {
+    grid-column: 1 / -1;
+  }
+
+  /* Feature Banner */
+  .fb-banner {
+    min-height: auto;
+    padding: 2.75rem 1.25rem 1.5rem;
+  }
+  .fb-title {
+    font-size: 1.7rem;
+  }
+  .fb-desc {
+    font-size: 1rem;
+    white-space: normal;
+  }
+  .fb-tag {
+    font-size: 0.9rem;
+  }
+  .fb-chip {
+    top: -22px;
+  }
+
+  /* SubFeatureCard — side-icon (beasiswa) mobile reset */
+  .sfc-card--side-icon .sfc-corner-tab {
+    display: none;
+  }
+  .sfc-content--raised-icon .sfc-body {
+    border-radius: 16px;
+  }
+  .sfc-raised-icon {
+    left: auto;
+    right: 1rem;
+  }
+  .sfc-header--title-only {
+    margin-left: 0;
+    padding: 1rem 1.25rem 3rem;
+    display: flex;
+    align-self: auto;
+    width: 100%;
+    white-space: normal;
+    border-radius: 16px 16px 16px 0;
+  }
+  .sfc-header--title-only .sfc-title {
+    white-space: pre-line;
+    top: 0;
+  }
+  .sfc-footer--rounded {
+    margin-left: 0;
+    width: auto;
+    top: 0;
+    left: 0;
+    white-space: normal;
+    border-radius: 0 0 16px 16px;
+  }
+  .sfc-body--has-raised-icon p {
+    left: 0;
+  }
+  .sfc-body--has-raised-icon {
+    padding-top: 3rem;
+    padding-left: 1.25rem;
+  }
+
+  /* General card spacing */
+  .sfc-header {
+    padding: 1rem 1rem 3.5rem;
+  }
+  .sfc-body p {
+    font-size: 0.95rem;
+  }
+  .sfc-footer {
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes cardOpen {
+  0% {
+    transform: perspective(700px) rotateY(180deg);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(700px) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
 /* ─── ANIMATIONS ─────────────────────────────────── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -4273,10 +4709,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media (max-width: 768px) {
 
   /* ── Navbar ─────────────────────────────────────── */
-  .nav { top: 8px; padding: 0 4%; gap: 10px; }
-  .nav-links-card { padding: 4px; border-radius: 12px; gap: 0; }
+  .nav { top: 8px; padding: 0 6%; gap: 10px; justify-content: space-between; }
+  .nav-links-card { padding: 4px; border-radius: 12px; gap: 0; margin-right: -1rem; }
   .nav-hide-mobile { display: none !important; }
-  .nav-hamburger   { display: flex !important; }
+  .nav-hamburger   { display: flex !important; padding: 10px 12px; }
 
   /* ── Sections generic ───────────────────────────── */
   .section { padding: 48px 5%; }
@@ -4392,12 +4828,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 28px;
   }
 
-  /* 2-column grid on mobile (cards are short text) */
   .apasiku-fcards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     transform: none;
-    column-gap: 12px;
-    row-gap: 24px;
+    row-gap: 16px;
   }
 
   .apasiku-fcard {
