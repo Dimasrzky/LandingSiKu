@@ -13,7 +13,7 @@ import type { ReactNode } from 'react'
 
 const featureIconMap: Record<string, ReactNode> = {
   'manajemen-tagihan': <Image src="/icons/IconWallet.png" width={28} height={28} alt="Manajemen Tagihan" />,
-  'notifikasi-whatsapp': <Image src="/icons/IconWAStroke.png" width={28} height={28} alt="Notifikasi WhatsApp" />,
+  'notifikasi-whatsapp': <Image src="/icons/IconWaStroke.png" width={28} height={28} alt="Notifikasi WhatsApp" />,
   'pembayaran-digital': <Image src="/icons/IconDebit.png" width={28} height={28} alt="Pembayaran Digital" />,
   'laporan-dashboard': <BarChart3 size={28} />,
   'multi-jenjang': <Image src="/icons/IconSchool.png" width={28} height={28} alt="Multi-Jenjang" />,
