@@ -163,10 +163,7 @@ export default function Navbar() {
           Cara Kerja
         </Link>
         <Link href="/harga" className="nav-mobile-item" onClick={() => setMenuOpen(false)}>
-          Harga
-        </Link>
-        <Link href="/support" className="nav-mobile-item" onClick={() => setMenuOpen(false)}>
-          Dukungan
+          Harga & Paket
         </Link>
 
         <div className="nav-mobile-divider" />

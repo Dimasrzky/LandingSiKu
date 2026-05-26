@@ -25,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -32,6 +33,7 @@ body {
   color: var(--text-dark);
   background: var(--white);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* ─── NAVBAR ─────────────────────────────────────── */
