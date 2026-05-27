@@ -361,8 +361,9 @@ body {
 .ticker-wrap {
   background-color: #91BDFF;
   overflow: hidden;
-  padding: 14px 0;
+  padding: 6px 0;
   position: relative;
+  margin-top: -52px;
   z-index: 1;
   border-top: 1px solid rgba(26, 53, 87, 0.12);
   border-bottom: 1px solid rgba(26, 53, 87, 0.12);
@@ -680,6 +681,7 @@ body {
 
   .cta-card-note {
     font-size: 0.8rem;
+    margin-top: 12px;
   }
 
   .cta-info-box {
@@ -687,11 +689,17 @@ body {
   }
 
   .cta-info-icon {
-    min-width: 90px;
+    min-width: 64px;
+  }
+  .cta-info-icon img {
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .cta-info-text {
-    font-size: 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.5;
   }
 }
 
@@ -717,11 +725,17 @@ body {
   }
 
   .cta-info-icon {
-    min-width: 72px;
+    min-width: 52px;
+  }
+  .cta-info-icon img {
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .cta-info-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.5;
   }
 }
 
@@ -1385,7 +1399,7 @@ body {
 .hero-anchor-btn {
   position: absolute;
   right: 8%;
-  bottom: 6%;
+  bottom: 11.1%;
   background: none;
   border: none;
   padding: 0;
@@ -1856,7 +1870,7 @@ a.btn-hero-outline:hover {
   position: relative;
   z-index: 2;
   border-radius: 80px 0px 80px 0px;
-  box-shadow: 0 0px 20px rgba(26, 53, 87, 0.3);
+  box-shadow: 0 0px 20px rgba(26, 53, 87, 0.332);
 }
 
 .masalah-card--light::before {
@@ -2492,7 +2506,7 @@ a.btn-hero-outline:hover {
 
 .apasiku-fcard-desc {
   font-size: 1.12rem;
-  font-weight: 700;
+  font-weight: 450;
   color: #4A6A90;
   margin: 0;
   line-height: 1.6;
@@ -2512,7 +2526,7 @@ a.btn-hero-outline:hover {
   font-size: 1rem;
   font-weight: 600;
   padding: 6px 8px 6px 18px;
-  border-radius: 999px;
+  border-radius: 11px;
   box-shadow: 0 4px 20px rgba(33,67,108,0.25);
   display: inline-flex;
   align-items: center;
@@ -4414,7 +4428,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex: 1;
   display: flex;
   flex-direction: column;
-  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.285));
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.282));
 }
 
 .sfc-body {
@@ -4722,7 +4736,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .section-subtitle { font-size: 1rem; }
 
   /* ── Hero ───────────────────────────────────────── */
-  .hero { padding: 90px 5% 48px; min-height: unset; }
+  .hero { padding: 120px 5% 48px; min-height: unset; }
 
   .hero-inner {
     flex-direction: column;
@@ -4749,6 +4763,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .hero-star { display: none; }
 
   /* ── Ticker ─────────────────────────────────────── */
+  .ticker-wrap { margin-top: 0; }
   .ticker-item { font-size: 0.85rem; padding: 0 18px; }
 
   /* ── Pain / Masalah section ─────────────────────── */
@@ -4838,12 +4853,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .apasiku-fcard {
     min-width: 0;
-    min-height: unset;
+    min-height: 160px;
     padding: 14px 12px 12px;
   }
 
   .apasiku-fcard-desc {
-    font-size: 0.78rem;
+    font-size: 1rem;
     line-height: 1.5;
   }
 
@@ -4958,6 +4973,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* ── Cara Kerja timeline ────────────────────────── */
   .ckerja-timeline { margin-top: 2rem; }
   .ckerja-vline    { display: none; }
+  .ckerja-star     { width: 120px !important; height: 120px !important;margin-top: 30px; }
 
   .ckerja-step,
   .ckerja-step--left,
@@ -4988,11 +5004,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 34px;
   }
 
-  /* Disable entrance animations on mobile */
+  /* Mobile entrance: fade up instead of slide left/right */
   .ckerja-anim--left,
-  .ckerja-anim--right { opacity: 1; transform: none; }
+  .ckerja-anim--right {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
   .ckerja-anim--left.visible,
-  .ckerja-anim--right.visible { animation: none; }
+  .ckerja-anim--right.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+  }
 
   /* Number circle: sit fully above the card top edge */
   .ckerja-num {
@@ -5014,12 +5038,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left !important;
   }
 
+  .ckerja-card-body {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    padding-bottom: 2.5rem;
+    min-height: unset;
+  }
+
   .ckerja-card-icon,
   .ckerja-card-icon--bl {
     right: 0.75rem !important;
     left: auto !important;
     bottom: 0.6rem !important;
   }
+
+  .ckerja-end { display: none; }
 
   /* ── Pain grid ──────────────────────────────────── */
   .pain-grid      { grid-template-columns: 1fr; }
@@ -5145,7 +5179,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .closing-circle--br { bottom: -50px; right: -50px; }
 
   /* ── Hero — extra mobile polish ─────────────────── */
-  .hero { padding: 80px 5% 40px; }
+  .hero { padding: 140px 5% 40px; }
   .hero h1 { font-size: 1.65rem; }
   .hero-desc { font-size: 0.9rem; }
   .badge-tag { font-size: 0.82rem; padding: 5px 12px; margin-bottom: 1rem; }
