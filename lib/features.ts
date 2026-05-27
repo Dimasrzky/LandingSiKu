@@ -70,7 +70,7 @@ export const features: Feature[] = [
     items: ['Reminder H-3, H-1 jatuh tempo', 'Konfirmasi pembayaran instan', 'Laporan bulanan ke orang tua'],
     details: [
       {
-        heading: 'Pengingat Jatuh Tempo Otomatis',
+        heading: 'Pengingat Jatuh \nTempo Otomatis',
         body: 'Sistem secara otomatis mengirim pesan WhatsApp kepada orang tua H-3 dan H-1 sebelum jatuh tempo tagihan. Tidak ada lagi tunggakan yang terlewat karena orang tua lupa.',
         footerInfo: 'Nol tunggakan terlewat',
         icon: 'IconDate',
@@ -186,7 +186,7 @@ export const features: Feature[] = [
         icon: 'IconSave',
       },
       {
-        heading: 'Proses Naik Kelas & Mutasi Mudah',
+        heading: 'Proses Naik Kelas & \nMutasi Mudah',
         body: 'Proses kenaikan kelas massal di akhir tahun ajaran hanya perlu beberapa klik. Data siswa yang pindah sekolah juga dapat diarsipkan dengan riwayat keuangan lengkap.',
         footerInfo: 'Efisien di akhir tahun ajaran',
         icon: 'IconUp',
