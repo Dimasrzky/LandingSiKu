@@ -314,7 +314,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: rgba(121, 119, 119, 0.345);
+  background: rgba(173, 173, 173, 0.659);
   backdrop-filter: blur(2px);
   border-radius: 40px;
   pointer-events: none;
