@@ -119,7 +119,7 @@ const CheckIcon = () => (
 )
 
 const LockIcon = () => (
-  <Image src="/icons/IconsLock.png" alt="Lock" width={52} height={52} />
+  <Image src="/icons/IconLock.png" alt="Lock" width={52} height={52} />
 )
 
 export default function HargaPage() {
