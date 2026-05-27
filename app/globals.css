@@ -153,12 +153,12 @@ body {
 
 .nav-mobile-menu {
   position: fixed;
-  top: 88px;
+  top: 0;
   left: 0;
   right: 0;
   background: #fff;
   z-index: 99;
-  padding: 1rem 1.25rem 1.5rem;
+  padding: 80px 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -4433,7 +4433,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex: 1;
   display: flex;
   flex-direction: column;
-  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.292));
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.305));
 }
 
 .sfc-body {
