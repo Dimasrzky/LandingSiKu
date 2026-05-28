@@ -171,10 +171,7 @@ export default function HargaPage() {
                 dengan skala sekolah Anda
               </h1>
               <p className="ph-desc" data-animate style={{ '--delay': '0.24s' } as React.CSSProperties}>
-                Semua paket mencakup onboarding dan dukungan teknis dari tim kami.
-              </p>
-              <p className="ph-desc" data-animate style={{ '--delay': '0.34s' } as React.CSSProperties}>
-                Mulai dari paket mana pun dan upgrade kapan saja.
+                Semua paket mencakup onboarding dan dukungan teknis dari tim kami. <span className="ph-desc-newline">Mulai dari paket mana pun dan upgrade kapan saja.</span>
               </p>
             </div>
             <div className="ph-header-deco ph-header-deco--anim" aria-hidden="true" />

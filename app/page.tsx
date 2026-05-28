@@ -589,7 +589,7 @@ export default function HomePage() {
               />
             </div>
             <h2 className="kondisi-title">
-              Begini kondisi nyata yang terjadi<br />
+              Begini kondisi nyata yang terjadi <br className="br-hide-mobile" />
               di banyak sekolah swasta hari ini
             </h2>
             <p className="kondisi-desc">
@@ -681,7 +681,7 @@ export default function HomePage() {
         <div className="apasiku-inner">
           <div className="apasiku-content">
             <span className="apasiku-badge apasiku-anim" data-delay="0">Apa itu SiKu?</span>
-            <h2 className="apasiku-title apasiku-anim" data-delay="140">Sistem keuangan sekolah swasta yang simpel, akurat, dan siap audit</h2>
+            <h2 className="apasiku-title apasiku-anim" data-delay="140">Sistem keuangan sekolah swasta<br className="apasiku-title-br" /> yang simpel, akurat, dan siap audit</h2>
             <p className="apasiku-desc apasiku-anim" data-delay="280">SiKu adalah platform SaaS manajemen keuangan berbasis web yang dirancang khusus untuk sekolah dan yayasan swasta skala kecil hingga menengah — menggantikan Excel, buku kas, dan WhatsApp dengan satu sistem yang terintegrasi penuh.</p>
           </div>
           <div className="apasiku-image">
@@ -844,7 +844,7 @@ export default function HomePage() {
             <div className="section-label">Cara Kerja</div>
             <h2 className="section-title">Mulai dalam 3 langkah mudah</h2>
             <p className="section-subtitle" style={{ margin: '0 auto', textAlign: 'center' }}>
-              Tidak perlu keahlian IT. Tim kami siap membantu <br /> setup dari awal hingga sekolah siap pakai.
+              Tidak perlu keahlian IT. Tim kami siap membantu <br className="br-hide-mobile" /> setup dari awal hingga sekolah siap pakai.
             </p>
           </div>
 
@@ -858,7 +858,7 @@ export default function HomePage() {
                 <div className="ckerja-card">
                   <div className="ckerja-card-header">Daftar &amp; Lengkapi Data Sekolah</div>
                   <div className="ckerja-card-body ckerja-card-body--right">
-                    <p>Isi formulir singkat seputar profil sekolah dan komponen biaya.<br />Tim kami menghubungi dalam <br />1×24 jam untuk membantu <br />proses setup awal.</p>
+                    <p>Isi formulir singkat seputar profil sekolah dan komponen biaya. <br className="br-hide-mobile" />Tim kami menghubungi dalam <br className="br-hide-mobile" />1×24 jam untuk membantu <br className="br-hide-mobile" />proses setup awal.</p>
                     <span className="ckerja-card-icon">
                       <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#A4CEFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
@@ -1145,7 +1145,7 @@ export default function HomePage() {
         <div className="closing-inner">
           <span className="closing-badge closing-anim" data-delay="0">Mulai Sekarang</span>
           <h2 className="closing-title closing-anim" data-delay="120">Saatnya beralih ke SiKu.<br />Sudah cukup rekap manual.</h2>
-          <p className="closing-desc closing-anim" data-delay="240">Coba gratis 1 bulan penuh tanpa kartu kredit, tanpa risiko.<br />Tim kami siap membantu dari awal hingga sistem berjalan.</p>
+          <p className="closing-desc closing-anim" data-delay="240">Coba gratis 1 bulan penuh tanpa kartu kredit, tanpa risiko.<br className="br-hide-mobile" />Tim kami siap membantu dari awal hingga sistem berjalan.</p>
           <div className="closing-btns closing-anim" data-delay="360">
             <Link href="/harga" className="closing-btn-outline">Lihat Paket &amp; Harga</Link>
             <Link href="/daftar" className="closing-btn-primary">

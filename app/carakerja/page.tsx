@@ -94,7 +94,7 @@ export default function CaraKerjaPage() {
               <div className="section-label">Cara Kerja</div>
               <h2 className="section-title">Mulai dalam 3 langkah mudah</h2>
               <p className="section-subtitle" style={{ margin: '0 auto', textAlign: 'center' }}>
-                Tidak perlu keahlian IT. Tim kami siap membantu <br /> setup dari awal hingga sekolah siap pakai.
+                Tidak perlu keahlian IT. Tim kami siap membantu <br className="br-hide-mobile" /> setup dari awal hingga sekolah siap pakai.
               </p>
             </div>
 
@@ -108,7 +108,7 @@ export default function CaraKerjaPage() {
                   <div className="ckerja-card">
                     <div className="ckerja-card-header">Daftar &amp; Lengkapi Data Sekolah</div>
                     <div className="ckerja-card-body ckerja-card-body--right">
-                      <p>Isi formulir singkat seputar profil sekolah dan komponen biaya.<br />Tim kami menghubungi dalam <br />1×24 jam untuk membantu <br />proses setup awal.</p>
+                      <p>Isi formulir singkat seputar profil sekolah dan komponen biaya. <br className="br-hide-mobile" />Tim kami menghubungi dalam <br className="br-hide-mobile" />1×24 jam untuk membantu <br className="br-hide-mobile" />proses setup awal.</p>
                       <span className="ckerja-card-icon">
                         <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#A4CEFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>

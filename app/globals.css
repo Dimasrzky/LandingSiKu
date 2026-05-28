@@ -714,6 +714,7 @@ body {
 
   .cta-harga-desc {
     font-size: 0.95rem;
+    display: none;
   }
 
   .cta-price-num {
@@ -4361,7 +4362,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   align-items: center;
   justify-content: center;
   color: #1A3557;
-  box-shadow: 0 6px 18px rgba(42, 85, 153, 0.334);
+  box-shadow: 0 6px 18px rgba(42, 85, 153, 0.355);
   z-index: 2;
 }
 
@@ -4433,7 +4434,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex: 1;
   display: flex;
   flex-direction: column;
-  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.305));
+  filter: drop-shadow(0 8px 24px rgba(42, 85, 153, 0.308));
 }
 
 .sfc-body {
@@ -4729,6 +4730,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* ── Mobile (≤768px) ──────────────────────────────── */
 @media (max-width: 768px) {
 
+  /* ── General ────────────────────────────────────── */
+  .br-hide-mobile { display: none; }
+
   /* ── Navbar ─────────────────────────────────────── */
   .nav { top: 8px; padding: 0 6%; gap: 10px; justify-content: space-between; }
   .nav-links-card { padding: 4px; border-radius: 12px; gap: 0; margin-right: -1rem; }
@@ -4840,7 +4844,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .apasiku-image { transform: none; align-self: center; }
   .apasiku-star img { width: 140px !important; height: 140px !important; }
 
-  .apasiku-title { font-size: 1.45rem; }
+  .apasiku-title { font-size: 1.3rem; text-wrap: balance; }
   .apasiku-desc  { font-size: 1rem; }
 
   .apasiku-cards {
