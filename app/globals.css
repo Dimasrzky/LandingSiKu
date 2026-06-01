@@ -3403,6 +3403,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: not-allowed;
 }
 
+.submit-btn--loading {
+  padding: 0 2rem;
+  justify-content: center;
+}
+
 .form-validation-alert {
   margin-bottom: 1.5rem;
   padding: 1rem 1.25rem;

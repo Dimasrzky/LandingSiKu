@@ -423,7 +423,7 @@ export default function DaftarPage() {
                 </div>
 
                 <button
-                  className="submit-btn fp-fade"
+                  className={`submit-btn fp-fade${isSubmitting ? ' submit-btn--loading' : ''}`}
                   style={{ '--fd': '1.1s' } as React.CSSProperties}
                   onClick={handleSubmit}
                   disabled={isSubmitting}
