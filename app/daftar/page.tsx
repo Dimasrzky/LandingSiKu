@@ -218,14 +218,14 @@ export default function DaftarPage() {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="email">
-                      Email <span>*</span>
+                      Email Sekolah <span>*</span>
                     </label>
                     <input
                       id="email"
                       name="email"
                       type="email"
                       className={`form-input${errors.email ? ' error' : ''}`}
-                      placeholder="cth: SariDewi@example.com"
+                      placeholder="cth: Sditmekarbuana@gmail.com"
                       value={form.email}
                       onChange={handleChange}
                     />
