@@ -83,7 +83,7 @@ function buildEmailHtml(data: Record<string, string>): string {
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9CA3AF;margin-bottom:8px;">Data Kontak</div>
             <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;margin-bottom:24px;">
               ${field('Nama Lengkap', data.nama)}
-              ${field('Email', data.email)}
+              ${field('Email Sekolah', data.email)}
               ${field('Jabatan', data.jabatan)}
             </table>
 
