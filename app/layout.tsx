@@ -10,7 +10,10 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'SiKu - Sistem Keuangan Sekolah Swasta Modern',
+  title: {    
+    default: 'SiKu - Sistem Keuangan Sekolah Swasta Modern',
+    template: '%s | SiKu',
+  },
   description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta Indonesia dalam satu platform digital.',
   keywords: 'sistem keuangan sekolah, aplikasi SPP, bendahara sekolah, yayasan pendidikan Indonesia',
 
