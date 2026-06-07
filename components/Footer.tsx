@@ -29,7 +29,7 @@ export default function Footer() {
               <span className="footer-social-icon">
                 <Image src="/icons/IconEmail.png" alt="Email icon" width={22} height={22} style={{ objectFit: 'contain' }} />
               </span>
-              <span>siku@gmail.com</span>
+              <span>equanusa@gmail.com</span>
             </a>
             <a href="https://wa.me/6281256640452" className="footer-social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
               <span className="footer-social-icon">
