@@ -11,11 +11,20 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: 'SiKu - Sistem Keuangan Sekolah Swasta Modern',
-  description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta Indonesia dalam satu platform digital. Notifikasi otomatis ke orang tua via WhatsApp.',
+  description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta Indonesia dalam satu platform digital.',
   keywords: 'sistem keuangan sekolah, aplikasi SPP, bendahara sekolah, yayasan pendidikan Indonesia',
 
   verification: {
     google: 'AYljetFck46XJADB0wAOb8HTXVECATUkGrmylA51ncM',
+  },
+
+  openGraph: {
+  title: 'SiKu - Sistem Keuangan Sekolah Swasta Modern',
+  description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta dalam satu platform digital.',
+  url: 'https://pakaisiku.id',
+  siteName: 'SiKu',
+  locale: 'id_ID',
+  type: 'website',
   },
 }
 
