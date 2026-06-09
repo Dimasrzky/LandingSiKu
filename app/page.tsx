@@ -105,7 +105,7 @@ export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [heroReady, setHeroReady] = useState(false)
   const [testiActive, setTestiActive] = useState(0)
-  const { requestLocation } = useGeolocation()
+  const { lat, lng, granted, requestLocation } = useGeolocation()
 
   useEffect(() => {
     const t = setTimeout(() => setHeroReady(true), 50)
@@ -116,6 +116,15 @@ export default function HomePage() {
     requestLocation()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!granted || lat === null || lng === null) return
+    fetch('/api/lokasi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lat, lng }),
+    })
+  }, [granted, lat, lng])
 
   useEffect(() => {
     const timer = setInterval(() => {
