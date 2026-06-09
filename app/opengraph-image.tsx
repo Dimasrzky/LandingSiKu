@@ -6,23 +6,8 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function Image() {
-  // Ambil logo dari public folder
-  const logoData = await fetch(
-    new URL('/logo.png', 'https://pakaisiku.id')
-  ).then(res => res.arrayBuffer())
-
-  const logoBase64 = btoa(
-    String.fromCharCode(...new Uint8Array(logoData))
-  )
-
-  // Ambil icon.png dari folder app
-  const iconData = await fetch(
-    new URL('./icon.png', import.meta.url)
-  ).then(res => res.arrayBuffer())
-
-  const iconBase64 = btoa(
-    String.fromCharCode(...new Uint8Array(iconData))
-  )
+  const logoData = await fetch('https://pakaisiku.id/image/LogoSiKuBaru.png').then(res => res.arrayBuffer())
+  const logoBase64 = btoa(String.fromCharCode(...new Uint8Array(logoData)))
 
   return new ImageResponse(
     (
@@ -39,22 +24,14 @@ export default async function Image() {
           padding: '60px',
         }}
       >
-        {/* Logo dan Icon */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`data:image/png;base64,${logoBase64}`}
-            width={180}
-            height={180}
-            alt='SiKu Logo'
-            style={{ objectFit: 'contain' }}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`data:image/png;base64,${iconBase64}`}
-            width={80}
-            height={80}
-            alt='SiKu Icon'
+            width={200}
+            height={200}
+            alt='PakaiSiku Logo'
             style={{ objectFit: 'contain' }}
           />
         </div>
