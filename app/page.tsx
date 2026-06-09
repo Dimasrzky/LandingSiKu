@@ -14,6 +14,7 @@ const ArrowCircleIcon = () => (
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { useGeolocation } from '@/hooks/useGeolocation'
+import { useTracking } from '@/hooks/useTracking'
 
 function GachaNumber({ target, from, duration = 1400, format }: {
   target: number
@@ -106,6 +107,7 @@ export default function HomePage() {
   const [heroReady, setHeroReady] = useState(false)
   const [testiActive, setTestiActive] = useState(0)
   const { lat, lng, granted, requestLocation } = useGeolocation()
+  const { trackCTA } = useTracking()
 
   useEffect(() => {
     const t = setTimeout(() => setHeroReady(true), 50)
@@ -439,10 +441,10 @@ export default function HomePage() {
             </p>
 
             <div className="hero-cta">
-              <Link href="/harga" className="btn-hero-outline">
+              <Link href="/harga" className="btn-hero-outline" onClick={() => trackCTA('Harga & Paket', '/harga')}>
                 Harga &amp; Paket
               </Link>
-              <Link href="/daftar" className="btn-primary">
+              <Link href="/daftar" className="btn-primary" onClick={() => trackCTA('Coba Gratis Sekarang (Hero)', '/daftar')}>
                 Coba Gratis Sekarang <ArrowCircleIcon />
               </Link>
             </div>
@@ -616,7 +618,7 @@ export default function HomePage() {
 
           {/* Kanan: tombol */}
           <div className="kondisi-action kondisi-anim-right">
-            <Link href="/daftar" className="kondisi-btn">
+            <Link href="/daftar" className="kondisi-btn" onClick={() => trackCTA('Solusi Kami', '/daftar')}>
               <span>Solusi Kami</span>
               <svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="10" fill="#1A3557" />
@@ -1003,7 +1005,7 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <Link href="/daftar" className="cta-card-btn">
+              <Link href="/daftar" className="cta-card-btn" onClick={() => trackCTA('Jadwalkan Demo Gratis (CTA Card)', '/daftar')}>
                 Jadwalkan Demo Gratis
               </Link>
               <p className="cta-card-note">Setelah 1 bulan, pilih lanjut atau berhenti – tanpa paksaan</p>
@@ -1144,7 +1146,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <Link href="/daftar" className="testi-cta-btn">
+              <Link href="/daftar" className="testi-cta-btn" onClick={() => trackCTA('Coba Gratis Sekarang (Testimoni)', '/daftar')}>
                 Coba Gratis Sekarang <ArrowCircleIcon />
               </Link>
             </div>
@@ -1163,8 +1165,8 @@ export default function HomePage() {
           <h2 className="closing-title closing-anim" data-delay="120">Saatnya beralih ke SiKu.<br />Sudah cukup rekap manual.</h2>
           <p className="closing-desc closing-anim" data-delay="240">Coba gratis 1 bulan penuh tanpa kartu kredit, tanpa risiko.<br className="br-hide-mobile" />Tim kami siap membantu dari awal hingga sistem berjalan.</p>
           <div className="closing-btns closing-anim" data-delay="360">
-            <Link href="/harga" className="closing-btn-outline">Lihat Paket &amp; Harga</Link>
-            <Link href="/daftar" className="closing-btn-primary">
+            <Link href="/harga" className="closing-btn-outline" onClick={() => trackCTA('Lihat Paket & Harga', '/harga')}>Lihat Paket &amp; Harga</Link>
+            <Link href="/daftar" className="closing-btn-primary" onClick={() => trackCTA('Jadwalkan Demo Gratis (Closing)', '/daftar')}>
               Jadwalkan Demo Gratis <ArrowCircleIcon />
             </Link>
           </div>

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X } from 'lucide-react'
+import { useTracking } from '@/hooks/useTracking'
 
 const ChevronRightCircleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,6 +34,7 @@ export default function Navbar() {
   const router = useRouter()
   const isHome = pathname === '/'
   const [menuOpen, setMenuOpen] = useState(false)
+  const { trackCTA } = useTracking()
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
@@ -92,6 +94,7 @@ export default function Navbar() {
                     key={item.slug}
                     href={`/fitur/${item.slug}`}
                     className="nav-dropdown-item"
+                    onClick={() => trackCTA(`Fitur: ${item.label} (Navbar Desktop)`, `/fitur/${item.slug}`)}
                   >
                     <span className="nav-dropdown-icon">{item.icon}</span>
                     <span>
@@ -106,6 +109,7 @@ export default function Navbar() {
           <Link
             href="/carakerja"
             className={`nav-hide-mobile${pathname === '/carakerja' ? ' nav-link-active' : ''}`}
+            onClick={() => trackCTA('Cara Kerja (Navbar Desktop)', '/carakerja')}
           >
             Cara Kerja
           </Link>
@@ -113,11 +117,12 @@ export default function Navbar() {
           <Link
             href="/harga"
             className={`nav-hide-mobile${pathname === '/harga' ? ' nav-link-active' : ''}`}
+            onClick={() => trackCTA('Harga & Paket (Navbar Desktop)', '/harga')}
           >
             Harga &amp; Paket
           </Link>
 
-          <Link href="/daftar" className="btn-nav nav-hide-mobile" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <Link href="/daftar" className="btn-nav nav-hide-mobile" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }} onClick={() => trackCTA('Coba Gratis (Navbar Desktop)', '/daftar')}>
             Coba Gratis <ChevronRightCircleIcon />
           </Link>
 
@@ -146,7 +151,7 @@ export default function Navbar() {
             key={item.slug}
             href={`/fitur/${item.slug}`}
             className="nav-mobile-item"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => { setMenuOpen(false); trackCTA(`Fitur: ${item.label} (Navbar Mobile)`, `/fitur/${item.slug}`) }}
           >
             <span className="nav-dropdown-icon">{item.icon}</span>
             <span className="nav-dropdown-item-label">{item.label}</span>
@@ -158,17 +163,17 @@ export default function Navbar() {
         <Link
           href="/carakerja"
           className="nav-mobile-item"
-          onClick={() => setMenuOpen(false)}
+          onClick={() => { setMenuOpen(false); trackCTA('Cara Kerja (Navbar Mobile)', '/carakerja') }}
         >
           Cara Kerja
         </Link>
-        <Link href="/harga" className="nav-mobile-item" onClick={() => setMenuOpen(false)}>
+        <Link href="/harga" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Harga & Paket (Navbar Mobile)', '/harga') }}>
           Harga & Paket
         </Link>
 
         <div className="nav-mobile-divider" />
 
-        <Link href="/daftar" className="btn-nav nav-mobile-cta" onClick={() => setMenuOpen(false)}>
+        <Link href="/daftar" className="btn-nav nav-mobile-cta" onClick={() => { setMenuOpen(false); trackCTA('Coba Gratis (Navbar Mobile)', '/daftar') }}>
           Coba Gratis
         </Link>
       </div>
