@@ -13,6 +13,7 @@ const ArrowCircleIcon = () => (
 )
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { useGeolocation } from '@/hooks/useGeolocation'
 
 function GachaNumber({ target, from, duration = 1400, format }: {
   target: number
@@ -104,10 +105,16 @@ export default function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [heroReady, setHeroReady] = useState(false)
   const [testiActive, setTestiActive] = useState(0)
+  const { requestLocation } = useGeolocation()
 
   useEffect(() => {
     const t = setTimeout(() => setHeroReady(true), 50)
     return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    requestLocation()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
