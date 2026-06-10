@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/daftar', '/harga', '/fitur/multi-jenjang', '/fitur/notifikasi-whatsapp', '/fitur/manajemen-tagihan', '/fitur/laporan-dashboard', '/fitur/pembayaran-digital', '/fitur/manajemen-siswa', '/carakerja', '/api/'],
+        disallow: ['/api/'],
       },
     ],
     sitemap: 'https://pakaisiku.id/sitemap.xml',
