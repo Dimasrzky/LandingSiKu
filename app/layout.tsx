@@ -11,8 +11,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'PakaiSiku - Sistem Keuangan Sekolah Swasta Modern',
-    template: '%s | PakaiSiku',
+    default: 'Siku - Sistem Keuangan Sekolah Swasta Modern',
+    template: '%s | Siku',
   },
   description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta Indonesia dalam satu platform digital.',
   keywords: 'sistem keuangan sekolah, aplikasi SPP, bendahara sekolah, yayasan pendidikan Indonesia',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: 'PakaiSiku - Sistem Keuangan Sekolah Swasta Modern',
+    title: 'Siku - Sistem Keuangan Sekolah Swasta Modern',
     description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta dalam satu platform digital.',
     url: 'https://pakaisiku.id',
     siteName: 'PakaiSiku',
@@ -34,14 +34,14 @@ export const metadata: Metadata = {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'PakaiSiku - Sistem Keuangan Sekolah Swasta Modern',
+        alt: 'Siku - Sistem Keuangan Sekolah Swasta Modern',
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'PakaiSiku - Sistem Keuangan Sekolah Swasta Modern',
+    title: 'Siku - Sistem Keuangan Sekolah Swasta Modern',
     description: 'Kelola SPP, tagihan, dan laporan keuangan sekolah swasta dalam satu platform digital.',
     images: ['/opengraph-image'],
   },
