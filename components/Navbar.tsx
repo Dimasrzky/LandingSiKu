@@ -7,12 +7,6 @@ import { useState } from 'react'
 import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X } from 'lucide-react'
 import { useTracking } from '@/hooks/useTracking'
 
-const ChevronRightCircleIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="black" />
-    <polyline points="10 8 14 12 10 16" stroke="#F7DD7D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
 
 const WhatsAppIcon = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -122,9 +116,37 @@ export default function Navbar() {
             Harga &amp; Paket
           </Link>
 
-          <Link href="/daftar" className="btn-nav nav-hide-mobile" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }} onClick={() => trackCTA('Coba Gratis (Navbar Desktop)', '/daftar')}>
-            Coba Gratis <ChevronRightCircleIcon />
+          <Link
+            href="/daftar"
+            className={`nav-hide-mobile${pathname === '/daftar' ? ' nav-link-active' : ''}`}
+            onClick={() => trackCTA('Jadwalkan Demo (Navbar Desktop)', '/daftar')}
+          >
+            Jadwalkan Demo
           </Link>
+
+          <div className="nav-dropdown nav-dropdown-login nav-hide-mobile">
+            <button className="nav-login-btn" type="button">
+              Login <ChevronDown size={14} strokeWidth={2.5} />
+            </button>
+            <div className="nav-dropdown-menu nav-login-menu">
+              <div className="nav-dropdown-menu-inner nav-login-menu-inner">
+                <a
+                  href="https://app.pakaisiku.id"
+                  className="nav-login-item"
+                  onClick={() => trackCTA('Login (Navbar Desktop)', 'https://app.pakaisiku.id')}
+                >
+                  Login
+                </a>
+                <Link
+                  href="/daftar"
+                  className="nav-login-item"
+                  onClick={() => trackCTA('Demo (Navbar Desktop)', '/daftar')}
+                >
+                  Demo
+                </Link>
+              </div>
+            </div>
+          </div>
 
           {/* Hamburger button */}
           <button
@@ -170,11 +192,17 @@ export default function Navbar() {
         <Link href="/harga" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Harga & Paket (Navbar Mobile)', '/harga') }}>
           Harga & Paket
         </Link>
+        <Link href="/demo" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Jadwalkan Demo (Navbar Mobile)', '/demo') }}>
+          Jadwalkan Demo
+        </Link>
 
         <div className="nav-mobile-divider" />
 
-        <Link href="/daftar" className="btn-nav nav-mobile-cta" onClick={() => { setMenuOpen(false); trackCTA('Coba Gratis (Navbar Mobile)', '/daftar') }}>
-          Coba Gratis
+        <a href="https://app.pakaisiku.id" className="btn-nav nav-mobile-cta" onClick={() => { setMenuOpen(false); trackCTA('Login (Navbar Mobile)', 'https://app.pakaisiku.id') }}>
+          Login
+        </a>
+        <Link href="/daftar" className="btn-nav nav-mobile-cta" style={{ marginTop: '8px' }} onClick={() => { setMenuOpen(false); trackCTA('Demo (Navbar Mobile)', '/daftar') }}>
+          Demo
         </Link>
       </div>
     </>

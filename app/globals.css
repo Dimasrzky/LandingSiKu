@@ -357,6 +357,87 @@ body {
   line-height: 1.4;
 }
 
+/* ─── NAVBAR LOGIN DROPDOWN ─────────────────────── */
+.nav-dropdown-login {
+  align-self: stretch;
+  display: flex;
+  align-items: stretch;
+}
+
+.nav-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F7DD7D;
+  color: #000;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin: -8px -9px;
+  white-space: nowrap;
+}
+
+.nav-dropdown-login:hover .nav-login-btn {
+  background: rgba(255, 255, 255, 0.30);
+}
+
+.nav-login-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown-login:hover .nav-login-btn svg {
+  transform: rotate(180deg);
+}
+
+.nav-login-menu {
+  left: auto !important;
+  right: -9px;
+  transform: translateY(-6px) !important;
+}
+
+.nav-dropdown-login:hover .nav-login-menu {
+  transform: translateY(0) !important;
+}
+
+.nav-login-menu-inner {
+  min-width: 140px !important;
+  grid-template-columns: 1fr !important;
+}
+
+.nav-login-menu .nav-dropdown-menu-inner::before {
+  left: auto !important;
+  right: 24px;
+  transform: none;
+}
+
+.nav-login-menu .nav-dropdown-menu-inner::after {
+  left: auto !important;
+  right: 24px;
+  transform: none;
+}
+
+.nav-login-menu-inner .nav-login-item {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1A2C4E !important;
+  text-decoration: none;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.nav-login-menu-inner .nav-login-item:hover {
+  background: #ededed;
+  color: #1A2C4E !important;
+}
+
 /* ─── TICKER ────────────────────────────────────── */
 .ticker-wrap {
   background-color: #91BDFF;
