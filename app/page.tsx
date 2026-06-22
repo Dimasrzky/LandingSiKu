@@ -441,9 +441,9 @@ export default function HomePage() {
             </p>
 
             <div className="hero-cta">
-              <Link href="/harga" className="btn-hero-outline" onClick={() => trackCTA('Harga & Paket', '/harga')}>
+              {/* <Link href="/harga" className="btn-hero-outline" onClick={() => trackCTA('Harga & Paket', '/harga')}>
                 Harga &amp; Paket
-              </Link>
+              </Link> */}
               <Link href="/daftar" className="btn-primary" onClick={() => trackCTA('Coba Gratis Sekarang (Hero)', '/daftar')}>
                 Coba Gratis Sekarang <ArrowCircleIcon />
               </Link>
@@ -1165,7 +1165,7 @@ export default function HomePage() {
           <h2 className="closing-title closing-anim" data-delay="120">Saatnya beralih ke SiKu.<br />Sudah cukup rekap manual.</h2>
           <p className="closing-desc closing-anim" data-delay="240">Coba gratis 1 bulan penuh tanpa kartu kredit, tanpa risiko.<br className="br-hide-mobile" />Tim kami siap membantu dari awal hingga sistem berjalan.</p>
           <div className="closing-btns closing-anim" data-delay="360">
-            <Link href="/harga" className="closing-btn-outline" onClick={() => trackCTA('Lihat Paket & Harga', '/harga')}>Lihat Paket &amp; Harga</Link>
+            {/* <Link href="/harga" className="closing-btn-outline" onClick={() => trackCTA('Lihat Paket & Harga', '/harga')}>Lihat Paket &amp; Harga</Link> */}
             <Link href="/daftar" className="closing-btn-primary" onClick={() => trackCTA('Jadwalkan Demo Gratis (Closing)', '/daftar')}>
               Jadwalkan Demo Gratis <ArrowCircleIcon />
             </Link>

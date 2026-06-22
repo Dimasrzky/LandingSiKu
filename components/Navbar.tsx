@@ -108,13 +108,13 @@ export default function Navbar() {
             Cara Kerja
           </Link>
 
-          <Link
+          {/* <Link
             href="/harga"
             className={`nav-hide-mobile${pathname === '/harga' ? ' nav-link-active' : ''}`}
             onClick={() => trackCTA('Harga & Paket (Navbar Desktop)', '/harga')}
           >
             Harga &amp; Paket
-          </Link>
+          </Link> */}
 
           <Link
             href="/daftar"
