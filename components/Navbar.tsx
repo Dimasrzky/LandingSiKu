@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X } from 'lucide-react'
+import { Wallet, CreditCard, BarChart3, Building2, GraduationCap, ChevronDown, Menu, X, HelpCircle, MessageCircle } from 'lucide-react'
 import { useTracking } from '@/hooks/useTracking'
 
 
@@ -108,13 +108,39 @@ export default function Navbar() {
             Cara Kerja
           </Link>
 
-          {/* <Link
-            href="/harga"
-            className={`nav-hide-mobile${pathname === '/harga' ? ' nav-link-active' : ''}`}
-            onClick={() => trackCTA('Harga & Paket (Navbar Desktop)', '/harga')}
-          >
-            Harga &amp; Paket
-          </Link> */}
+          {/* Bantuan dropdown */}
+          <div className="nav-dropdown nav-hide-mobile">
+            <button
+              className={`nav-dropdown-trigger${pathname.startsWith('/bantuan') ? ' nav-link-active' : ''}`}
+              type="button"
+            >
+              Bantuan <ChevronDown size={14} strokeWidth={2.5} />
+            </button>
+            <div className="nav-dropdown-menu">
+              <div className="nav-dropdown-menu-inner">
+                <Link
+                  href="/bantuan/faq"
+                  className="nav-dropdown-item"
+                  onClick={() => trackCTA('FAQ (Navbar Desktop)', '/bantuan/faq')}
+                >
+                  <span className="nav-dropdown-icon"><HelpCircle size={16} /></span>
+                  <span>
+                    <span className="nav-dropdown-item-label">FAQ</span>
+                  </span>
+                </Link>
+                <Link
+                  href="/bantuan/hubungi-kami"
+                  className="nav-dropdown-item"
+                  onClick={() => trackCTA('Hubungi Kami (Navbar Desktop)', '/bantuan/hubungi-kami')}
+                >
+                  <span className="nav-dropdown-icon"><MessageCircle size={16} /></span>
+                  <span>
+                    <span className="nav-dropdown-item-label">Hubungi Kami</span>
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
 
           <Link
             href="/daftar"
@@ -189,10 +215,30 @@ export default function Navbar() {
         >
           Cara Kerja
         </Link>
-        <Link href="/harga" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Harga & Paket (Navbar Mobile)', '/harga') }}>
-          Harga & Paket
+
+        <div className="nav-mobile-divider" />
+
+        <div className="nav-mobile-section-label">Bantuan</div>
+        <Link
+          href="/bantuan/faq"
+          className="nav-mobile-item"
+          onClick={() => { setMenuOpen(false); trackCTA('FAQ (Navbar Mobile)', '/bantuan/faq') }}
+        >
+          <span className="nav-dropdown-icon"><HelpCircle size={16} /></span>
+          <span className="nav-dropdown-item-label">FAQ</span>
         </Link>
-        <Link href="/demo" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Jadwalkan Demo (Navbar Mobile)', '/demo') }}>
+        <Link
+          href="/bantuan/hubungi-kami"
+          className="nav-mobile-item"
+          onClick={() => { setMenuOpen(false); trackCTA('Hubungi Kami (Navbar Mobile)', '/bantuan/hubungi-kami') }}
+        >
+          <span className="nav-dropdown-icon"><MessageCircle size={16} /></span>
+          <span className="nav-dropdown-item-label">Hubungi Kami</span>
+        </Link>
+
+        <div className="nav-mobile-divider" />
+
+        <Link href="/daftar" className="nav-mobile-item" onClick={() => { setMenuOpen(false); trackCTA('Jadwalkan Demo (Navbar Mobile)', '/daftar') }}>
           Jadwalkan Demo
         </Link>
 

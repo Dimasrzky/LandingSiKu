@@ -1,0 +1,547 @@
+/* ─── SHARED: SCROLL REVEAL ───────────────────── */
+[data-bn-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--delay, 0s);
+}
+[data-bn-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── SHARED: PAGE BASE ────────────────────────── */
+.bn-main {
+  background: #CEE1F8;
+  min-height: 100vh;
+}
+
+/* ─── SHARED: HEADER ───────────────────────────── */
+.bn-header {
+  padding: 150px 5% 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bn-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.bn-header-text {
+  max-width: 760px;
+}
+
+.bn-label {
+  display: inline-block;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #1A3557;
+  padding: 0 0 6px 0;
+  border-bottom: 9px solid #F7DD7D;
+  margin-bottom: 0.6rem;
+}
+
+.bn-h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #1A3557;
+  line-height: 1.2;
+  margin: 0.6rem 0 1rem;
+}
+
+.bn-desc {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #4A6A90;
+  line-height: 1.65;
+}
+
+.bn-header-deco {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes bn-img-enter {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 24px)) translateX(32px) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+}
+
+.bn-header-img-enter {
+  animation: bn-img-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+/* ─── FAQ: SECTION WRAPPER ─────────────────────── */
+.faq-section {
+  padding: 56px 5% 72px;
+  background: #fff;
+}
+
+.faq-section-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* ─── FAQ: ACCORDION ROOT ──────────────────────── */
+.faq-root {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.faq-category-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2A5499;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #CEE1F8;
+  margin-bottom: 14px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ─── FAQ: ACCORDION ITEM ──────────────────────── */
+.faq-item {
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.faq-item:hover {
+  border-color: #A4CEFF;
+}
+
+.faq-item--open {
+  border-color: #A4CEFF;
+  box-shadow: 0 4px 20px rgba(42, 84, 153, 0.09);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.faq-question:hover .faq-question-text {
+  color: #2A5499;
+}
+
+.faq-question-text {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: #1A3557;
+  line-height: 1.45;
+  transition: color 0.2s;
+}
+
+.faq-item--open .faq-question-text {
+  color: #2A5499;
+}
+
+.faq-chevron {
+  flex-shrink: 0;
+  color: #9CA3AF;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+}
+
+.faq-item--open .faq-chevron {
+  transform: rotate(180deg);
+  color: #2A5499;
+}
+
+/* Smooth height via grid trick */
+.faq-answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-item--open .faq-answer-wrap {
+  grid-template-rows: 1fr;
+}
+
+.faq-answer {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-answer p {
+  padding: 0 20px 20px;
+  font-size: 0.9rem;
+  color: #4B5563;
+  line-height: 1.75;
+  border-top: 1px solid #F3F4F6;
+  margin-top: 0;
+  padding-top: 16px;
+}
+
+.faq-bullets {
+  padding: 0 20px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: -8px;
+}
+
+.faq-bullets li {
+  font-size: 0.9rem;
+  color: #4B5563;
+  line-height: 1.65;
+  list-style-type: disc;
+}
+
+/* ─── FAQ: FORM SECTION ────────────────────────── */
+.faq-form-section {
+  padding: 72px 5%;
+  background: #CEE1F8;
+}
+
+.faq-form-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.faq-form-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: #1A3557;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.faq-form-desc {
+  font-size: 1rem;
+  color: #4A6A90;
+  margin-bottom: 2rem;
+  line-height: 1.65;
+}
+
+.faq-form {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 6px 32px rgba(26, 53, 87, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.faq-form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.faq-form-input,
+.faq-form-textarea {
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  background: #F9FAFB;
+  width: 100%;
+}
+
+.faq-form-input:focus,
+.faq-form-textarea:focus {
+  border-color: #2A5499;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(42, 84, 153, 0.1);
+}
+
+.faq-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.faq-form-btn {
+  background: #2A5499;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 0.975rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  align-self: flex-end;
+}
+
+.faq-form-btn:hover:not(:disabled) {
+  background: #1A3557;
+}
+
+.faq-form-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.faq-form-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.faq-form-feedback {
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.faq-form-feedback--success {
+  background: #ECFDF5;
+  border: 1px solid #6EE7B7;
+  color: #065F46;
+}
+
+.faq-form-feedback--error {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+}
+
+/* ─── HUBUNGI KAMI: SECTION ────────────────────── */
+.hk-section {
+  padding: 56px 5% 72px;
+  background: #fff;
+}
+
+.hk-section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ─── HUBUNGI KAMI: CONTACT CARDS ──────────────── */
+.hk-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.hk-card {
+  background: #fff;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.hk-card:hover {
+  box-shadow: 0 8px 32px rgba(26, 53, 87, 0.12);
+  transform: translateY(-3px);
+}
+
+.hk-card:hover.hk-card--wa  { border-color: #25D366; }
+.hk-card:hover.hk-card--ig  { border-color: #E1306C; }
+.hk-card:hover.hk-card--email { border-color: #2A5499; }
+
+.hk-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hk-card--wa    .hk-card-icon { background: #DCFCE7; }
+.hk-card--ig    .hk-card-icon { background: #FEE2E2; }
+.hk-card--email .hk-card-icon { background: #EFF6FF; }
+
+.hk-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hk-card-platform {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1A3557;
+}
+
+.hk-card-handle {
+  font-size: 0.88rem;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.hk-card-desc {
+  font-size: 0.85rem;
+  color: #9CA3AF;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.hk-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 6px;
+}
+
+.hk-card-btn:hover {
+  opacity: 0.88;
+  transform: scale(0.98);
+}
+
+.hk-card--wa    .hk-card-btn { background: #25D366; color: #fff; }
+.hk-card--ig    .hk-card-btn { background: #E1306C; color: #fff; }
+.hk-card--email .hk-card-btn { background: #2A5499; color: #fff; }
+
+/* ─── HUBUNGI KAMI: HOURS CARD ─────────────────── */
+.hk-hours-card {
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.hk-hours-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #2A5499;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.hk-hours-content {
+  flex: 1;
+}
+
+.hk-hours-content h3 {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: #1A3557;
+  margin-bottom: 6px;
+}
+
+.hk-hours-content p {
+  font-size: 0.875rem;
+  color: #4A6A90;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.hk-hours-content strong {
+  color: #1A3557;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .hk-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .bn-header {
+    padding: 120px 5% 36px;
+  }
+
+  .bn-header-deco {
+    display: none;
+  }
+
+  .bn-label {
+    font-size: 1.3rem;
+  }
+
+.faq-section {
+    padding: 40px 5% 56px;
+  }
+
+  .faq-question {
+    padding: 16px;
+  }
+
+  .faq-answer p {
+    padding: 12px 16px 16px;
+  }
+
+  .faq-bullets {
+    padding: 0 16px 16px 32px;
+  }
+
+  .faq-form-section {
+    padding: 48px 5%;
+  }
+
+  .faq-form {
+    padding: 24px 20px;
+  }
+
+  .faq-form-btn {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .hk-section {
+    padding: 40px 5% 56px;
+  }
+
+  .hk-hours-card {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
