@@ -487,6 +487,45 @@
   color: #1A3557;
 }
 
+.hk-address-card {
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.hk-address-content {
+  flex: 1;
+}
+
+.hk-address-content h3 {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: #1A3557;
+  margin-bottom: 6px;
+}
+
+.hk-address-text {
+  font-size: 0.875rem;
+  color: #4A6A90;
+  line-height: 1.65;
+  font-style: normal;
+  margin: 0 0 16px;
+}
+
+.hk-map-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid #BFDBFE;
+}
+
+.hk-map-wrap iframe {
+  display: block;
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────── */
 @media (max-width: 768px) {
   .hk-cards {

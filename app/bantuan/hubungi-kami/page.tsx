@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock } from 'lucide-react'
+import { Clock, MapPin } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import '../bantuan.css'
@@ -159,6 +159,36 @@ export default function HubungiKamiPage() {
                   Di luar jam operasional atau hari libur, pesan Anda tetap kami terima dan akan
                   ditindaklanjuti pada hari kerja berikutnya.
                 </p>
+              </div>
+            </div>
+
+            {/* Alamat & Map */}
+            <div
+              className='hk-address-card'
+              data-bn-animate
+              style={{ '--delay': '0.4s' } as React.CSSProperties}
+            >
+              <div className='hk-hours-icon'>
+                <MapPin size={22} strokeWidth={2} />
+              </div>
+              <div className='hk-address-content'>
+                <h3>Alamat Kantor</h3>
+                <address className='hk-address-text'>
+                  KM 12, Jl. Kaliurang Jl. Candi 3, RT.01/RW.05, Candi,
+                  Sardonoharjo, Kec. Ngaglik, Kabupaten Sleman,
+                  Daerah Istimewa Yogyakarta 55581
+                </address>
+                <div className='hk-map-wrap'>
+                  <iframe
+                    title='Lokasi Kantor Equanusa'
+                    src='https://www.openstreetmap.org/export/embed.html?bbox=110.401%2C-7.716%2C110.421%2C-7.696&layer=mapnik&marker=-7.705972%2C110.411341'
+                    width='100%'
+                    height='260'
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading='lazy'
+                  />
+                </div>
               </div>
             </div>
 
