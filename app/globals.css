@@ -2904,6 +2904,76 @@ a.btn-hero-outline:hover {
   animation: ckerja-end-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+/* ─── WA REMINDER PREVIEW ────────────────────────── */
+.ckerja-wa-section {
+  background: #F0F5FC;
+}
+
+.ckerja-wa-phone {
+  display: flex;
+  justify-content: center;
+}
+
+.ckerja-wa-bubble {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 22px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(26, 53, 87, 0.15);
+  position: relative;
+}
+
+.ckerja-wa-bubble-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ckerja-wa-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #059669;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ckerja-wa-msg {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.ckerja-wa-link {
+  display: inline-block;
+  color: #1D6FE0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.ckerja-wa-time {
+  display: block;
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
 .ckerja-step {
   display: grid;
   grid-template-columns: 1fr 80px 1fr;

@@ -2,10 +2,21 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { useTracking } from '@/hooks/useTracking'
+
+const ArrowCircleIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#F7DD7D" />
+    <line x1="7" y1="12" x2="16" y2="12" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" />
+    <polyline points="12.5 8 17 12 12.5 16" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
 
 export default function CaraKerjaPage() {
+  const { trackCTA } = useTracking()
   // Scroll-linked vline grow (lerp + RAF)
   useEffect(() => {
     const vline    = document.querySelector<HTMLElement>('.ckerja-vline')
@@ -188,6 +199,51 @@ export default function CaraKerjaPage() {
               </div>
             </div>
 
+          </div>
+        </section>
+
+        {/* ─── PREVIEW PENGINGAT WHATSAPP ───────────── */}
+        <section className="section ckerja-wa-section" id="preview-wa">
+          <div className="section-inner">
+            <div style={{ textAlign: 'center' }}>
+              <div className="section-label">Notifikasi Otomatis</div>
+              <h2 className="section-title">Begini pengingat yang diterima orang tua</h2>
+              <p className="section-subtitle" style={{ margin: '0 auto 2.5rem', textAlign: 'center' }}>
+                Begitu tagihan terbit, SiKu otomatis mengirim pengingat lewat WhatsApp lengkap <br className="br-hide-mobile" />
+                dengan link pembayaran — seperti contoh berikut.
+              </p>
+            </div>
+
+            <div className="ckerja-wa-phone">
+              <div className="ckerja-wa-bubble">
+                <div className="ckerja-wa-bubble-header">
+                  <span className="ckerja-wa-avatar">S</span>
+                  <span>SiKu Notifikasi</span>
+                </div>
+                <p className="ckerja-wa-msg">🔔 <strong>Pengingat Tagihan SPP</strong></p>
+                <p className="ckerja-wa-msg">
+                  Halo Bapak/Ibu, tagihan SPP ananda bulan ini sudah terbit. Yuk selesaikan pembayaran melalui link berikut:
+                </p>
+                <Link
+                  href="/demo-pembayaran"
+                  className="ckerja-wa-link"
+                  onClick={() => trackCTA('Link Demo Pembayaran (Preview WA)', '/demo-pembayaran')}
+                >
+                  👉 pakaisiku.id/demo-pembayaran
+                </Link>
+                <span className="ckerja-wa-time">09:15</span>
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+              <Link
+                href="/demo-pembayaran"
+                className="btn-primary"
+                onClick={() => trackCTA('Coba Demo Pembayaran (Cara Kerja)', '/demo-pembayaran')}
+              >
+                Coba Demo Pembayaran <ArrowCircleIcon />
+              </Link>
+            </div>
           </div>
         </section>
 
