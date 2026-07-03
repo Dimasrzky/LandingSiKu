@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 
-const IPAYMU_ENDPOINT = 'https://my.ipaymu.com/api/v2/payment'
+const IPAYMU_ENDPOINT = 'https://sandbox.ipaymu.com/api/v2/payment'
 
 function buildTimestamp(): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
