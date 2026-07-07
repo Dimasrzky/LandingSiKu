@@ -1716,6 +1716,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 10px;
+  margin-top: -8px;
   margin-bottom: 18;
 }
 
