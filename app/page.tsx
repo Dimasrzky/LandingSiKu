@@ -63,10 +63,14 @@ const tickerItems = [
   'Selesai dalam 3 langkah',
 ]
 
-const heroSlides = [
-  { src: '/assets/AssetsHero1.jpeg', alt: 'Dashboard SiKu' },
-  { src: '/assets/AssetsHero2.jpg', alt: 'Laporan Keuangan SiKu' },
-]
+const CALC_STUDENT_MIN = 50
+const CALC_STUDENT_MAX = 1000
+const CALC_STUDENT_STEP = 50
+
+// Rasio per siswa, dikalibrasi dari acuan 200 siswa = 10 jam, 30 kali, 40 pesan
+const CALC_RATE_JAM_REKAP = 10 / 200
+const CALC_RATE_RISIKO_CATAT = 30 / 200
+const CALC_RATE_PESAN_WA = 40 / 200
 
 const testimonials = [
   {
@@ -103,8 +107,8 @@ const testimonials = [
 ]
 
 export default function HomePage() {
-  const [activeSlide, setActiveSlide] = useState(0)
   const [heroReady, setHeroReady] = useState(false)
+  const [calcStudents, setCalcStudents] = useState(200)
   const [testiActive, setTestiActive] = useState(0)
   const { lat, lng, granted, requestLocation } = useGeolocation()
   const { trackCTA } = useTracking()
@@ -128,12 +132,9 @@ export default function HomePage() {
     })
   }, [granted, lat, lng])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 3500)
-    return () => clearInterval(timer)
-  }, [])
+  const adjustCalcStudents = (delta: number) => {
+    setCalcStudents((prev) => Math.min(CALC_STUDENT_MAX, Math.max(CALC_STUDENT_MIN, prev + delta)))
+  }
 
 
   useEffect(() => {
@@ -450,91 +451,155 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Slide kanan */}
-          <div className="hero-slides-wrap">
-            <Image
-              src="/image/StarHero.png"
-              alt=""
-              width={110}
-              height={110}
-              className="hero-star hero-star--tr"
-              aria-hidden
-            />
-            <Image
-              src="/image/StarHero.png"
-              alt=""
-              width={150}
-              height={150}
-              className="hero-star hero-star--bl"
-              aria-hidden
-            />
-            <div className="hero-slides-clip">
-              <div
-                className="hero-slides-track"
-                style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-              >
-                {heroSlides.map((slide, i) => (
-                  <div className="hero-slide" key={i}>
-                    <Image
-                      src={slide.src}
-                      alt={slide.alt}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      priority={i === 0}
-                    />
+          {/* Kalkulator kanan */}
+          <div className="hero-calc-wrap">
+            <div className="hero-calc-card">
+              <div className="hero-calc-float hero-calc-float--tr">
+                <div className="hero-calc-float-icon hero-calc-float-icon--doc">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z" stroke="#1A3557" strokeWidth="1.6" strokeLinejoin="round" />
+                    <path d="M14 2v5h5M8 13h8M8 17h5" stroke="#1A3557" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <div className="hero-calc-float-text">
+                  <span className="hero-calc-float-tag">Otomatis</span>
+                  <strong>Laporan rapi</strong>
+                  <span>Siap audit</span>
+                </div>
+              </div>
+
+              <div className="hero-calc-header">
+                <div className="hero-calc-header-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="4" y="2" width="16" height="20" rx="2" stroke="#1A3557" strokeWidth="1.6" />
+                    <path d="M8 6h8M7 11h2M11 11h2M15 11h2M7 15h2M11 15h2M15 15h2M7 19h2M11 19h2" stroke="#1A3557" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h3 className="hero-calc-title">Kalkulator Waktu</h3>
+              </div>
+              <p className="hero-calc-subtitle">Seberapa berat beban bendahara?</p>
+
+              <div className="hero-calc-stepper">
+                <button
+                  type="button"
+                  className="hero-calc-stepper-btn"
+                  onClick={() => adjustCalcStudents(-CALC_STUDENT_STEP)}
+                  aria-label="Kurangi jumlah siswa"
+                >
+                  &minus;
+                </button>
+                <div className="hero-calc-stepper-value">
+                  <span className="hero-calc-stepper-number">{calcStudents}</span>
+                  <span className="hero-calc-stepper-unit">Siswa</span>
+                </div>
+                <button
+                  type="button"
+                  className="hero-calc-stepper-btn"
+                  onClick={() => adjustCalcStudents(CALC_STUDENT_STEP)}
+                  aria-label="Tambah jumlah siswa"
+                >
+                  +
+                </button>
+              </div>
+
+              <div className="hero-calc-metrics">
+                <div className="hero-calc-metric">
+                  <div className="hero-calc-metric-left">
+                    <div className="hero-calc-metric-icon hero-calc-metric-icon--blue">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="#1A3557" strokeWidth="1.6" />
+                        <path d="M12 7v5l3.5 2" stroke="#1A3557" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <div className="hero-calc-metric-info">
+                      <span className="hero-calc-metric-label">Waktu rekap manual</span>
+                      <span className="hero-calc-metric-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        SiKu: 3 menit
+                      </span>
+                    </div>
                   </div>
-                ))}
+                  <div className="hero-calc-metric-right">
+                    <span className="hero-calc-metric-value">{Math.round(calcStudents * CALC_RATE_JAM_REKAP)}</span>
+                    <span className="hero-calc-metric-unit">Jam/bulan</span>
+                  </div>
+                </div>
+
+                <div className="hero-calc-metric">
+                  <div className="hero-calc-metric-left">
+                    <div className="hero-calc-metric-icon hero-calc-metric-icon--red">
+                      <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 3 2 20h20L12 3Z" stroke="#DC2626" strokeWidth="1.6" strokeLinejoin="round" />
+                        <path d="M12 10v4" stroke="#DC2626" strokeWidth="1.6" strokeLinecap="round" />
+                        <circle cx="12" cy="17" r="0.9" fill="#DC2626" />
+                      </svg>
+                    </div>
+                    <div className="hero-calc-metric-info">
+                      <span className="hero-calc-metric-label">Risiko salah catat</span>
+                      <span className="hero-calc-metric-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        SiKu: Otomatis
+                      </span>
+                    </div>
+                  </div>
+                  <div className="hero-calc-metric-right">
+                    <span className="hero-calc-metric-value">{Math.round(calcStudents * CALC_RATE_RISIKO_CATAT)}</span>
+                    <span className="hero-calc-metric-unit">Kali/bulan</span>
+                  </div>
+                </div>
+
+                <div className="hero-calc-metric">
+                  <div className="hero-calc-metric-left">
+                    <div className="hero-calc-float-icon hero-calc-float-icon--wa">
+                      <Image src="/icons/WaIjo.png" alt="" width={23} height={23} />
+                    </div>
+                    <div className="hero-calc-metric-info">
+                      <span className="hero-calc-metric-label">Pesan WA manual</span>
+                      <span className="hero-calc-metric-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M20 6L9 17l-5-5" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        SiKu: 1 klik
+                      </span>
+                    </div>
+                  </div>
+                  <div className="hero-calc-metric-right">
+                    <span className="hero-calc-metric-value">{Math.round(calcStudents * CALC_RATE_PESAN_WA)}</span>
+                    <span className="hero-calc-metric-unit">Pesan/bulan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hero-calc-float hero-calc-float--bl">
+                <div className="hero-calc-float-icon hero-calc-float-icon--wa">
+                  <Image src="/icons/WaIjo.png" alt="" width={22} height={22} />
+                </div>
+                <div className="hero-calc-float-text">
+                  <span className="hero-calc-float-tag">Real-time</span>
+                  <strong>Tagihan terkirim</strong>
+                  <span>Tanpa ketik manual</span>
+                </div>
               </div>
             </div>
 
-            <button
-              className="hero-slide-btn hero-slide-btn--prev"
-              onClick={() => setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-              aria-label="Slide sebelumnya"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <polyline points="15 18 9 12 15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <button
-              className="hero-slide-btn hero-slide-btn--next"
-              onClick={() => setActiveSlide((prev) => (prev + 1) % heroSlides.length)}
-              aria-label="Slide berikutnya"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <polyline points="9 18 15 12 9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            <div className="hero-dots">
-              {heroSlides.map((_, i) => (
-                <button
-                  key={i}
-                  className={`hero-dot${i === activeSlide ? ' hero-dot--active' : ''}`}
-                  onClick={() => setActiveSlide(i)}
-                  aria-label={`Slide ${i + 1}`}
-                />
-              ))}
+            <div className="hero-calc-trust">
+              <div className="hero-calc-avatars">
+                <span className="hero-calc-avatar hero-calc-avatar--1">MI</span>
+                <span className="hero-calc-avatar hero-calc-avatar--2">MA</span>
+                <span className="hero-calc-avatar hero-calc-avatar--3">SMA</span>
+              </div>
+              <div className="hero-calc-trust-text">
+                <strong>Telah dicoba</strong>
+                <span>Sekolah swasta di Yogyakarta dan sekitarnya</span>
+              </div>
             </div>
           </div>
 
         </div>
-
-        {/* Anchor — klik scroll ke bagian masalah */}
-        <a
-          href="#masalah"
-          className="hero-anchor-btn"
-          aria-label="Lihat masalah yang kami selesaikan"
-        >
-          <Image
-            src="/image/AnchorProblem.png"
-            alt=""
-            width={340}
-            height={120}
-            className="hero-anchor"
-          />
-          <span className="hero-anchor-text">Gulir ke bawah</span>
-        </a>
       </section>
 
       {/* ─── TICKER ───────────────────────────────── */}
