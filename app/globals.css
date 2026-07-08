@@ -1766,6 +1766,18 @@ body {
   color: #2A5499;
 }
 
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: #2A5499;
+  animation: caretBlink 0.8s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 @keyframes fadeInOnly {
   from { opacity: 0; }
   to   { opacity: 1; }

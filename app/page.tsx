@@ -70,6 +70,50 @@ function GachaNumber({ target, from, duration = 1400, format }: {
   return <span ref={ref}>{format(display)}</span>
 }
 
+function TypewriterLoop({ text, typingSpeed = 20, deletingSpeed = 60, holdFull = 1400, holdEmpty = 400 }: {
+  text: string
+  typingSpeed?: number
+  deletingSpeed?: number
+  holdFull?: number
+  holdEmpty?: number
+}) {
+  const [display, setDisplay] = useState('')
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const delay = !deleting && display === text
+      ? holdFull
+      : deleting && display === ''
+        ? holdEmpty
+        : deleting ? deletingSpeed : typingSpeed
+
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        if (display.length < text.length) {
+          setDisplay(text.slice(0, display.length + 1))
+        } else {
+          setDeleting(true)
+        }
+      } else {
+        if (display.length > 0) {
+          setDisplay(display.slice(0, -1))
+        } else {
+          setDeleting(false)
+        }
+      }
+    }, delay)
+
+    return () => clearTimeout(timeout)
+  }, [display, deleting, text, typingSpeed, deletingSpeed, holdFull, holdEmpty])
+
+  return (
+    <>
+      {display}
+      <span className="typewriter-cursor" aria-hidden>|</span>
+    </>
+  )
+}
+
 const tickerItems = [
   'Kurangi rekap manual',
   'Laporan akurat siap audit',
@@ -467,9 +511,9 @@ export default function HomePage() {
             </p>
 
             <div className="hero-cta">
-              {/* <Link href="/harga" className="btn-hero-outline" onClick={() => trackCTA('Harga & Paket', '/harga')}>
-                Harga &amp; Paket
-              </Link> */}
+              <Link href="/carakerja" className="btn-hero-outline" onClick={() => trackCTA('Cara Kerja', '/carakerja')}>
+                Cara Kerja
+              </Link>
               <Link href="/daftar" className="btn-primary" onClick={() => trackCTA('Coba Gratis Sekarang (Hero)', '/daftar')}>
                 Coba Gratis Sekarang <ArrowCircleIcon />
               </Link>
@@ -631,7 +675,7 @@ export default function HomePage() {
               </div>
               <div className="hero-calc-trust-text">
                 <strong>Telah dicoba</strong>
-                <span>Sekolah swasta di Yogyakarta dan sekitarnya</span>
+                <span><TypewriterLoop text="Sekolah swasta di Yogyakarta dan sekitarnya" /></span>
               </div>
             </div>
           </div>
