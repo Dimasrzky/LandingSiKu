@@ -11,6 +11,19 @@ const ArrowCircleIcon = () => (
     <polyline points="12.5 8 17 12 12.5 16" stroke="#1A3557" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
+
+const WhatsAppIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Z"
+      fill="#fff"
+    />
+    <path
+      d="M17.34 14.24c-.28-.14-1.64-.81-1.9-.9-.25-.09-.44-.14-.62.14-.19.28-.72.9-.88 1.08-.16.19-.32.21-.6.07-.28-.14-1.17-.43-2.23-1.37-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.62-1.5-.86-2.05-.22-.53-.45-.46-.62-.47-.16-.01-.35-.01-.53-.01-.19 0-.5.07-.76.35-.26.28-1 1-1 2.43 0 1.43 1.03 2.82 1.18 3.01.14.19 2.03 3.1 4.92 4.35.69.3 1.22.48 1.64.61.69.22 1.32.19 1.81.11.55-.08 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33Z"
+      fill="#25D366"
+    />
+  </svg>
+)
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { useGeolocation } from '@/hooks/useGeolocation'
@@ -109,6 +122,7 @@ const testimonials = [
 export default function HomePage() {
   const [heroReady, setHeroReady] = useState(false)
   const [calcStudents, setCalcStudents] = useState(200)
+  const [calcStudentsInput, setCalcStudentsInput] = useState('200')
   const [testiActive, setTestiActive] = useState(0)
   const { lat, lng, granted, requestLocation } = useGeolocation()
   const { trackCTA } = useTracking()
@@ -133,7 +147,18 @@ export default function HomePage() {
   }, [granted, lat, lng])
 
   const adjustCalcStudents = (delta: number) => {
-    setCalcStudents((prev) => Math.min(CALC_STUDENT_MAX, Math.max(CALC_STUDENT_MIN, prev + delta)))
+    const next = Math.min(CALC_STUDENT_MAX, Math.max(CALC_STUDENT_MIN, calcStudents + delta))
+    setCalcStudents(next)
+    setCalcStudentsInput(String(next))
+  }
+
+  const commitCalcStudentsInput = () => {
+    const parsed = parseInt(calcStudentsInput, 10)
+    const clamped = Number.isNaN(parsed)
+      ? calcStudents
+      : Math.min(CALC_STUDENT_MAX, Math.max(CALC_STUDENT_MIN, parsed))
+    setCalcStudents(clamped)
+    setCalcStudentsInput(String(clamped))
   }
 
 
@@ -170,7 +195,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const targets = document.querySelectorAll<HTMLElement>(
-      '.masalah-card--light, .masalah-card--dark, .kondisi-anim-left, .kondisi-anim-right'
+      '.masalah-card--light, .masalah-card--dark, .masalah-deco, .kondisi-anim-left, .kondisi-anim-right'
     )
     const observer = new IntersectionObserver(
       (entries) => {
@@ -489,7 +514,19 @@ export default function HomePage() {
                   &minus;
                 </button>
                 <div className="hero-calc-stepper-value">
-                  <span className="hero-calc-stepper-number">{calcStudents}</span>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    className="hero-calc-stepper-input"
+                    value={calcStudentsInput}
+                    onChange={(e) => setCalcStudentsInput(e.target.value.replace(/[^0-9]/g, ''))}
+                    onBlur={commitCalcStudentsInput}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') e.currentTarget.blur()
+                    }}
+                    aria-label="Jumlah siswa"
+                  />
                   <span className="hero-calc-stepper-unit">Siswa</span>
                 </div>
                 <button
@@ -616,26 +653,6 @@ export default function HomePage() {
       <section className="section masalah-section" id="masalah">
         <div className="section-inner masalah-inner">
 
-          {/* Dekorasi bintang kiri */}
-          <div className="masalah-deco">
-            <Image
-              src="/image/StarHero.png"
-              alt=""
-              width={152}
-              height={152}
-              className="masalah-star masalah-star--sm"
-              aria-hidden
-            />
-            <Image
-              src="/image/StarHero.png"
-              alt=""
-              width={250}
-              height={250}
-              className="masalah-star masalah-star--lg"
-              aria-hidden
-            />
-          </div>
-
           {/* Kartu statistik */}
           <div className="masalah-cards">
             <div className="masalah-card masalah-card--light">
@@ -648,6 +665,79 @@ export default function HomePage() {
                 Masih kelola keuangan secara manual. Tanpa sistem yang terintegrasi.
               </p>
               <span className="masalah-quote-c">&rdquo;</span>
+            </div>
+          </div>
+
+          {/* Dekorasi page masalah kanan */}
+          <div className="masalah-deco">
+            <Image
+              src="/image/StarHero.png"
+              alt=""
+              width={90}
+              height={90}
+              className="masalah-star masalah-star--sm"
+              aria-hidden
+            />
+            <Image
+              src="/image/StarHero.png"
+              alt=""
+              width={200}
+              height={200}
+              className="masalah-star masalah-star--lg"
+              aria-hidden
+            />
+            <Image
+              src="/image/PageExcel.png"
+              alt=""
+              width={600}
+              height={600}
+              className="masalah-page"
+              aria-hidden
+            />
+            <Image
+              src="/image/PopUpTransfer.png"
+              alt=""
+              width={300}
+              height={300}
+              className="masalah-popUp"
+              aria-hidden
+            />
+            <Image
+              src="/image/PopUpTransfer.png"
+              style={{ zIndex: 2 }}
+              alt=""
+              width={300}
+              height={300}
+              className="masalah-popUp masalah-popUp--reverse"
+              aria-hidden
+            />
+            <Image
+              src="/image/PopUpTransfer.png"
+              style={{ zIndex: 3 }}
+              alt=""
+              width={300}
+              height={300}
+              className="masalah-popUp masalah-popUp--front"
+              aria-hidden
+            />
+
+            {/* Bubble chat WhatsApp dekorasi */}
+            <div className="masalah-chat masalah-chat--sari" aria-hidden>
+              <span className="masalah-chat-icon"><WhatsAppIcon /></span>
+              <span className="masalah-chat-text"><strong>Ibu Sari:</strong> Ini bukti SPP bulan Juni 🙏</span>
+            </div>
+            <div className="masalah-chat masalah-chat--rian" aria-hidden>
+              <span className="masalah-chat-icon"><WhatsAppIcon /></span>
+              <span className="masalah-chat-text"><strong>Bapak Rian:</strong> Sudah bayar tapi blm dikonfirmasi ❗</span>
+            </div>
+            <div className="masalah-chat masalah-chat--siti" aria-hidden>
+              <span className="masalah-chat-icon"><WhatsAppIcon /></span>
+              <span className="masalah-chat-text"><strong>Ibu Siti:</strong> Bukti ekskul + SPP jadi satu</span>
+            </div>
+            <div className="masalah-chat-badge" aria-hidden>
+              <span className="masalah-chat-badge-icon"><WhatsAppIcon /></span>
+              <span className="masalah-chat-badge-count">47</span>
+              <span className="masalah-chat-badge-text">Pesan belum terbaca</span>
             </div>
           </div>
 
