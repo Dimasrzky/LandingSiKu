@@ -108,6 +108,14 @@ export default function Navbar() {
             Cara Kerja
           </Link>
 
+          <Link
+            href="/demo-pembayaran"
+            className={`nav-hide-mobile${pathname === '/demo-pembayaran' ? ' nav-link-active' : ''}`}
+            onClick={() => trackCTA('Demo Pembayaran (Navbar Desktop)', '/demo-pembayaran')}
+          >
+            Demo Pembayaran
+          </Link>
+
           {/* Bantuan dropdown */}
           <div className="nav-dropdown nav-hide-mobile">
             <button
@@ -214,6 +222,13 @@ export default function Navbar() {
           onClick={() => { setMenuOpen(false); trackCTA('Cara Kerja (Navbar Mobile)', '/carakerja') }}
         >
           Cara Kerja
+        </Link>
+        <Link
+          href="/demo-pembayaran"
+          className="nav-mobile-item"
+          onClick={() => { setMenuOpen(false); trackCTA('Demo Pembayaran (Navbar Mobile)', '/demo-pembayaran') }}
+        >
+          Demo Pembayaran
         </Link>
 
         <div className="nav-mobile-divider" />
