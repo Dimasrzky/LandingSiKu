@@ -356,6 +356,22 @@ export default function HomePage() {
     return () => observer.disconnect()
   }, [])
 
+  // Cara Kerja — num rotates in, header+body slide in
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>('.howto-anim-num, .howto-anim-slide')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const delay = parseInt(el.dataset.delay ?? '0', 10)
+        setTimeout(() => el.classList.add('visible'), delay)
+        observer.unobserve(el)
+      })
+    }, { threshold: 0.2 })
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   // CTA Harga — staggered entrance
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>('.cta-anim')
@@ -995,12 +1011,12 @@ export default function HomePage() {
 
             {/* Card 1 */}
             <div className="howto-card">
-              <div className="howto-num">1</div>
-              <div className="howto-card-inner">
+              <div className="howto-num howto-anim-num" data-delay="0">1</div>
+              <div className="howto-card-inner howto-anim-slide" data-delay="0">
               <div className="howto-header">
                 <div className="howto-header-title">Daftar &amp; Setup</div>
                 <span className="howto-header-icon">
-                  <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
                     <rect x="9" y="3" width="6" height="4" rx="1"/>
                     <path d="M9 12l2 2 4-4"/>
@@ -1029,8 +1045,8 @@ export default function HomePage() {
 
             {/* Card 2 */}
             <div className="howto-card">
-              <div className="howto-num">2</div>
-              <div className="howto-card-inner">
+              <div className="howto-num howto-anim-num" data-delay="120">2</div>
+              <div className="howto-card-inner howto-anim-slide" data-delay="120">
               <div className="howto-header">
                 <div className="howto-header-title">Import Data Siswa</div>
                 <span className="howto-header-icon">
@@ -1065,8 +1081,8 @@ export default function HomePage() {
 
             {/* Card 3 */}
             <div className="howto-card">
-              <div className="howto-num">3</div>
-              <div className="howto-card-inner">
+              <div className="howto-num howto-anim-num" data-delay="240">3</div>
+              <div className="howto-card-inner howto-anim-slide" data-delay="240">
               <div className="howto-header">
                 <div className="howto-header-title">Sistem Berjalan Otomatis</div>
                 <span className="howto-header-icon">
@@ -1100,8 +1116,8 @@ export default function HomePage() {
 
             {/* Card 4 */}
             <div className="howto-card">
-              <div className="howto-num">4</div>
-              <div className="howto-card-inner">
+              <div className="howto-num howto-anim-num" data-delay="360">4</div>
+              <div className="howto-card-inner howto-anim-slide" data-delay="360">
               <div className="howto-header">
                 <div className="howto-header-title">Reminder Otomatis</div>
                 <span className="howto-header-icon">
@@ -1112,7 +1128,7 @@ export default function HomePage() {
                 </span>
               </div>
               <div className="howto-body">
-                <p>SiKu otomatis mengirim pengingat tagihan lewat WhatsApp lengkap dengan link pembayaran tanpa perlu ketik <br />manual.</p>
+                <p>SiKu otomatis mengirim pengingat tagihan lewat WhatsApp lengkap dengan link pembayaran tanpa perlu ketik manual.</p>
                 <span className="badge-tag howto-badge">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A2C4E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"/>

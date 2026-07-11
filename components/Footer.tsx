@@ -21,13 +21,6 @@ export default function Footer() {
             <span className="footer-badge-dot" />
             Tersedia · Batch Pertama Terbuka
           </div>
-
-          <address className="footer-address">
-            <MapPin size={25} className="footer-address-pin" />
-            KM 12, Jl. Kaliurang Jl. Candi 3, RT.01/RW.05, Candi,
-            Sardonoharjo, Kec. Ngaglik, Kabupaten Sleman,
-            Daerah Istimewa Yogyakarta 55581
-          </address>
         </div>
 
         {/* Tengah: Legalitas */}
@@ -38,7 +31,7 @@ export default function Footer() {
               Syarat &amp; Ketentuan
             </Link>
             <Link href="/legalitas/kebijakan-pengembalian-dana" className="footer-legal-link">
-              Kebijakan Pengembalian Dana
+              Pengembalian Dana
             </Link>
             <Link href="/legalitas/kebijakan-privasi" className="footer-legal-link">
               Kebijakan Privasi
@@ -74,10 +67,18 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="footer-bottom">
-        <span className="footer-copy-text">© {new Date().getFullYear()} Equanusa. Semua hak dilindungi.</span>
-        <a href="https://equanusa.vercel.app/" target="_blank" rel="noopener noreferrer">
-          <Image src="/image/LogoEquanusaWhite.png" alt="Equanusa" width={50} height={24} style={{ objectFit: 'contain', opacity: 1 }} />
-        </a>
+        <address className="footer-address">
+          <MapPin size={20} className="footer-address-pin" />
+          KM 12, Jl. Kaliurang Jl. Candi 3, RT.01/RW.05, Candi,
+          Sardonoharjo, Kec. Ngaglik, Kabupaten Sleman,
+          Daerah Istimewa Yogyakarta 55581
+        </address>
+        <div className="footer-bottom-row">
+          <span className="footer-copy-text">© {new Date().getFullYear()} Equanusa. Semua hak dilindungi.</span>
+          <a href="https://equanusa.vercel.app/" target="_blank" rel="noopener noreferrer">
+            <Image src="/image/LogoEquanusaWhite.png" alt="Equanusa" width={50} height={24} style={{ objectFit: 'contain', opacity: 1 }} />
+          </a>
+        </div>
       </div>
     </footer>
   )
